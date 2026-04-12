@@ -1,0 +1,40 @@
+{
+	"folders": [
+		{
+			"name": "airscan (root)",
+			"path": "."
+		},
+		{
+			"name": "backends/bw16",
+			"path": "backends/bw16"
+		},
+		{
+			"name": "backends/tshark",
+			"path": "backends/tshark"
+		},
+		{
+			"name": "backends/mock",
+			"path": "backends/mock"
+		},
+		{
+			"name": "backends/windows",
+			"path": "backends/windows"
+		},
+		{
+			"name": "frontends/web",
+			"path": "frontends/web"
+		},
+		{
+			"name": "packages/engine",
+			"path": "packages/engine"
+		},
+		{
+			"name": "packages/types",
+			"path": "packages/types"
+		},
+		{
+			"name": "packages/websockets",
+			"path": "packages/websockets"
+		}
+	]
+}

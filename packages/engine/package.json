@@ -1,0 +1,32 @@
+{
+  "name": "@airscan/engine",
+  "module": "src/index.ts",
+  "type": "module",
+  "types": "src/index.ts",
+  "scripts": {
+    "lint": "bunx tsc -b",
+    "build": "bun ./bin/create-oui.ts",
+    "postinstall": "bun run build"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./selectors": "./src/selectors/index.ts",
+    "./state": "./src/engine.ts",
+    "./utils": "./src/utils/index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19"
+  },
+  "peerDependencies": {
+    "react": "^19",
+    "typescript": "^5",
+    "zustand": "^5"
+  },
+  "dependencies": {
+    "@airscan/types": "workspace:*",
+    "nanoid": "^5.1.7",
+    "oui-data": "^1.1.560",
+    "zustand": "^5.0.0"
+  }
+}

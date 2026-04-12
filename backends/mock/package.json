@@ -1,0 +1,22 @@
+{
+  "name": "@airscan/backend-mock",
+  "module": "src/index.ts",
+  "scripts": {
+    "lint": "bunx tsc -b",
+    "dev": "bun ./src/index.ts",
+    "build": "bun build --production --compile ./src/index.ts --outfile ./dist/airscan-backend-mock"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@airscan/websockets": "workspace:*",
+    "@airscan/types": "workspace:*",
+    "@faker-js/faker": "^9.6.0",
+    "meow": "^14.1.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@airscan/backend-windows",
+  "module": "src/index.ts",
+  "scripts": {
+    "lint": "bunx tsc -b",
+    "dev": "bun ./src/index.ts",
+    "build": "bun build --production --compile --target=bun-windows-x64 ./src/index.ts --outfile ./dist/airscan-backend-windows"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

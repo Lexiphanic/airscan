@@ -1,0 +1,322 @@
+name: Monorepo Build
+
+on:
+  push:
+    branches: [main]
+    tags: ['*']
+    paths:
+      - 'backends/**'
+      - 'frontends/**'
+      - 'packages/**'
+      - '.github/workflows/monorepo-build.yml'
+      - '.devcontainer/**'
+  pull_request:
+    paths:
+      - 'backends/**'
+      - 'frontends/**'
+      - 'packages/**'
+      - '.github/workflows/monorepo-build.yml'
+      - '.devcontainer/**'
+
+jobs:
+  build-container:
+    name: Build DevContainer
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push devcontainer image
+        uses: devcontainers/ci@v0.3
+        with:
+          imageName: ghcr.io/${{ github.repository }}
+          cacheFrom: ghcr.io/${{ github.repository }}:${{ github.sha }}
+          imageTag: ${{ github.sha }}${{ github.ref == 'refs/heads/main' && ',latest' || '' }}
+          push: always
+          runCmd: echo "Image built"
+
+  build-backends-mock:
+    name: Build @airscan/backend-mock
+    runs-on: ubuntu-latest
+    needs: build-container
+    permissions:
+      contents: read
+      packages: read
+    if: ${{ github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'backend-mock') || github.event_name == 'pull_request' }}
+    env:
+      PACKAGE_DIR: backends/mock
+      ARTIFACT_NAME: airscan-mock
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build package
+        uses: ./.github/actions/build-package
+        with:
+          package-dir: ${{ env.PACKAGE_DIR }}
+          artifact-name: ${{ env.ARTIFACT_NAME }}
+          artifact-path: ${{ env.PACKAGE_DIR }}/dist/*
+          run-cmd: |
+            bun install --frozen-lockfile
+            bun run lint
+            bun run build
+
+  build-backends-tshark:
+    name: Build @airscan/backend-tshark
+    runs-on: ubuntu-latest
+    needs: build-container
+    permissions:
+      contents: read
+      packages: read
+    if: ${{ github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'backend-tshark') || github.event_name == 'pull_request' }}
+    env:
+      PACKAGE_DIR: backends/tshark
+      ARTIFACT_NAME: airscan-tshark
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build package
+        uses: ./.github/actions/build-package
+        with:
+          package-dir: ${{ env.PACKAGE_DIR }}
+          artifact-name: ${{ env.ARTIFACT_NAME }}
+          artifact-path: ${{ env.PACKAGE_DIR }}/dist/*
+          run-cmd: |
+            bun install --frozen-lockfile
+            bun run lint
+            bun run build
+
+  build-backends-windows:
+    name: Build @airscan/backend-windows
+    runs-on: ubuntu-latest
+    needs: build-container
+    permissions:
+      contents: read
+      packages: read
+    if: ${{ github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'backend-windows') || github.event_name == 'pull_request' }}
+    env:
+      PACKAGE_DIR: backends/windows
+      ARTIFACT_NAME: airscan-windows
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build package
+        uses: ./.github/actions/build-package
+        with:
+          package-dir: ${{ env.PACKAGE_DIR }}
+          artifact-name: ${{ env.ARTIFACT_NAME }}
+          artifact-path: ${{ env.PACKAGE_DIR }}/dist/*
+          run-cmd: |
+            bun install --frozen-lockfile
+            bun run lint
+            bun run build
+
+  build-backends-bw16:
+    name: Build @airscan/backend-bw16
+    runs-on: ubuntu-latest
+    needs: build-container
+    permissions:
+      contents: read
+      packages: read
+    if: ${{ github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'backend-bw16') || github.event_name == 'pull_request' }}
+    env:
+      PACKAGE_DIR: backends/bw16
+      ARTIFACT_NAME: airscan-bw16
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build package
+        uses: ./.github/actions/build-package
+        with:
+          package-dir: ${{ env.PACKAGE_DIR }}
+          artifact-name: ${{ env.ARTIFACT_NAME }}
+          artifact-path: ${{ env.PACKAGE_DIR }}/*.bin
+          run-cmd: |
+            bun install --frozen-lockfile
+            bun run build
+
+  build-frontends-web:
+    name: Build @airscan/frontend-web
+    runs-on: ubuntu-latest
+    needs: build-container
+    permissions:
+      contents: read
+      packages: read
+    if: ${{ github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'frontend-web') || github.event_name == 'pull_request' }}
+    env:
+      PACKAGE_DIR: frontends/web
+      ARTIFACT_NAME: airscan-web
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build package
+        uses: ./.github/actions/build-package
+        with:
+          package-dir: ${{ env.PACKAGE_DIR }}
+          artifact-name: ${{ env.ARTIFACT_NAME }}
+          artifact-path: ${{ env.PACKAGE_DIR }}/dist/*
+          run-cmd: |
+            bun install --frozen-lockfile
+            bun run lint
+            bun run build
+
+  build-packages-engine:
+    name: Build @airscan/engine
+    runs-on: ubuntu-latest
+    needs: build-container
+    permissions:
+      contents: read
+      packages: read
+    if: ${{ github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'package-engine') || github.event_name == 'pull_request' }}
+    env:
+      PACKAGE_DIR: packages/engine
+      ARTIFACT_NAME: airscan-engine
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build package
+        uses: ./.github/actions/build-package
+        with:
+          package-dir: ${{ env.PACKAGE_DIR }}
+          artifact-name: ${{ env.ARTIFACT_NAME }}
+          artifact-path: ${{ env.PACKAGE_DIR }}/dist/*
+          run-cmd: |
+            bun install --frozen-lockfile
+            bun run lint
+
+  build-packages-types:
+    name: Build @airscan/types
+    runs-on: ubuntu-latest
+    needs: build-container
+    permissions:
+      contents: read
+      packages: read
+    if: ${{ github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'package-types') || github.event_name == 'pull_request' }}
+    env:
+      PACKAGE_DIR: packages/types
+      ARTIFACT_NAME: airscan-types
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build package
+        uses: ./.github/actions/build-package
+        with:
+          package-dir: ${{ env.PACKAGE_DIR }}
+          artifact-name: ${{ env.ARTIFACT_NAME }}
+          artifact-path: ${{ env.PACKAGE_DIR }}/dist/*
+          run-cmd: |
+            bun install --frozen-lockfile
+            bun run lint
+
+  build-packages-websockets:
+    name: Build @airscan/websockets
+    runs-on: ubuntu-latest
+    needs: build-container
+    permissions:
+      contents: read
+      packages: read
+    if: ${{ github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'package-websockets') || github.event_name == 'pull_request' }}
+    env:
+      PACKAGE_DIR: packages/websockets
+      ARTIFACT_NAME: airscan-websockets
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build package
+        uses: ./.github/actions/build-package
+        with:
+          package-dir: ${{ env.PACKAGE_DIR }}
+          artifact-name: ${{ env.ARTIFACT_NAME }}
+          artifact-path: ${{ env.PACKAGE_DIR }}/dist/*
+          run-cmd: |
+            bun install --frozen-lockfile
+            bun run lint
+
+  test-e2e:
+    name: Test E2E
+    runs-on: ubuntu-latest
+    needs: [build-backends-tshark, build-backends-mock, build-backends-windows, build-backends-bw16, build-frontends-web, build-packages-engine, build-packages-types, build-packages-websockets]
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+      - name: Download frontend artifact
+        uses: actions/download-artifact@v6
+        with:
+          name: airscan-web
+          path: frontends/web/dist
+      - name: Run in devcontainer
+        uses: devcontainers/ci@v0.3
+        with:
+          imageName: ghcr.io/${{ github.repository }}
+          cacheFrom: ghcr.io/${{ github.repository}}:${{ github.sha }}
+          imageTag: ${{ github.sha }}
+          push: never
+          runCmd: |
+            cd frontends/web
+            bun install --frozen-lockfile
+            bun run install:playwright
+            bun run test:e2e
+      - id: test-e2e-evidence
+        name: Upload video artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-e2e-smoke.webm
+          path: frontends/web/test-results/**/video.webm
+          archive: false
+      - name: Comment on PR with video link
+        uses: actions/github-script@v7
+        if: success() && github.event_name == 'pull_request'
+        env:
+          ARTIFACT_URL: ${{ steps.test-e2e-evidence.outputs.artifact-url }}
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `E2E test passed! Video recording available as an artifact: [test-e2e-smoke.webm](${process.env.ARTIFACT_URL})`
+            });
+
+  release:
+    name: Create Releases
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: [build-backends-tshark, build-backends-mock, build-backends-windows, build-backends-bw16, build-frontends-web, build-packages-engine, build-packages-types, build-packages-websockets]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Download all artifacts
+        run: |
+          mkdir -p artifacts
+          for artifact in airscan-tshark airscan-windows airscan-bw16 airscan-web airscan-engine airscan-types airscan-websockets; do
+            if gh run download --name $artifact --dir artifacts 2>/dev/null; then
+              echo "Downloaded $artifact"
+            fi
+          done
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Airscan ${{ github.ref_name }}
+          files: artifacts/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  cleanup-container-image:
+    name: Delete DevContainer Image
+    runs-on: ubuntu-latest
+    needs: [build-container, test-e2e]
+    permissions:
+      contents: read
+      packages: write
+    if: ${{ always() && !(github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    steps:
+      - name: Delete GHCR version
+        uses: actions/delete-package-versions@v5
+        with:
+          owner: ${{ github.repository_owner }}
+          package-name: ${{ github.event.repository.name }}
+          package-type: container
+          package-version-ids: ${{ github.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}

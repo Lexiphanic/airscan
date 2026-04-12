@@ -1,0 +1,46 @@
+name: 'Build package in devcontainer'
+description: 'Build a monorepo package using devcontainer and upload artifact'
+
+inputs:
+  package-dir:
+    description: 'Directory of the package to build'
+    required: true
+  artifact-name:
+    description: 'Name of the artifact to upload'
+    required: true
+  run-cmd:
+    description: 'Command to run inside the package directory'
+    required: true
+  artifact-path:
+    description: 'Path pattern for artifact files relative to repository root'
+    required: true
+  image-name:
+    description: 'DevContainer image name'
+    default: 'ghcr.io/${{ github.repository }}'
+  cache-from:
+    description: 'Cache from image tag'
+    default: 'ghcr.io/${{ github.repository }}:${{ github.sha }}'
+  image-tag:
+    description: 'Image tag to use'
+    default: '${{ github.sha }}'
+
+runs:
+  using: composite
+  steps:
+
+    - name: Run in devcontainer
+      uses: devcontainers/ci@v0.3
+      with:
+        imageName: ${{ inputs.image-name }}
+        cacheFrom: ${{ inputs.cache-from }}
+        imageTag: ${{ inputs.image-tag }}
+        push: never
+        runCmd: |
+          cd ${{ inputs.package-dir }}
+          ${{ inputs.run-cmd }}
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v6
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.artifact-path }}

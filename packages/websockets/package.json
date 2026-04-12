@@ -1,0 +1,23 @@
+{
+  "name": "@airscan/websockets",
+  "module": "src/index.ts",
+  "type": "module",
+  "types": "src/index.ts",
+  "scripts": {
+    "lint": "bunx tsc -b"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./Server": "./src/Server.ts",
+    "./Manager": "./src/Manager.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
+  }
+}

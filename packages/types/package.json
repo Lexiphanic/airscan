@@ -1,0 +1,27 @@
+{
+  "name": "@airscan/types",
+  "module": "src/index.ts",
+  "type": "module",
+  "types": "src/index.ts",
+  "scripts": {
+    "lint": "bunx tsc -b"
+  },
+  "exports": {
+    "./AccessPoint": "./src/AccessPoint.ts",
+    "./Api/WebSocketApi": "./src/Api/WebSocketApi.ts",
+    "./Client": "./src/Client.ts",
+    "./Device": "./src/Device.ts",
+    "./Feature": "./src/Feature.ts",
+    "./Logs": "./src/Logs.ts",
+    "./Transport": "./src/Transport.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
+  }
+}
