@@ -16,18 +16,27 @@ inputs:
     required: true
   image-name:
     description: 'DevContainer image name'
-    default: 'ghcr.io/${{ github.repository }}'
+    required: true
   cache-from:
     description: 'Cache from image tag'
-    default: 'ghcr.io/${{ github.repository }}:${{ github.sha }}'
+    required: true
   image-tag:
     description: 'Image tag to use'
-    default: '${{ github.sha }}'
+    required: true
+  token:
+    description: Repository Auth Token
+    required: false
 
 runs:
   using: composite
   steps:
-
+    - name: Login to GHCR
+      if: ${{ inputs.token }}
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ inputs.token }}
     - name: Run in devcontainer
       uses: devcontainers/ci@v0.3
       with:
