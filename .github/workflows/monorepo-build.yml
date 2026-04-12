@@ -77,6 +77,7 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           cache-from: ${{ env.CACHE_FROM }}
           image-tag: ${{ env.IMAGE_TAG }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           run-cmd: |
             bun install --frozen-lockfile
             bun run lint
@@ -107,6 +108,7 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           cache-from: ${{ env.CACHE_FROM }}
           image-tag: ${{ env.IMAGE_TAG }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           run-cmd: |
             bun install --frozen-lockfile
             bun run lint
@@ -137,6 +139,7 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           cache-from: ${{ env.CACHE_FROM }}
           image-tag: ${{ env.IMAGE_TAG }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           run-cmd: |
             bun install --frozen-lockfile
             bun run lint
@@ -167,6 +170,7 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           cache-from: ${{ env.CACHE_FROM }}
           image-tag: ${{ env.IMAGE_TAG }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           run-cmd: |
             bun install --frozen-lockfile
             bun run build
@@ -196,6 +200,7 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           cache-from: ${{ env.CACHE_FROM }}
           image-tag: ${{ env.IMAGE_TAG }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           run-cmd: |
             bun install --frozen-lockfile
             bun run lint
@@ -226,6 +231,7 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           cache-from: ${{ env.CACHE_FROM }}
           image-tag: ${{ env.IMAGE_TAG }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           run-cmd: |
             bun install --frozen-lockfile
             bun run lint
@@ -255,6 +261,7 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           cache-from: ${{ env.CACHE_FROM }}
           image-tag: ${{ env.IMAGE_TAG }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           run-cmd: |
             bun install --frozen-lockfile
             bun run lint
@@ -284,6 +291,7 @@ jobs:
           image-name: ${{ env.IMAGE_NAME }}
           cache-from: ${{ env.CACHE_FROM }}
           image-tag: ${{ env.IMAGE_TAG }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           run-cmd: |
             bun install --frozen-lockfile
             bun run lint
