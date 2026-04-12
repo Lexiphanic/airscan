@@ -38,13 +38,13 @@ jobs:
           echo "containerCache=ghcr.io/${GITHUB_REPOSITORY,,}:${{ github.sha }}" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v6
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push devcontainer image
-        uses: devcontainers/ci@v0.3
+        uses: devcontainers/ci@v0.3.1900000417
         with:
           imageName: ${{ steps.config.outputs.containerName }}
           cacheFrom: ${{ steps.config.outputs.containerCache }}
@@ -309,13 +309,19 @@ jobs:
       IMAGE_TAG: ${{ needs.build-container.outputs.containerTag }}
     steps:
       - uses: actions/checkout@v6
+      - name: Login to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Download frontend artifact
         uses: actions/download-artifact@v6
         with:
           name: airscan-web
           path: frontends/web/dist
       - name: Run in devcontainer
-        uses: devcontainers/ci@v0.3
+        uses: devcontainers/ci@v0.3.1900000417
         with:
           imageName: ${{ env.IMAGE_NAME }}
           cacheFrom: ${{ env.CACHE_FROM }}
@@ -334,7 +340,7 @@ jobs:
           path: frontends/web/test-results/**/video.webm
           archive: false
       - name: Comment on PR with video link
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         if: success() && github.event_name == 'pull_request'
         env:
           ARTIFACT_URL: ${{ steps.test-e2e-evidence.outputs.artifact-url }}
@@ -375,7 +381,7 @@ jobs:
   cleanup-container-image:
     name: Delete DevContainer Image
     runs-on: ubuntu-latest
-    needs: [build-container, test-e2e]
+    needs: [build-container, test-e2e, release]
     permissions:
       contents: read
       packages: write
