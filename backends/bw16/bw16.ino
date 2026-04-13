@@ -482,7 +482,25 @@ bool shouldDeauth(const uint8_t *apMac, const uint8_t *stationMac, uint8_t chann
 
 void extractSSID(const uint8_t *frame, size_t len, char *ssid_out)
 {
+    // For management frames (type 0x00), tagged parameters start after the fixed header
+    // Fixed header size is 24 bytes for most management frames
+    // But beacon frames (subtype 0x08) have additional fields before tagged parameters
     size_t pos = 24;
+    
+    // Check if this is a beacon frame (subtype 0x08)
+    uint8_t fc_hi = frame[0];
+    uint8_t type = fc_hi & 0x0F;
+    uint8_t subtype = (fc_hi >> 4) & 0x0F;
+    
+    if (type == 0x00 && subtype == 0x08) {
+        // Beacon frames have timestamp (8 bytes), beacon interval (2 bytes), and capability info (2 bytes)
+        // So tagged parameters start at 24 + 8 + 2 + 2 = 36 bytes
+        pos = 36;
+    }
+    // Probe response frames (subtype 0x05) have timestamp (8 bytes), beacon interval (2 bytes), and capability info (2 bytes)
+    else if (type == 0x00 && subtype == 0x05) {
+        pos = 36;
+    }
     
     while (pos + 2 < len)
     {
@@ -492,10 +510,27 @@ void extractSSID(const uint8_t *frame, size_t len, char *ssid_out)
         if (tag_len > 32 || pos + 2 + tag_len > len)
             break;
             
-        if (tag == 0x00)
+        if (tag == 0x00)  // SSID tag
         {
-            memcpy(ssid_out, frame + pos + 2, tag_len);
-            ssid_out[tag_len] = '\0';
+            // Handle zero-length SSID (hidden network)
+            if (tag_len == 0) {
+                ssid_out[0] = '\0';
+                return;
+            }
+            
+            // Copy SSID, ensure null termination and valid characters
+            // SSID can contain any bytes, but we need to ensure it's valid for JSON
+            size_t copy_len = tag_len;
+            for (size_t i = 0; i < tag_len; i++) {
+                uint8_t c = frame[pos + 2 + i];
+                // Skip control characters (except space)
+                if (c < 0x20 && c != 0x20) {
+                    copy_len = i;
+                    break;
+                }
+            }
+            memcpy(ssid_out, frame + pos + 2, copy_len);
+            ssid_out[copy_len] = '\0';
             return;
         }
         
@@ -515,7 +550,7 @@ void reportAccessPoint(const uint8_t *bssid, const char *ssid, uint8_t channel, 
     doc["accessPoints"][bssidStr]["bssid"] = bssidStr;
     doc["accessPoints"][bssidStr]["ssid"] = ssid;
     doc["accessPoints"][bssidStr]["channel"] = channel;
-    doc["accessPoints"][bssidStr]["rssi"] = -rssi;
+    doc["accessPoints"][bssidStr]["rssi"] = rssi < 0 ? -rssi : rssi;
     doc["accessPoints"][bssidStr]["authentication"] = "";
     doc["accessPoints"][bssidStr]["encryption"] = "";
     doc["accessPoints"][bssidStr]["beacons"] = 0;
@@ -531,7 +566,7 @@ void reportClient(const uint8_t *mac, int8_t rssi, const uint8_t *bssid)
     JsonDocument doc;
     doc["type"] = "addClients";
     doc["clients"][macStr]["mac"] = macStr;
-    doc["clients"][macStr]["rssi"] = -rssi;
+    doc["clients"][macStr]["rssi"] = rssi < 0 ? -rssi : rssi;
     doc["clients"][macStr]["probes"] = JsonArray();
     doc["clients"][macStr]["bssid"] = JsonArray();
     doc["clients"][macStr]["data"] = 0;
@@ -575,8 +610,12 @@ void handlePacket(uint8_t type, uint8_t subtype, const uint8_t *addr2, const uin
                 break;
                 
             case 0x05:
-                reportAccessPoint(addr2, "", current_channel, rssi);
+            {
+                char ssid[33] = {0};
+                extractSSID(frame, len, ssid);
+                reportAccessPoint(addr2, ssid, current_channel, rssi);
                 break;
+            }
                 
             case 0x08:
             {
@@ -709,7 +748,7 @@ rtw_result_t scan_handler(rtw_scan_handler_result_t *res)
         doc["accessPoints"][b]["bssid"] = b;
         doc["accessPoints"][b]["ssid"] = (const char *)ap->SSID.val;
         doc["accessPoints"][b]["channel"] = ap->channel;
-        doc["accessPoints"][b]["rssi"] = -ap->signal_strength;
+        doc["accessPoints"][b]["rssi"] = ap->signal_strength < 0 ? -ap->signal_strength : ap->signal_strength;
         doc["accessPoints"][b]["authentication"] = "";
         doc["accessPoints"][b]["encryption"] = "";
         doc["accessPoints"][b]["beacons"] = 0;
