@@ -400,6 +400,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: frontends/web/dist
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v5
 
   cleanup-container-image:
     name: Delete DevContainer Image
