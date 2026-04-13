@@ -575,8 +575,12 @@ void handlePacket(uint8_t type, uint8_t subtype, const uint8_t *addr2, const uin
                 break;
                 
             case 0x05:
-                reportAccessPoint(addr2, "", current_channel, rssi);
+            {
+                char ssid[33] = {0};
+                extractSSID(frame, len, ssid);
+                reportAccessPoint(addr2, ssid, current_channel, rssi);
                 break;
+            }
                 
             case 0x08:
             {
