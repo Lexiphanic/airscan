@@ -482,27 +482,43 @@ bool shouldDeauth(const uint8_t *apMac, const uint8_t *stationMac, uint8_t chann
 
 void extractSSID(const uint8_t *frame, size_t len, char *ssid_out)
 {
-    size_t pos = 24;
+    ssid_out[0] = '\0';
     
-    while (pos + 2 < len)
+    // Need at least 36 bytes for MAC header + fixed fields before tagged parameters
+    if (len < 38)
+        return;
+    
+    // Beacon/Probe Response frame structure:
+    // Bytes 0-1: Frame Control
+    // Bytes 2-3: Duration
+    // Bytes 4-9: Destination MAC (Addr1)
+    // Bytes 10-15: Source MAC (Addr2/BSSID)
+    // Bytes 16-21: BSSID (Addr3)
+    // Bytes 22-23: Sequence Control
+    // Bytes 24-31: Timestamp (8 bytes)
+    // Bytes 32-33: Beacon Interval (2 bytes)
+    // Bytes 34-35: Capability Info (2 bytes)
+    // Bytes 36+: Tagged parameters start here
+
+    size_t pos = 36;  // Skip MAC header (24) + Timestamp (8) + Beacon Interval (2) + Capability Info (2)
+
+    while (pos + 2 <= len)
     {
         uint8_t tag = frame[pos];
         uint8_t tag_len = frame[pos + 1];
-        
+
         if (tag_len > 32 || pos + 2 + tag_len > len)
             break;
-            
-        if (tag == 0x00)
+
+        if (tag == 0x00)  // SSID tag
         {
             memcpy(ssid_out, frame + pos + 2, tag_len);
             ssid_out[tag_len] = '\0';
             return;
         }
-        
+
         pos += 2 + tag_len;
     }
-    
-    ssid_out[0] = '\0';
 }
 
 void reportAccessPoint(const uint8_t *bssid, const char *ssid, uint8_t channel, int8_t rssi)
@@ -574,9 +590,13 @@ void handlePacket(uint8_t type, uint8_t subtype, const uint8_t *addr2, const uin
                 reportClient(addr2, rssi, NULL);
                 break;
                 
-            case 0x05:
-                reportAccessPoint(addr2, "", current_channel, rssi);
+            case 0x05:  // Probe Response
+            {
+                char ssid[33] = {0};
+                extractSSID(frame, len, ssid);
+                reportAccessPoint(addr2, ssid, current_channel, rssi);
                 break;
+            }
                 
             case 0x08:
             {
