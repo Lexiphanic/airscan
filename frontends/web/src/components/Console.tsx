@@ -5,7 +5,6 @@ import { useEngineStore } from '@airscan/engine/engine.ts';
 export default function Console() {
   const logs = useEngineStore(state => state.logs);
   const clearLogs = useEngineStore(state => state.clearLogs);
-  const enabledFeatures = useEngineStore(state => state.enabledFeatures);
   const [isOpen, setIsOpen] = useState(false);
 
   if (!isOpen) {
@@ -16,9 +15,6 @@ export default function Console() {
       >
         <div className="neobrutalist-card p-3">
           <Terminal className="w-5 h-5 text-[var(--nb-accent)]" />
-          {enabledFeatures.length > 0 && (
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-600 border border-[var(--nb-border)] rounded-full animate-pulse" />
-          )}
           {logs.length > 0 && (
             <div className="absolute -top-1 -left-1 min-w-4.5 h-4.5 bg-[var(--nb-accent)] border-2 border-[var(--nb-border)] rounded-full flex items-center justify-center text-[10px] font-bold text-white px-1">
               {logs.length > 99 ? '99+' : logs.length}
@@ -41,12 +37,6 @@ export default function Console() {
             <Terminal className="w-4 h-4" />
             <span className="text-xs font-bold uppercase">Log / Console</span>
           </div>
-          {enabledFeatures.length > 0 && (
-            <div className="flex items-center gap-2 px-2 py-1 border-2 border-red-600 bg-red-500">
-              <Zap className="w-3 h-3 text-white" />
-              <span className="text-xs text-white font-mono">{enabledFeatures.length} ACTIVE</span>
-            </div>
-          )}
         </div>
         <div className="flex items-center gap-4">
           <span className="text-[10px] font-bold uppercase">Click to minimize</span>

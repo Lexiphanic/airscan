@@ -39,7 +39,7 @@ export default function ClientRow(props: { client: Client, accessPointBssid: str
   };
 
   return (
-    <div className="flex items-center justify-between border-2 border-[var(--nb-border)] p-3 hover:bg-[var(--nb-accent)] hover:text-[var(--nb-bg)] group/client">
+    <div className="flex items-center justify-between bg-[var(--nb-card-bg)] border-2 border-[var(--nb-border)] rounded-lg p-3 hover:bg-[var(--nb-accent)] hover:text-[var(--nb-bg)] group/client">
       <div className="flex items-center gap-3">
         <Smartphone className="w-4 h-4" />
         <div>
