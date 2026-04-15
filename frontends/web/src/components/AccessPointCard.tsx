@@ -30,7 +30,7 @@ function analyzeMacAddress(bssid: string) {
     return {
       type: 'broadcast',
       label: 'Broadcast',
-      color: 'text-purple-400',
+      color: 'text-purple-600',
       bgColor: 'bg-purple-500/20'
     };
   }
@@ -39,7 +39,7 @@ function analyzeMacAddress(bssid: string) {
     return {
       type: 'laa-multicast',
       label: 'Local Multicast',
-      color: 'text-orange-400',
+      color: 'text-orange-600',
       bgColor: 'bg-orange-500/20',
       description: 'Locally administered multicast group'
     };
@@ -49,7 +49,7 @@ function analyzeMacAddress(bssid: string) {
     return {
       type: 'multicast',
       label: 'Multicast',
-      color: 'text-yellow-400',
+      color: 'text-yellow-600',
       bgColor: 'bg-yellow-500/20'
     };
   }
@@ -58,7 +58,7 @@ function analyzeMacAddress(bssid: string) {
     return {
       type: 'laa',
       label: 'Local Admin',
-      color: 'text-cyan-400',
+      color: 'text-cyan-600',
       bgColor: 'bg-cyan-500/20',
       description: 'Randomized or virtual MAC'
     };
@@ -66,8 +66,8 @@ function analyzeMacAddress(bssid: string) {
 
   return {
     type: 'uaa',
-    label: null,  // Normal hardware MAC, no badge needed
-    color: 'text-slate-400',
+    label: null,
+    color: 'text-[var(--nb-text-muted)]',
     bgColor: null
   };
 };
@@ -111,43 +111,42 @@ export default function AccessPointCard(props: AccessPointCardProps) {
 
   return (
     <Card
-      className={`group transition-all duration-200 hover:border-cyan-500/30 hover:ring-1 ring-cyan-500 border-cyan-500`}
+      className={`group overflow-hidden hover:bg-red-400`}
     >
       <div className="p-4">
         <div className="flex justify-between items-start mb-2">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-bold text-lg text-white group-hover:text-cyan-400 transition-colors">
+              <h3 className="font-bold text-lg text-[var(--nb-text)] group-hover:text-[var(--nb-accent)]">
                 {accessPoint.ssid
                   ? <button className="cursor-pointer" onClick={(e) => {
                     e.preventDefault();
                     setSearchTerm(accessPoint.ssid);
                   }}>{accessPoint.ssid}</button>
-                  : <em className="text-slate-400">
+                  : <em className="text-[var(--nb-text-muted)]">
                     {macInfo.label || '[hidden]'}
                   </em>
                 }
               </h3>
-              {accessPoint.encryption === "NONE" && <ShieldAlert className="w-4 h-4 text-red-500" />}
-              {isEnabled && <Badge color="red" className="animate-pulse">ACTIVE</Badge>}
+              {accessPoint.encryption === "NONE" && <ShieldAlert className="w-4 h-4 text-red-600" />}
+              {isEnabled && <Badge color="red" className="animate-pulse font-bold">ACTIVE</Badge>}
             </div>
 
-            <div className="font-mono text-xs text-slate-500 flex flex-col gap-1">
+            <div className="font-mono text-xs text-[var(--nb-text-muted)] flex flex-col gap-1">
               <div className="flex items-center gap-2">
-                <span className="text-slate-400">
+                <span className="text-[var(--nb-text)]">
                   {accessPoint.bssid}
                 </span>
 
-                {/* NEW: Show LAA indicator when no manufacturer found */}
                 {macInfo.type === 'laa' && !manufacturer && (
-                  <span className="text-xs italic text-cyan-500/60">
+                  <span className="text-xs italic text-[var(--nb-accent)]">
                     (virtual)
                   </span>
                 )}
               </div>
 
-              {(manufacturer || macInfo.type === 'laa') && <div className="flex items-center gap-2 text-slate-500">
-                <span className="w-1 h-1 rounded-full bg-slate-600" />
+              {(manufacturer || macInfo.type === 'laa') && <div className="flex items-center gap-2 text-[var(--nb-text-muted)]">
+                <span className="w-1 h-1 rounded-full bg-[var(--nb-border)]" />
                 <span>
                   {manufacturer || 'No OUI vendor'}
                 </span>
@@ -155,15 +154,15 @@ export default function AccessPointCard(props: AccessPointCardProps) {
             </div>
           </div>
           <div className="text-right flex flex-col items-end gap-2">
-            <div className="text-2xl font-mono font-bold text-white">
-              -{accessPoint.rssi}&nbsp;<span className="text-sm text-slate-500 font-normal">dBm</span>
+            <div className="text-2xl font-mono font-bold text-[var(--nb-text)]">
+              -{accessPoint.rssi}&nbsp;<span className="text-sm text-[var(--nb-text-muted)] font-normal">dBm</span>
             </div>
 
             {deviceConfig.features.includes('deauth') && <button
               onClick={handleToggleFeature}
-              className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider transition-colors ${isEnabled
-                ? "bg-red-500 text-white border border-red-500 shadow-[0_0_15px_-3px_rgba(239,68,68,0.5)]"
-                : "bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30"
+              className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-[var(--nb-border)] ${isEnabled
+                ? "bg-red-600 text-white"
+                : "bg-[var(--nb-bg)] text-red-600 hover:bg-red-600 hover:text-white"
                 }`}
               title={isEnabled ? "Stop deauth feature" : "Deauthenticate all clients on this network"}
             >
@@ -175,14 +174,14 @@ export default function AccessPointCard(props: AccessPointCardProps) {
             </button>}
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t border-slate-800">
+        <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t-2 border-[var(--nb-border)]">
           <div className="flex flex-col col-span-2">
-            <span className="text-[10px] uppercase text-slate-500 font-bold">Security</span>
+            <span className="text-[10px] uppercase text-[var(--nb-text-muted)] font-bold">Security</span>
             <AuthenticationAndEncryptionText className="text-sm" authentication={accessPoint.authentication} encryption={accessPoint.encryption} />
           </div>
           <div className="flex flex-col">
-            <span className="text-[10px] uppercase text-slate-500 font-bold">Packets</span>
-            <span className="text-sm font-mono text-slate-300">{accessPoint.packetCount?.toLocaleString() ?? '--'}</span>
+            <span className="text-[10px] uppercase text-[var(--nb-text-muted)] font-bold">Packets</span>
+            <span className="uppercase font-mono font-medium">{accessPoint.packetCount?.toLocaleString() ?? '--'}</span>
           </div>
           <div className="flex flex-col items-end justify-center">
             <Badge color={accessPoint.rssi > 60 ? "green" : accessPoint.rssi > 40 ? "yellow" : "red"}>
@@ -192,26 +191,29 @@ export default function AccessPointCard(props: AccessPointCardProps) {
         </div>
       </div>
 
-      <div className="bg-slate-950/50 border-t border-slate-800">
+      <div className="bg-[var(--nb-bg-secondary)] border-t-2 border-[var(--nb-border)]">
         <button
           onClick={() => setShowClients(!showClients)}
-          className="w-full px-4 py-2 flex items-center justify-between text-xs text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
+          disabled={connectedClients.length === 0}
+          className={`w-full px-4 py-2 flex items-center justify-between text-xs font-bold uppercase cursor-pointer ${
+            connectedClients.length > 0 ? 'hover:bg-[var(--nb-accent)] hover:text-[var(--nb-bg)]' : 'cursor-not-allowed'
+          }`}
         >
           <span className="flex items-center gap-2">
             <Activity className="w-3 h-3" />
-            View Associated Clients ({connectedClients.length})
+            {connectedClients.length === 0 ? 'No Associated Clients' : `View Associated Clients (${connectedClients.length})`}
           </span>
-          {showClients ? <span className="text-[10px]">HIDE</span> : <span className="text-[10px]">SHOW</span>}
+          {connectedClients.length > 0 && (showClients ? <span className="text-[10px]">HIDE</span> : <span className="text-[10px]">SHOW</span>)}
         </button>
 
         {showClients && (
-          <div className="p-4 space-y-2 animate-in slide-in-from-top-2 duration-200">
+          <div className="p-4 space-y-2">
             {connectedClients.length > 0 ? (
               connectedClients.map(client => (
                 <ClientRow key={client.mac} client={client} accessPointBssid={accessPoint.bssid} />
               ))
             ) : (
-              <div className="text-xs text-slate-600 italic py-2">No clients currently associated.</div>
+              <div className="text-xs text-[var(--nb-text-muted)] italic py-2">No clients currently associated.</div>
             )}
           </div>
         )}

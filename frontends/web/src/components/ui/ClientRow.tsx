@@ -39,23 +39,23 @@ export default function ClientRow(props: { client: Client, accessPointBssid: str
   };
 
   return (
-    <div className="flex items-center justify-between bg-slate-900 p-3 rounded border border-slate-800 group/client hover:border-slate-600 transition-colors">
+    <div className="flex items-center justify-between bg-[var(--nb-card-bg)] border-2 border-[var(--nb-border)] rounded-lg p-3 hover:bg-[var(--nb-accent)] hover:text-[var(--nb-bg)] group/client">
       <div className="flex items-center gap-3">
-        <Smartphone className="w-4 h-4 text-slate-500" />
+        <Smartphone className="w-4 h-4" />
         <div>
-          <div className="font-mono text-sm text-slate-300">{props.client.mac}</div>
-          <div className="text-[10px] text-slate-500">{getManufacturerByMac(props.client.mac) || "Unknown"}</div>
+          <div className="font-mono text-sm">{props.client.mac}</div>
+          <div className="text-[10px] text-[var(--nb-text-muted)] group-hover/client:text-[var(--nb-bg)]">{getManufacturerByMac(props.client.mac) || "Unknown"}</div>
         </div>
       </div>
 
       <div className="flex items-center gap-4">
-        <span className="text-xs font-mono text-slate-500">-{props.client.rssi}&nbsp;dBm</span>
+        <span className="text-xs font-mono text-[var(--nb-text-muted)] group-hover/client:text-[var(--nb-bg)]">-{props.client.rssi}&nbsp;dBm</span>
 
         {deviceConfig.features.includes('deauth') && <button
           onClick={handleDeauth}
-          className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold uppercase transition-all ${isEnabled
-            ? "bg-red-500 text-white opacity-100"
-            : "group-hover/client:opacity-100 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/50"
+          className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold uppercase border-2 border-[var(--nb-border)] ${isEnabled
+            ? "bg-red-600 text-white"
+            : "bg-[var(--nb-bg)] text-red-600 hover:bg-red-600 hover:text-white group-hover/client:opacity-100"
             }`}
           title={isEnabled ? "Stop deauth on this client" : "Disconnect this specific client"}
         >

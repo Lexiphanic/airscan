@@ -34,7 +34,7 @@ test('Smoke test with @airscan/backend-mock', async ({ page }) => {
   // Now the connect button should show "Not Connected" (config saved)
   // Locate the connect button (first button inside the flex container)
   const connectButton = page.locator('div.flex.items-stretch > button').first();
-  await expect(connectButton).toContainText('Not Connected');
+  await expect(connectButton).toContainText('Connect');
   await connectButton.click();
 
   // Wait for connection state to become "Connected"

@@ -33,27 +33,21 @@ export default function DeauthFeature() {
     const apValue = apMode === 'manual' ? accessPoint : '';
     const clientValue = clientMode === 'manual' ? client : '';
     
-    // Check if this is a broadcast deauth (no specific targets)
     const isBroadcast = !apValue && !clientValue && 
       !(apMode === 'manufacturer' && selectedApManufacturer) && 
       !(clientMode === 'manufacturer' && selectedClientManufacturer);
     
     if (apMode === 'manufacturer' && selectedApManufacturer && manufacturers[selectedApManufacturer]) {
-      // Manufacturer-based Access Point features
       const apPrefixes = manufacturers[selectedApManufacturer]!;
       
       if (clientMode === 'manufacturer' && selectedClientManufacturer && manufacturers[selectedClientManufacturer]) {
-        // Both AP and Client are manufacturer mode
         return { type: 'manufacturer-both', apPrefixes, clientPrefixes: manufacturers[selectedClientManufacturer]!, channelNum };
       } else {
-        // Only AP is manufacturer mode
         return { type: 'manufacturer-ap', apPrefixes, clientValue, channelNum };
       }
     } else if (clientMode === 'manufacturer' && selectedClientManufacturer && manufacturers[selectedClientManufacturer]) {
-      // Only Client is manufacturer mode
       return { type: 'manufacturer-client', clientPrefixes: manufacturers[selectedClientManufacturer]!, apValue, channelNum };
     } else {
-      // Single or broadcast feature
       return { type: 'single', apValue, clientValue, channelNum, isBroadcast };
     }
   }, [channel, accessPoint, client, apMode, clientMode, selectedApManufacturer, selectedClientManufacturer, manufacturers]);
@@ -61,9 +55,7 @@ export default function DeauthFeature() {
   const handleSubmit = useCallback(() => {
     const featureConfig = prepareFeature();
     
-    // Check if this is a broadcast deauth that needs confirmation
     if (featureConfig.type === 'single' && featureConfig.isBroadcast) {
-      // Show confirmation for broadcast deauth
       setPendingFeature({
         id: id(),
         type: "deauth",
@@ -78,10 +70,8 @@ export default function DeauthFeature() {
       return;
     }
     
-    // Execute the feature creation
     executeFeatureCreation(featureConfig);
     
-    // Reset form
     setChannel('');
     setAccessPoint('');
     setClient('');
@@ -160,7 +150,6 @@ export default function DeauthFeature() {
     setShowConfirmation(false);
     setPendingFeature(null);
     
-    // Reset form
     setChannel('');
     setAccessPoint('');
     setClient('');
@@ -175,12 +164,12 @@ export default function DeauthFeature() {
 
 
 
-  const canSubmit = true; // Always allow submission, even for broadcast deauth
+  const canSubmit = true;
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+        <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2 text-[var(--nb-text-muted)]">
           <Crosshair className="w-4 h-4" /> Deauth
         </h2>
         <Badge color="purple">{Object.keys(manufacturers).length} Manufacturers</Badge>
@@ -188,9 +177,8 @@ export default function DeauthFeature() {
 
       <Card className="p-4">
         <div className="space-y-4">
-          {/* Channel Input */}
           <div>
-            <label className="text-xs uppercase text-slate-500 font-bold mb-2 block">
+            <label className="text-xs uppercase text-[var(--nb-text-muted)] font-bold mb-2 block">
               Channel (optional)
             </label>
             <input
@@ -200,21 +188,20 @@ export default function DeauthFeature() {
               value={channel}
               onChange={(e) => setChannel(e.target.value)}
               placeholder="All channels"
-              className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500"
+              className="w-full neobrutalist-input"
             />
-            <div className="text-xs text-slate-500 mt-1">Leave empty for all channels</div>
+            <div className="text-xs text-[var(--nb-text-muted)] mt-1">Leave empty for all channels</div>
           </div>
 
-          {/* Access Point Section */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-xs uppercase text-slate-500 font-bold">
+              <label className="text-xs uppercase text-[var(--nb-text-muted)] font-bold">
                 Access Point
               </label>
               <div className="flex gap-1">
                 <button
                   onClick={() => setApMode('manual')}
-                  className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors ${apMode === 'manual' ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/50' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] ${apMode === 'manual' ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]' : 'bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]'}`}
                   title="Enter MAC manually"
                 >
                   <Edit className="w-3 h-3" />
@@ -222,7 +209,7 @@ export default function DeauthFeature() {
                 </button>
                 <button
                   onClick={() => setApMode('manufacturer')}
-                  className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors ${apMode === 'manufacturer' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/50' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] ${apMode === 'manufacturer' ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]' : 'bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]'}`}
                   title="Select by manufacturer"
                 >
                   <Building className="w-3 h-3" />
@@ -237,14 +224,14 @@ export default function DeauthFeature() {
                 value={accessPoint}
                 onChange={(e) => setAccessPoint(e.target.value)}
                 placeholder="ab:cd:ef:12:34:56"
-                className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-cyan-500"
+                className="w-full neobrutalist-input font-mono"
               />
             ) : (
               <div className="space-y-2">
                 <select
                   value={selectedApManufacturer}
                   onChange={(e) => setSelectedApManufacturer(e.target.value)}
-                  className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full neobrutalist-input"
                 >
                   <option value="">Choose AP manufacturer...</option>
                   {Object.keys(manufacturers).map(manufacturer => (
@@ -252,8 +239,8 @@ export default function DeauthFeature() {
                   ))}
                 </select>
                 {selectedApManufacturer && (
-                  <div className="bg-slate-800/50 rounded p-2">
-                    <div className="text-xs text-slate-400 mb-1">OUI Prefixes:</div>
+                  <div className="border-2 border-[var(--nb-border)] p-2">
+                    <div className="text-xs text-[var(--nb-text-muted)] font-bold mb-1">OUI Prefixes:</div>
                     <div className="flex flex-wrap gap-1">
                       {manufacturers[selectedApManufacturer]!.map(prefix => (
                         <Badge key={prefix} color="cyan" className="font-mono text-[10px]">{prefix}</Badge>
@@ -263,21 +250,20 @@ export default function DeauthFeature() {
                 )}
               </div>
             )}
-            <div className="text-xs text-slate-500">
+            <div className="text-xs text-[var(--nb-text-muted)]">
               {apMode === 'manual' ? 'Specific AP MAC address' : 'Target all APs from selected manufacturer'}
             </div>
           </div>
 
-          {/* Client Section */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-xs uppercase text-slate-500 font-bold">
+              <label className="text-xs uppercase text-[var(--nb-text-muted)] font-bold">
                 Client
               </label>
               <div className="flex gap-1">
                 <button
                   onClick={() => setClientMode('manual')}
-                  className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors ${clientMode === 'manual' ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/50' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] ${clientMode === 'manual' ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]' : 'bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]'}`}
                   title="Enter MAC manually"
                 >
                   <Edit className="w-3 h-3" />
@@ -285,7 +271,7 @@ export default function DeauthFeature() {
                 </button>
                 <button
                   onClick={() => setClientMode('manufacturer')}
-                  className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors ${clientMode === 'manufacturer' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/50' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] ${clientMode === 'manufacturer' ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]' : 'bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]'}`}
                   title="Select by manufacturer"
                 >
                   <Building className="w-3 h-3" />
@@ -300,14 +286,14 @@ export default function DeauthFeature() {
                 value={client}
                 onChange={(e) => setClient(e.target.value)}
                 placeholder="ab:cd:ef:12:34:56"
-                className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-cyan-500"
+                className="w-full neobrutalist-input font-mono"
               />
             ) : (
               <div className="space-y-2">
                 <select
                   value={selectedClientManufacturer}
                   onChange={(e) => setSelectedClientManufacturer(e.target.value)}
-                  className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full neobrutalist-input"
                 >
                   <option value="">Choose client manufacturer...</option>
                   {Object.keys(manufacturers).map(manufacturer => (
@@ -315,8 +301,8 @@ export default function DeauthFeature() {
                   ))}
                 </select>
                 {selectedClientManufacturer && (
-                  <div className="bg-slate-800/50 rounded p-2">
-                    <div className="text-xs text-slate-400 mb-1">OUI Prefixes:</div>
+                  <div className="border-2 border-[var(--nb-border)] p-2">
+                    <div className="text-xs text-[var(--nb-text-muted)] font-bold mb-1">OUI Prefixes:</div>
                     <div className="flex flex-wrap gap-1">
                       {manufacturers[selectedClientManufacturer]!.map(prefix => (
                         <Badge key={prefix} color="cyan" className="font-mono text-[10px]">{prefix}</Badge>
@@ -326,18 +312,17 @@ export default function DeauthFeature() {
                 )}
               </div>
             )}
-            <div className="text-xs text-slate-500">
+            <div className="text-xs text-[var(--nb-text-muted)]">
               {clientMode === 'manual' ? 'Specific client MAC address' : 'Target all clients from selected manufacturer'}
             </div>
           </div>
 
-          {/* Submit Button */}
           <button
             onClick={handleSubmit}
             disabled={!canSubmit}
-            className={`w-full flex items-center justify-center gap-2 px-4 py-2 rounded font-bold uppercase text-sm tracking-wider transition-all ${!canSubmit
-              ? "bg-slate-800 text-slate-600 cursor-not-allowed"
-              : "bg-red-500/10 text-red-400 border border-red-500/50 hover:bg-red-500 hover:text-white"
+            className={`w-full flex items-center justify-center gap-2 px-4 py-2 font-bold border-2 border-[var(--nb-border)] uppercase text-sm tracking-wider ${!canSubmit
+              ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+              : "bg-red-600 text-white hover:translate-x-1 hover:-translate-y-1"
               }`}
           >
             <Crosshair className="w-4 h-4" />
@@ -349,45 +334,43 @@ export default function DeauthFeature() {
               } else if (clientMode === 'manufacturer' && selectedClientManufacturer) {
                 return `Deauth ${selectedClientManufacturer} Clients`;
               } else if ((apMode === 'manual' && !accessPoint) && (clientMode === 'manual' && !client)) {
-                return '⚠️ Broadcast Deauth (Dangerous)';
+                return '⚠️ BROADCAST';
               } else {
-                return 'Enable Deauth Feature';
+                return 'Enable Deauth';
               }
             })()}
           </button>
         </div>
       </Card>
 
-      {/* Deauth Feature List */}
       <DeauthFeatureList />
 
-      {/* Confirmation Modal for Broadcast Deauth */}
       {showConfirmation && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <Card className="w-full max-w-md border-2 border-red-500/50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80">
+          <Card className="w-full max-w-md border-4 border-red-600">
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-red-500/10 rounded-lg">
-                    <AlertTriangle className="w-6 h-6 text-red-400" />
+                  <div className="p-2 border-2 border-[var(--nb-border)] bg-red-500">
+                    <AlertTriangle className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-lg font-bold text-white">Dangerous Operation</h3>
+                  <h3 className="text-lg font-bold">Dangerous Operation</h3>
                 </div>
                 <button
                   onClick={handleCancel}
-                  className="p-1 hover:bg-slate-800 rounded transition-colors"
+                  className="p-1 hover:bg-red-500 hover:text-white"
                 >
-                  <X className="w-5 h-5 text-slate-400" />
+                  <X className="w-5 h-5" />
                 </button>
               </div>
 
               <div className="space-y-4">
-                <div className="bg-red-500/5 border border-red-500/20 rounded p-4">
-                  <div className="text-red-400 font-bold mb-2">⚠️ WARNING: Broadcast Deauth</div>
-                  <p className="text-slate-300 text-sm">
-                    You are about to enable a <span className="font-bold text-red-400">broadcast deauthentication attack</span>.
+                <div className="border-2 border-red-600 p-4">
+                  <div className="text-red-600 font-bold mb-2">WARNING: Broadcast Deauth</div>
+                  <p className="text-sm">
+                    You are about to enable a <span className="font-bold text-red-600">broadcast deauthentication attack</span>.
                   </p>
-                  <ul className="text-slate-400 text-sm mt-2 space-y-1 list-disc list-inside">
+                  <ul className="text-sm mt-2 space-y-1 list-disc list-inside">
                     <li>This will target <span className="font-bold">ALL devices</span> on the network</li>
                     <li>Can cause widespread network disruption</li>
                     <li>May be detected as malicious activity</li>
@@ -395,28 +378,28 @@ export default function DeauthFeature() {
                   </ul>
                 </div>
 
-                <div className="bg-slate-800/50 rounded p-3">
-                  <div className="text-xs uppercase text-slate-500 font-bold mb-1">Configuration</div>
-                  <div className="text-sm text-slate-300 font-mono space-y-1">
+                <div className="border-2 border-[var(--nb-border)] p-3">
+                  <div className="text-xs uppercase text-[var(--nb-text-muted)] font-bold mb-1">Configuration</div>
+                  <div className="text-sm font-mono space-y-1">
                     <div>Channel: {channel || 'All'}</div>
-                    <div>Access Point: <span className="text-red-400">ANY</span></div>
-                    <div>Client: <span className="text-red-400">ANY</span></div>
+                    <div>Access Point: <span className="text-red-600">ANY</span></div>
+                    <div>Client: <span className="text-red-600">ANY</span></div>
                   </div>
                 </div>
 
                 <div className="flex gap-3 pt-2">
                   <button
                     onClick={handleCancel}
-                    className="flex-1 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-medium transition-colors"
+                    className="flex-1 px-4 py-2 neobrutalist-btn-outline font-bold"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleConfirm}
-                    className="flex-1 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded font-bold transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 px-4 py-2 bg-red-600 text-white border-2 border-[var(--nb-border)] font-bold hover:translate-x-1 hover:-translate-y-1 flex items-center justify-center gap-2"
                   >
                     <AlertTriangle className="w-4 h-4" />
-                    I Understand - Proceed
+                    Proceed
                   </button>
                 </div>
               </div>

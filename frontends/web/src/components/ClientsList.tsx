@@ -40,7 +40,7 @@ function RotatingDeviceIcon(props: { className: string }) {
           ${isAnimating ? 'opacity-0 scale-75 rotate-12' : 'opacity-100 scale-100 rotate-0'}
         `}
       >
-        <CurrentIcon className={`${props.className} text-slate-600`} strokeWidth={1.5} />
+        <CurrentIcon className={`${props.className} text-gray-400`} strokeWidth={1.5} />
       </div>
     </div>
   );
@@ -53,7 +53,7 @@ export default function ClientsList() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+        <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2 text-[var(--nb-text-muted)]">
           <Smartphone className="w-4 h-4" /> Clients ({filteredClients.length})
         </h2>
       </div>
@@ -64,9 +64,9 @@ export default function ClientsList() {
         ))}
 
         {filteredClients.length === 0 && (
-          <Card className="text-center py-12 border border-dashed border-slate-800 rounded-lg">
-            <RotatingDeviceIcon className="w-8 h-8 text-slate-700 mx-auto mb-2" />
-            <p className="text-slate-500">No clients detected.</p>
+          <Card className="text-center py-12 border-2 border-dashed border-[var(--nb-border)]">
+            <RotatingDeviceIcon className="w-8 h-8 mx-auto mb-2 text-[var(--nb-text-muted)]" />
+            <p className="text-[var(--nb-text-muted)]">No clients detected.</p>
           </Card>
         )}
       </div>

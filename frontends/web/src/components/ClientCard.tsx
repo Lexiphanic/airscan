@@ -47,37 +47,36 @@ export default function ClientCard(props: ClientCardProps) {
   };
 
   return (
-    <Card className={`p-0 border-l-4 transition-all overflow-visible ${isEnabled ? 'border-l-red-500' : 'border-l-transparent hover:border-l-cyan-500'
-      }`}>
+    <Card className={`p-0 border-l-4 overflow-visible border-l-[var(--nb-border)] hover:border-l-[var(--nb-accent)] ${isEnabled ? 'border-l-red-600' : ''}`}>
       <div className="p-4">
         <div className="flex justify-between items-start mb-3">
           <div className="flex items-center gap-2">
-            <div className={`p-1.5 rounded ${isUnassociated ? 'bg-amber-500/10 text-amber-500' : 'bg-emerald-500/10 text-emerald-500'}`}>
-              {isUnassociated ? <Search className="w-4 h-4" /> : <Wifi className="w-4 h-4" />}
+            <div className={`p-1.5 rounded-lg border-2 border-[var(--nb-border)] ${isUnassociated ? 'bg-amber-400' : 'bg-emerald-500'}`}>
+              {isUnassociated ? <Search className="w-4 h-4 text-black" /> : <Wifi className="w-4 h-4 text-white" />}
             </div>
             <div>
-              <div className="font-mono text-sm text-white flex items-center gap-2">
+              <div className="font-mono text-sm text-[var(--nb-text)] flex items-center gap-2">
                 {props.client.mac}
                 {isEnabled && <Badge color="red" className="animate-pulse text-[10px]">ACTIVE</Badge>}
               </div>
-              <div className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">
+              <div className="text-[10px] text-[var(--nb-text-muted)] uppercase font-bold tracking-wider">
 
                 <span>{getManufacturerByMac(props.client.mac) || "Unknown Device"}</span>
               </div>
             </div>
           </div>
           <div className="text-right">
-            <div className="font-mono text-sm font-bold text-slate-300">-{props.client.rssi}&nbsp;dBm</div>
-            <div className="text-[10px] text-slate-500">{props.client.packetCount} Pkts</div>
+            <div className="font-mono text-sm font-bold text-[var(--nb-text)]">-{props.client.rssi}&nbsp;dBm</div>
+            <div className="text-[10px] text-[var(--nb-text-muted)]">{props.client.packetCount} Pkts</div>
           </div>
         </div>
 
         {props.client.probes.length > 0 && (
           <div className="mb-3">
-            <div className="text-[10px] uppercase text-slate-500 font-bold mb-1">Probing For:</div>
+            <div className="text-[10px] uppercase text-[var(--nb-text-muted)] font-bold mb-1">Probing For:</div>
             <div className="flex flex-wrap gap-1">
               {props.client.probes.map((probe, idx) => (
-                <button key={idx} className="px-2 py-1 bg-slate-800 rounded text-xs text-cyan-300 border border-slate-700 font-mono cursor-pointer"
+                <button key={idx} className="neobrutalist-btn-outline px-2 py-1 text-xs"
                   onClick={(e) => { e.preventDefault(); setSearchTerm(probe) }}>
                   {probe}
                 </button>
@@ -86,8 +85,8 @@ export default function ClientCard(props: ClientCardProps) {
           </div>
         )}
 
-        <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
-          <span className={`text-xs flex items-center gap-1.5 ${isUnassociated ? 'text-amber-500' : 'text-emerald-500'}`}>
+        <div className="pt-3 border-t-2 border-[var(--nb-border)] flex items-center justify-between">
+          <span className={`text-xs flex items-center gap-1.5 ${isUnassociated ? 'text-amber-600' : 'text-emerald-600'}`}>
             {isUnassociated ? (
               <><Unlock className="w-3 h-3" /> Not Associated</>
             ) : (
@@ -98,11 +97,11 @@ export default function ClientCard(props: ClientCardProps) {
           {deviceConfig.features.includes('deauth') && <button
             onClick={handleDeauth}
             disabled={isUnassociated && !isEnabled}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-bold uppercase tracking-wider transition-all border ${isUnassociated && !isEnabled
-              ? "opacity-30 cursor-not-allowed bg-slate-800 text-slate-500 border-slate-700"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-bold uppercase tracking-wider border-2 border-[var(--nb-border)] ${isUnassociated && !isEnabled
+              ? "opacity-30 cursor-not-allowed bg-gray-300 text-gray-500"
               : isEnabled
-                ? "bg-red-500 text-white border-red-500 shadow-[0_0_15px_-3px_rgba(239,68,68,0.5)]"
-                : "bg-red-500/10 text-red-400 border-red-500/50 hover:bg-red-500 hover:text-white"
+                ? "bg-red-600 text-white"
+                : "bg-[var(--nb-bg)] text-red-600 hover:bg-red-600 hover:text-white"
               }`}
           >
             {isEnabled ? (
