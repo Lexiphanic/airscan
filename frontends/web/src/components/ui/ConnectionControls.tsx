@@ -15,14 +15,14 @@ export default function ConnectionControls() {
       <div className="flex items-stretch">
         <button
           onClick={connect}
-          className="flex cursor-pointer items-center gap-2 px-4 py-1.5 rounded-l-full text-sm font-medium transition-all bg-red-500/10 text-red-400 border border-red-500/50 hover:bg-red-500/20 border-r-0"
+          className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-r-1 border-[var(--nb-border)] bg-red-500 text-white hover:bg-red-600 rounded-l-lg"
         >
           <WifiOff className="w-4 h-4" />
-          <span>{transportConfig.type === "none" ? "Missing Config" : "Not Connected"}</span>
+          <span>{transportConfig.type === "none" ? "Missing Config" : "Connect"}</span>
         </button>
         <button
           onClick={() => setTransportDialogState('open')}
-          className="flex cursor-pointer items-center justify-center w-9 rounded-r-full text-sm font-medium transition-all bg-red-500/10 text-red-400 border border-red-500/50 hover:bg-red-500/20"
+          className="flex cursor-pointer items-center justify-center w-9 py-1.5 text-sm font-bold border-2 border-l-1 border-[var(--nb-border)] bg-red-500 text-white hover:bg-red-600 rounded-r-lg"
           aria-label="Transport settings"
         >
           <Settings className="w-4 h-4" />
@@ -34,7 +34,7 @@ export default function ConnectionControls() {
   if (transportState === 'connecting' || transportState === 'reconnecting') {
     return (
       <button
-        className="flex cursor-pointer items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-amber-500/10 text-amber-400 border border-amber-500/50"
+        className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-[var(--nb-border)] bg-amber-400 text-black hover:bg-amber-500 rounded-lg"
         onClick={disconnect}
       >
         <Loader2 className="w-4 h-4 animate-spin" />
@@ -47,7 +47,7 @@ export default function ConnectionControls() {
     return (
       <button
         onClick={disconnect}
-        className="flex cursor-pointer items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 hover:bg-cyan-500/20"
+        className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-[var(--nb-border)] bg-[var(--nb-accent)] text-[var(--nb-bg)] rounded-lg"
       >
         <Zap className="w-4 h-4" />
         Connected

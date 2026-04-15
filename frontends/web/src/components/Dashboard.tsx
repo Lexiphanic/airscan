@@ -22,9 +22,9 @@ export default function Dashboard() {
 
   if (connectionState === 'connecting' || connectionState === 'reconnecting') {
     return <div className="max-w-7xl mx-auto p-8">
-      <div className="bg-blue-900/20 border border-blue-700/50 rounded-lg p-6 text-center">
-        <div className="text-blue-400 text-2xl mb-2">⏳ Connecting...</div>
-        <p className="text-slate-300">
+      <div className="neobrutalist-card p-6 text-center">
+        <div className="text-[var(--nb-accent)] text-2xl mb-2">Wait...</div>
+        <p className="text-[var(--nb-text-muted)]">
           {connectionState === 'reconnecting' ? 'Reconnecting to device...' : 'Connecting to device...'}
         </p>
       </div>
@@ -33,9 +33,9 @@ export default function Dashboard() {
 
   if (connectionState === 'disconnected') {
     return <div className="max-w-7xl mx-auto p-8">
-      <div className="bg-slate-800/20 border border-slate-700/50 rounded-lg p-6 text-center">
-        <div className="text-slate-300 text-2xl mb-2">🔌 Not Connected</div>
-        <p className="text-slate-400">
+      <div className="neobrutalist-card p-6 text-center">
+        <div className="text-[var(--nb-text-muted)] text-2xl mb-2">Not Connected</div>
+        <p className="text-[var(--nb-text-muted)]">
           Please connect to a device first to view the dashboard.
         </p>
       </div>
@@ -44,9 +44,9 @@ export default function Dashboard() {
 
   if (!hasActiveFeatures) {
     return <div className="max-w-7xl mx-auto p-8">
-      <div className="bg-yellow-900/20 border border-yellow-700/50 rounded-lg p-6 text-center">
-        <div className="text-yellow-400 text-2xl mb-2">⚠️ No Supported Features</div>
-        <p className="text-slate-300">
+      <div className="neobrutalist-card p-6 text-center">
+        <div className="text-amber-600 text-2xl mb-2">No Features</div>
+        <p className="text-[var(--nb-text-muted)]">
           Your device doesn't appear to support any features. Please check your device and try again.
         </p>
       </div>
@@ -54,18 +54,18 @@ export default function Dashboard() {
   }
 
   return <>
-    <nav className="lg:hidden sticky top-0 z-40 bg-slate-950/95 backdrop-blur border-b border-slate-800">
-      <div className="flex divide-x divide-slate-800">
+    <nav className="lg:hidden sticky top-0 z-40 bg-[var(--nb-bg)] border-b-4 border-[var(--nb-border)]">
+      <div className="flex divide-x-2 divide-[var(--nb-border)]">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           return <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`
-                cursor-pointer flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium transition-colors
+                cursor-pointer flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold
                 ${activeTab === tab.id
-                ? 'text-cyan-400 bg-slate-900/50 border-b-2 border-b-cyan-400'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/30'
+                ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]'
+                : 'bg-[var(--nb-bg)] text-[var(--nb-text)] hover:bg-[var(--nb-bg-secondary)]'
               }
               `}
           >
