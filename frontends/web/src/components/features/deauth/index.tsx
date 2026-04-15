@@ -198,10 +198,10 @@ export default function DeauthFeature() {
               <label className="text-xs uppercase text-[var(--nb-text-muted)] font-bold">
                 Access Point
               </label>
-              <div className="flex gap-1">
+              <div className="flex -space-x-px">
                 <button
                   onClick={() => setApMode('manual')}
-                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] ${apMode === 'manual' ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]' : 'bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]'}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] rounded-l-md cursor-pointer ${apMode === 'manual' ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]' : 'bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]'}`}
                   title="Enter MAC manually"
                 >
                   <Edit className="w-3 h-3" />
@@ -209,7 +209,7 @@ export default function DeauthFeature() {
                 </button>
                 <button
                   onClick={() => setApMode('manufacturer')}
-                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] ${apMode === 'manufacturer' ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]' : 'bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]'}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-l-0 border-[var(--nb-border)] rounded-r-md cursor-pointer ${apMode === 'manufacturer' ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]' : 'bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]'}`}
                   title="Select by manufacturer"
                 >
                   <Building className="w-3 h-3" />
@@ -239,7 +239,7 @@ export default function DeauthFeature() {
                   ))}
                 </select>
                 {selectedApManufacturer && (
-                  <div className="border-2 border-[var(--nb-border)] p-2">
+                  <div className="border-2 border-[var(--nb-border)] p-2 rounded-lg">
                     <div className="text-xs text-[var(--nb-text-muted)] font-bold mb-1">OUI Prefixes:</div>
                     <div className="flex flex-wrap gap-1">
                       {manufacturers[selectedApManufacturer]!.map(prefix => (
@@ -260,10 +260,10 @@ export default function DeauthFeature() {
               <label className="text-xs uppercase text-[var(--nb-text-muted)] font-bold">
                 Client
               </label>
-              <div className="flex gap-1">
+              <div className="flex -space-x-px">
                 <button
                   onClick={() => setClientMode('manual')}
-                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] ${clientMode === 'manual' ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]' : 'bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]'}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] rounded-l-md cursor-pointer ${clientMode === 'manual' ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]' : 'bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]'}`}
                   title="Enter MAC manually"
                 >
                   <Edit className="w-3 h-3" />
@@ -271,7 +271,7 @@ export default function DeauthFeature() {
                 </button>
                 <button
                   onClick={() => setClientMode('manufacturer')}
-                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] ${clientMode === 'manufacturer' ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]' : 'bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]'}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-l-0 border-[var(--nb-border)] rounded-r-md cursor-pointer ${clientMode === 'manufacturer' ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]' : 'bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]'}`}
                   title="Select by manufacturer"
                 >
                   <Building className="w-3 h-3" />
@@ -301,7 +301,7 @@ export default function DeauthFeature() {
                   ))}
                 </select>
                 {selectedClientManufacturer && (
-                  <div className="border-2 border-[var(--nb-border)] p-2">
+                  <div className="border-2 border-[var(--nb-border)] p-2 rounded-lg">
                     <div className="text-xs text-[var(--nb-text-muted)] font-bold mb-1">OUI Prefixes:</div>
                     <div className="flex flex-wrap gap-1">
                       {manufacturers[selectedClientManufacturer]!.map(prefix => (
@@ -320,10 +320,7 @@ export default function DeauthFeature() {
           <button
             onClick={handleSubmit}
             disabled={!canSubmit}
-            className={`w-full flex items-center justify-center gap-2 px-4 py-2 font-bold border-2 border-[var(--nb-border)] uppercase text-sm tracking-wider ${!canSubmit
-              ? "bg-gray-400 text-gray-600 cursor-not-allowed"
-              : "bg-red-600 text-white hover:translate-x-1 hover:-translate-y-1"
-              }`}
+            className={`w-full flex items-center justify-center gap-2 px-4 py-2 font-bold uppercase text-sm tracking-wider rounded-md neobrutalist-btn-danger ${!canSubmit ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             <Crosshair className="w-4 h-4" />
             {(() => {
@@ -334,7 +331,7 @@ export default function DeauthFeature() {
               } else if (clientMode === 'manufacturer' && selectedClientManufacturer) {
                 return `Deauth ${selectedClientManufacturer} Clients`;
               } else if ((apMode === 'manual' && !accessPoint) && (clientMode === 'manual' && !client)) {
-                return '⚠️ BROADCAST';
+                return 'BROADCAST';
               } else {
                 return 'Enable Deauth';
               }
@@ -351,21 +348,21 @@ export default function DeauthFeature() {
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 border-2 border-[var(--nb-border)] bg-red-500">
+                  <div className="p-2 border-2 border-[var(--nb-border)] bg-red-500 rounded-lg">
                     <AlertTriangle className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="text-lg font-bold">Dangerous Operation</h3>
                 </div>
                 <button
                   onClick={handleCancel}
-                  className="p-1 hover:bg-red-500 hover:text-white"
+                  className="p-1 rounded-lg hover:bg-red-500 hover:text-white cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               <div className="space-y-4">
-                <div className="border-2 border-red-600 p-4">
+                <div className="border-2 border-red-600 p-4 rounded-lg">
                   <div className="text-red-600 font-bold mb-2">WARNING: Broadcast Deauth</div>
                   <p className="text-sm">
                     You are about to enable a <span className="font-bold text-red-600">broadcast deauthentication attack</span>.
@@ -378,7 +375,7 @@ export default function DeauthFeature() {
                   </ul>
                 </div>
 
-                <div className="border-2 border-[var(--nb-border)] p-3">
+                <div className="border-2 border-[var(--nb-border)] p-3 rounded-lg">
                   <div className="text-xs uppercase text-[var(--nb-text-muted)] font-bold mb-1">Configuration</div>
                   <div className="text-sm font-mono space-y-1">
                     <div>Channel: {channel || 'All'}</div>
@@ -396,7 +393,7 @@ export default function DeauthFeature() {
                   </button>
                   <button
                     onClick={handleConfirm}
-                    className="flex-1 px-4 py-2 bg-red-600 text-white border-2 border-[var(--nb-border)] font-bold hover:translate-x-1 hover:-translate-y-1 flex items-center justify-center gap-2"
+                    className="flex-1 px-4 py-2 neobrutalist-btn-danger flex items-center justify-center gap-2"
                   >
                     <AlertTriangle className="w-4 h-4" />
                     Proceed

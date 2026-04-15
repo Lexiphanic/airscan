@@ -93,7 +93,7 @@ export default function TransportSettingsModal(props: {
           <h2 className="text-lg font-bold">Transport Settings</h2>
           <button
             onClick={props.onClose}
-            className="p-1 rounded-lg hover:bg-[var(--nb-accent)] hover:text-[var(--nb-bg)]"
+            className="p-1 rounded-lg cursor-pointer hover:bg-[var(--nb-accent)] hover:text-[var(--nb-bg)]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -181,7 +181,7 @@ export default function TransportSettingsModal(props: {
                     </div>
                     <button
                       onClick={() => setSelectedPort(undefined)}
-                      className="p-1.5 bg-black/20 hover:bg-black/40 text-white rounded"
+                      className="p-1.5 bg-black/20 hover:bg-black/40 text-white rounded cursor-pointer"
                     >
                       <X className="w-4 h-4" />
                     </button>

@@ -91,7 +91,7 @@ export default function DeauthFeatureList() {
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-1.5 border-2 border-[var(--nb-border)] bg-red-500">
+                  <div className="p-1.5 border-2 border-[var(--nb-border)] bg-red-500 rounded-lg">
                     <Crosshair className="w-4 h-4 text-white" />
                   </div>
                   <div>
@@ -104,10 +104,10 @@ export default function DeauthFeatureList() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1">
+<div className="flex items-center gap-1">
                   <button
                     onClick={() => feature.isActive ? pauseEnabledFeature(feature) : resumeEnabledFeature(feature)}
-                    className={`p-1.5 border-2 border-[var(--nb-border)] ${feature.isActive
+                    className={`p-1.5 border-2 border-[var(--nb-border)] rounded-lg cursor-pointer ${feature.isActive
                       ? "bg-amber-400 text-black hover:bg-amber-500"
                       : "bg-emerald-500 text-white hover:bg-emerald-600"
                       }`}
@@ -117,7 +117,7 @@ export default function DeauthFeatureList() {
                   </button>
                   <button
                     onClick={() => removeEnabledFeature(feature)}
-                    className="p-1.5 border-2 border-[var(--nb-border)] bg-[var(--nb-bg)] hover:bg-red-600 hover:text-white"
+                    className="p-1.5 border-2 border-[var(--nb-border)] rounded-lg cursor-pointer bg-[var(--nb-bg)] hover:bg-red-600 hover:text-white"
                     title="Remove feature"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -147,15 +147,15 @@ export default function DeauthFeatureList() {
                        {features.length} rules • {features.filter(feature => feature.isActive).length} enabled
                      </div>
                    </div>
-                   <div className="flex items-center gap-2">
-                     <button
-                       onClick={() => handleStopManufacturer(normalizedName, type)}
-                       className="p-2 border-2 border-[var(--nb-border)] bg-red-500 text-white hover:bg-red-600"
-                       title="Disable all"
-                     >
-                       <Crosshair className="w-4 h-4" />
-                     </button>
-                   </div>
+<div className="flex items-center gap-2">
+                      <button
+                        onClick={() => handleStopManufacturer(normalizedName, type)}
+                        className="p-2 border-2 border-[var(--nb-border)] rounded-lg cursor-pointer bg-red-500 text-white hover:bg-red-600"
+                        title="Disable all"
+                      >
+                        <Crosshair className="w-4 h-4" />
+                      </button>
+                    </div>
                  </div>
                  <div className="mt-2 flex flex-wrap gap-1">
                    {features.slice(0, 3).map(feature => (

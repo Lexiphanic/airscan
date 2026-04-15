@@ -53,7 +53,7 @@ export default function ClientRow(props: { client: Client, accessPointBssid: str
 
         {deviceConfig.features.includes('deauth') && <button
           onClick={handleDeauth}
-          className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold uppercase border-2 border-[var(--nb-border)] ${isEnabled
+          className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold uppercase border-2 border-[var(--nb-border)] cursor-pointer ${isEnabled
             ? "bg-red-600 text-white"
             : "bg-[var(--nb-bg)] text-red-600 hover:bg-red-600 hover:text-white group-hover/client:opacity-100"
             }`}

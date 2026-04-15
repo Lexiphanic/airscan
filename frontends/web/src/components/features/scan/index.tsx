@@ -30,7 +30,7 @@ export default function ScanFeature() {
           <button
             onClick={toggleScanning}
             disabled={!isConnected}
-            className={`px-4 py-2 neobrutalist-btn-outline ${
+            className={`px-4 py-2 neobrutalist-btn-outline cursor-pointer ${
               isScanning
                 ? '!bg-red-600 !text-white hover:!bg-red-700'
                 : '!bg-emerald-500 !text-white hover:!bg-emerald-600'

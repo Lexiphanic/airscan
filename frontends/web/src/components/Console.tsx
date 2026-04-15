@@ -11,7 +11,7 @@ export default function Console() {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 z-30"
+        className="fixed bottom-4 right-4 z-30 cursor-pointer"
       >
         <div className="neobrutalist-card p-3">
           <Terminal className="w-5 h-5 text-[var(--nb-accent)]" />
