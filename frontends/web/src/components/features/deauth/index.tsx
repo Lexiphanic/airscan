@@ -178,7 +178,7 @@ export default function DeauthFeature() {
       <Card className="p-4">
         <div className="space-y-4">
           <div>
-            <label className="text-xs uppercase text-[var(--nb-text-muted)] font-bold mb-2 block">
+            <label className="text-sm text-[var(--nb-text-muted)] font-bold mb-2 block">
               Channel (optional)
             </label>
             <input
@@ -195,7 +195,7 @@ export default function DeauthFeature() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-xs uppercase text-[var(--nb-text-muted)] font-bold">
+              <label className="text-sm text-[var(--nb-text-muted)] font-bold">
                 Access Point
               </label>
               <div className="flex -space-x-px">
@@ -257,7 +257,7 @@ export default function DeauthFeature() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-xs uppercase text-[var(--nb-text-muted)] font-bold">
+              <label className="text-sm text-[var(--nb-text-muted)] font-bold">
                 Client
               </label>
               <div className="flex -space-x-px">
@@ -331,7 +331,7 @@ export default function DeauthFeature() {
               } else if (clientMode === 'manufacturer' && selectedClientManufacturer) {
                 return `Deauth ${selectedClientManufacturer} Clients`;
               } else if ((apMode === 'manual' && !accessPoint) && (clientMode === 'manual' && !client)) {
-                return 'BROADCAST';
+                return 'Broadcast';
               } else {
                 return 'Enable Deauth';
               }

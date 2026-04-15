@@ -97,7 +97,7 @@ export default function ClientCard(props: ClientCardProps) {
           {deviceConfig.features.includes('deauth') && <button
             onClick={handleDeauth}
             disabled={isUnassociated && !isEnabled}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-bold uppercase tracking-wider border-2 border-[var(--nb-border)] cursor-pointer ${isUnassociated && !isEnabled
+            className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-[var(--nb-border)] cursor-pointer ${isUnassociated && !isEnabled
               ? "opacity-30 cursor-not-allowed bg-gray-300 text-gray-500"
               : isEnabled
                 ? "bg-red-600 text-white"
