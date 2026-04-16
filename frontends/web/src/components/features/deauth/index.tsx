@@ -112,33 +112,6 @@ export default function DeauthFeature() {
     manufacturers,
   ]);
 
-  const handleSubmit = useCallback(() => {
-    const featureConfig = prepareFeature();
-
-    if (featureConfig.type === "single" && featureConfig.isBroadcast) {
-      setPendingFeature({
-        id: id(),
-        type: "deauth",
-        isActive: true,
-        options: {
-          accessPoint: "",
-          station: "",
-          channel: featureConfig.channelNum,
-        },
-      });
-      setShowConfirmation(true);
-      return;
-    }
-
-    executeFeatureCreation(featureConfig);
-
-    setChannel("");
-    setAccessPoint("");
-    setClient("");
-    setSelectedApManufacturer("");
-    setSelectedClientManufacturer("");
-  }, [prepareFeature]);
-
   const executeFeatureCreation = useCallback(
     (featureConfig: FeatureConfig) => {
       switch (featureConfig.type) {
@@ -206,6 +179,33 @@ export default function DeauthFeature() {
     [addEnabledFeature],
   );
 
+  const handleSubmit = useCallback(() => {
+    const featureConfig = prepareFeature();
+
+    if (featureConfig.type === "single" && featureConfig.isBroadcast) {
+      setPendingFeature({
+        id: id(),
+        type: "deauth",
+        isActive: true,
+        options: {
+          accessPoint: "",
+          station: "",
+          channel: featureConfig.channelNum,
+        },
+      });
+      setShowConfirmation(true);
+      return;
+    }
+
+    executeFeatureCreation(featureConfig);
+
+    setChannel("");
+    setAccessPoint("");
+    setClient("");
+    setSelectedApManufacturer("");
+    setSelectedClientManufacturer("");
+  }, [prepareFeature, executeFeatureCreation]);
+
   const handleConfirm = useCallback(() => {
     if (pendingFeature) {
       addEnabledFeature(pendingFeature);
@@ -241,10 +241,11 @@ export default function DeauthFeature() {
       <Card className="p-4">
         <div className="space-y-4">
           <div>
-            <label className="text-sm text-[var(--nb-text-muted)] font-bold mb-2 block">
+            <label htmlFor="channel" className="text-sm text-[var(--nb-text-muted)] font-bold mb-2 block">
               Channel (optional)
             </label>
             <input
+              id="channel"
               type="number"
               min="1"
               max="14"
@@ -260,7 +261,7 @@ export default function DeauthFeature() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-[var(--nb-text-muted)] font-bold">
+              <label htmlFor="access-point" className="text-sm text-[var(--nb-text-muted)] font-bold">
                 Access Point
               </label>
               <div className="flex -space-x-px">
@@ -287,6 +288,7 @@ export default function DeauthFeature() {
 
             {apMode === "manual" ? (
               <input
+                id="access-point"
                 type="text"
                 value={accessPoint}
                 onChange={(e) => setAccessPoint(e.target.value)}
@@ -296,6 +298,7 @@ export default function DeauthFeature() {
             ) : (
               <div className="space-y-2">
                 <select
+                  id="access-point"
                   value={selectedApManufacturer}
                   onChange={(e) => setSelectedApManufacturer(e.target.value)}
                   className="w-full neobrutalist-input"
@@ -336,7 +339,7 @@ export default function DeauthFeature() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-[var(--nb-text-muted)] font-bold">
+              <label htmlFor="client" className="text-sm text-[var(--nb-text-muted)] font-bold">
                 Client
               </label>
               <div className="flex -space-x-px">
@@ -363,6 +366,7 @@ export default function DeauthFeature() {
 
             {clientMode === "manual" ? (
               <input
+                id="client"
                 type="text"
                 value={client}
                 onChange={(e) => setClient(e.target.value)}
@@ -372,6 +376,7 @@ export default function DeauthFeature() {
             ) : (
               <div className="space-y-2">
                 <select
+                  id="client"
                   value={selectedClientManufacturer}
                   onChange={(e) =>
                     setSelectedClientManufacturer(e.target.value)

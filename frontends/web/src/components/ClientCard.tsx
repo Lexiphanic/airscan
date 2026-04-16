@@ -99,10 +99,10 @@ export default function ClientCard(props: ClientCardProps) {
               Probing For:
             </div>
             <div className="flex flex-wrap gap-1">
-              {props.client.probes.map((probe, idx) => (
+              {props.client.probes.map((probe) => (
                 <button
                   type="button"
-                  key={idx}
+                  key={probe}
                   className="neobrutalist-btn-outline px-2 py-1 text-xs"
                   onClick={(e) => {
                     e.preventDefault();

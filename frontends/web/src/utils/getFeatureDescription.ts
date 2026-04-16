@@ -16,5 +16,5 @@ export default function getFeatureDescription(feature: EnabledFeature): string {
   // if (feature.type === "fake-ap") {
   //   return `Fake AP: ${feature.options.essid}`;
   // }
-  throw new Error("Unexpected feature " + JSON.stringify(feature));
+  throw new Error(`Unexpected feature: ${JSON.stringify(feature)}`);
 }

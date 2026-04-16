@@ -15,7 +15,6 @@ export function createTransport(
       return new WebSocketClient(config.url, callbacks);
     case "serial":
       return new SerialTransport(config.serialPort, config.baudRate, callbacks);
-    case "none":
     default:
       return null;
   }

@@ -69,7 +69,7 @@ export default function TransportSettingsModal(props: {
   const getEffectiveBaudRate = () => {
     if (baudRate === "custom") {
       const custom = parseInt(customBaudRate, 10);
-      return isNaN(custom) ? 115200 : custom;
+      return Number.isNaN(custom) ? 115200 : custom;
     }
     return baudRate;
   };
@@ -125,9 +125,9 @@ export default function TransportSettingsModal(props: {
 
         {/* Transport Type Selection */}
         <div className="space-y-3 mb-6">
-          <label className="text-sm font-bold text-[var(--nb-text-muted)]">
+          <span className="text-sm font-bold text-[var(--nb-text-muted)]">
             Transport Type
-          </label>
+          </span>
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
@@ -175,10 +175,11 @@ export default function TransportSettingsModal(props: {
         <div className="space-y-4">
           {transportType === "websocket" && (
             <div className="space-y-2">
-              <label className="text-sm font-bold text-[var(--nb-text-muted)]">
+              <label htmlFor="websocket-url" className="text-sm font-bold text-[var(--nb-text-muted)]">
                 WebSocket URL
               </label>
               <input
+                id="websocket-url"
                 type="url"
                 value={wsUrl}
                 onChange={(e) => setWsUrl(e.target.value)}
@@ -194,9 +195,9 @@ export default function TransportSettingsModal(props: {
             <div className="space-y-4">
               {/* Serial Port Selection */}
               <div className="space-y-3">
-                <label className="text-sm font-bold text-[var(--nb-text-muted)]">
+                <span className="text-sm font-bold text-[var(--nb-text-muted)]">
                   Serial Port
-                </label>
+                </span>
 
                 {selectedPort ? (
                   <div className="flex items-center justify-between p-3 border-2 border-[var(--nb-border)] rounded-lg bg-emerald-500">
@@ -238,9 +239,9 @@ export default function TransportSettingsModal(props: {
 
               {/* Baud Rate Selection */}
               <div className="space-y-2">
-                <label className="text-sm font-bold text-[var(--nb-text-muted)]">
+                <span className="text-sm font-bold text-[var(--nb-text-muted)]">
                   Baud Rate
-                </label>
+                </span>
                 <div className="grid grid-cols-4 gap-2">
                   {BAUD_RATE_OPTIONS.map((rate) => (
                     <button
