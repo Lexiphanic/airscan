@@ -28,8 +28,8 @@ export default function Dashboard() {
     return (
       <div className="max-w-7xl mx-auto p-8">
         <div className="neobrutalist-card p-6 text-center">
-          <div className="text-[var(--nb-accent)] text-2xl mb-2">Wait...</div>
-          <p className="text-[var(--nb-text-muted)]">
+          <div className="text-(--nb-accent) text-2xl mb-2">Wait...</div>
+          <p className="text-(--nb-text-muted)">
             {connectionState === "reconnecting"
               ? "Reconnecting to device..."
               : "Connecting to device..."}
@@ -43,10 +43,10 @@ export default function Dashboard() {
     return (
       <div className="max-w-7xl mx-auto p-8">
         <div className="neobrutalist-card p-6 text-center">
-          <div className="text-[var(--nb-text-muted)] text-2xl mb-2">
+          <div className="text-(--nb-text-muted) text-2xl mb-2">
             Not Connected
           </div>
-          <p className="text-[var(--nb-text-muted)]">
+          <p className="text-(--nb-text-muted)">
             Please connect to a device first to view the dashboard.
           </p>
         </div>
@@ -59,7 +59,7 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto p-8">
         <div className="neobrutalist-card p-6 text-center">
           <div className="text-amber-600 text-2xl mb-2">No Features</div>
-          <p className="text-[var(--nb-text-muted)]">
+          <p className="text-(--nb-text-muted)">
             Your device doesn't appear to support any features. Please check
             your device and try again.
           </p>
@@ -70,8 +70,8 @@ export default function Dashboard() {
 
   return (
     <>
-      <nav className="lg:hidden sticky top-0 z-40 bg-[var(--nb-bg)] border-b-4 border-[var(--nb-border)]">
-        <div className="flex divide-x-2 divide-[var(--nb-border)]">
+      <nav className="lg:hidden sticky top-0 z-40 bg-(--nb-bg) border-b-4 border-(--nb-border)">
+        <div className="flex divide-x-2 divide-(--nb-border)">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             return (
@@ -83,8 +83,8 @@ export default function Dashboard() {
                 cursor-pointer flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold
                 ${
                   activeTab === tab.id
-                    ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]"
-                    : "bg-[var(--nb-bg)] text-[var(--nb-text)] hover:bg-[var(--nb-bg-secondary)]"
+                    ? "bg-(--nb-accent) text-(--nb-bg)"
+                    : "bg-(--nb-bg) text-(--nb-text) hover:bg-(--nb-bg-secondary)"
                 }
               `}
               >
