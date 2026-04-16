@@ -28,10 +28,7 @@ export default function Console() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-(--nb-bg) border-t-4 border-(--nb-border) z-30 h-1/2 min-h-96 max-h-3/4 flex flex-col">
-      <div
-        onClick={() => setIsOpen(false)}
-        className="bg-(--nb-bg-secondary) px-4 py-2 border-b-4 border-(--nb-border) flex items-center justify-between hover:bg-(--nb-accent) hover:text-(--nb-bg) cursor-pointer w-full text-left"
-      >
+      <div className="bg-(--nb-bg-secondary) px-4 py-2 border-b-4 border-(--nb-border) flex items-center justify-between w-full text-left">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <ChevronUp className="w-4 h-4" />
@@ -40,16 +37,20 @@ export default function Console() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-[10px] font-bold uppercase">
-            Click to minimize
-          </span>
+          <button
+            type="button"
+            onClick={() => setIsOpen(false)}
+            className="neobrutalist-btn text-[10px] uppercase px-3 py-1"
+          >
+            Minimize
+          </button>
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
               clearLogs();
             }}
-            className="text-[10px] font-bold uppercase hover:text-white"
+            className="neobrutalist-btn-danger text-[10px] uppercase px-3 py-1"
           >
             Clear Log
           </button>

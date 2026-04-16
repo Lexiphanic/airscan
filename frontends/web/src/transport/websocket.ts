@@ -32,7 +32,7 @@ export class WebSocketClient implements ITransport {
         : {
             type: "addLog",
             log: {
-              message: event.data + ": " + data.error.toString(),
+              message: `${event.data}: ${data.error.toString()}`,
               type: "error",
               timestamp: new Date(),
             },
@@ -60,7 +60,7 @@ export class WebSocketClient implements ITransport {
           break;
         default:
           this.callbacks.addLog(
-            "Unexpected message type from server: " + (msg as any).type,
+            `Unexpected message type from server: ${(msg as any).type}`,
             "error",
           );
       }
