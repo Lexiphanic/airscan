@@ -175,7 +175,10 @@ export default function TransportSettingsModal(props: {
         <div className="space-y-4">
           {transportType === "websocket" && (
             <div className="space-y-2">
-              <label htmlFor="websocket-url" className="text-sm font-bold text-[var(--nb-text-muted)]">
+              <label
+                htmlFor="websocket-url"
+                className="text-sm font-bold text-[var(--nb-text-muted)]"
+              >
                 WebSocket URL
               </label>
               <input

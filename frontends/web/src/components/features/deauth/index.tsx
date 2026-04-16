@@ -241,7 +241,10 @@ export default function DeauthFeature() {
       <Card className="p-4">
         <div className="space-y-4">
           <div>
-            <label htmlFor="channel" className="text-sm text-[var(--nb-text-muted)] font-bold mb-2 block">
+            <label
+              htmlFor="channel"
+              className="text-sm text-[var(--nb-text-muted)] font-bold mb-2 block"
+            >
               Channel (optional)
             </label>
             <input
@@ -261,7 +264,10 @@ export default function DeauthFeature() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label htmlFor="access-point" className="text-sm text-[var(--nb-text-muted)] font-bold">
+              <label
+                htmlFor="access-point"
+                className="text-sm text-[var(--nb-text-muted)] font-bold"
+              >
                 Access Point
               </label>
               <div className="flex -space-x-px">
@@ -339,7 +345,10 @@ export default function DeauthFeature() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label htmlFor="client" className="text-sm text-[var(--nb-text-muted)] font-bold">
+              <label
+                htmlFor="client"
+                className="text-sm text-[var(--nb-text-muted)] font-bold"
+              >
                 Client
               </label>
               <div className="flex -space-x-px">
