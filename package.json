@@ -1,11 +1,20 @@
 {
   "name": "@airscan/monorepo",
   "version": "0.0.0",
-  "workspaces": ["backends/*", "frontends/*", "packages/*"],
+  "workspaces": [
+    "backends/*",
+    "frontends/*",
+    "packages/*"
+  ],
   "scripts": {
-    "postinstall": "cd packages/engine && bun run build"
+    "postinstall": "cd packages/engine && bun run build",
+    "format": "bun run biome format",
+    "format:fix": "bun run format --fix",
+    "lint": "bun run biome lint",
+    "lint:fix": "bun run lint --fix"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.4.12",
     "@types/bun": "^1.3.12"
   }
 }

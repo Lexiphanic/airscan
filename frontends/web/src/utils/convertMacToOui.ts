@@ -1,1 +1,1 @@
-export { default } from '@airscan/engine/utils/convertMacToOui';
+export { default } from "@airscan/engine/utils/convertMacToOui";

@@ -122,8 +122,8 @@ function buildAccessPointResponse(parsed: ParsedRow): WebSocketApi {
     ssid: parsed.ssid,
     rssi: parsed.rssi,
     channel: parsed.channel,
-    encryption: 'UNK',
-    authentication: 'UNK',
+    encryption: "UNK",
+    authentication: "UNK",
   };
 
   return {
@@ -154,7 +154,7 @@ function buildClientResponse(parsed: ParsedRow): WebSocketApi {
 export default function startScanner(
   interfaceName: string,
   channel: string | undefined,
-  callback: (response: WebSocketApi) => void
+  callback: (response: WebSocketApi) => void,
 ) {
   const ps = Bun.spawn({
     cmd: [
@@ -162,20 +162,34 @@ export default function startScanner(
       "-i",
       interfaceName,
       // "-I", // monitor mode (doesn't work well, just put in monitor mode yourself or use --mode auto)
-      "-T", "fields",
-      "-e", "frame.time_epoch",
-      "-e", "wlan.ta",
-      "-e", "wlan.ra",
-      "-e", "wlan.sa",
-      "-e", "wlan.da",
-      "-e", "wlan.bssid",
-      "-e", "wlan.ssid",
-      "-e", "radiotap.dbm_antsignal",
-      "-e", "wlan_radio.channel",
-      "-E", "header=y",
-      "-E", "separator=,",
-      "-E", "quote=d",
-      "-E", "occurrence=f",
+      "-T",
+      "fields",
+      "-e",
+      "frame.time_epoch",
+      "-e",
+      "wlan.ta",
+      "-e",
+      "wlan.ra",
+      "-e",
+      "wlan.sa",
+      "-e",
+      "wlan.da",
+      "-e",
+      "wlan.bssid",
+      "-e",
+      "wlan.ssid",
+      "-e",
+      "radiotap.dbm_antsignal",
+      "-e",
+      "wlan_radio.channel",
+      "-E",
+      "header=y",
+      "-E",
+      "separator=,",
+      "-E",
+      "quote=d",
+      "-E",
+      "occurrence=f",
     ],
     stdout: "pipe",
     stderr: "pipe",
@@ -194,7 +208,6 @@ export default function startScanner(
       return;
     }
 
-    
     const values = parseCsvLine(trimmed);
     const parsed = parseRow(headers, values);
 

@@ -1,8 +1,8 @@
-import type { WebSocketApi } from '@airscan/types/Api/WebSocket';
-import type { DeviceConfig } from '@airscan/types/Device';
-import type { AccessPointsMap } from '@airscan/types/AccessPoint';
-import type { FeatureType } from '@airscan/types/Feature';
-import type { ClientsMap } from '@airscan/types/Client';
+import type { WebSocketApi } from "@airscan/types/Api/WebSocket";
+import type { DeviceConfig } from "@airscan/types/Device";
+import type { AccessPointsMap } from "@airscan/types/AccessPoint";
+import type { FeatureType } from "@airscan/types/Feature";
+import type { ClientsMap } from "@airscan/types/Client";
 
 export default class Manager {
   clients: Set<Bun.ServerWebSocket> = new Set();
@@ -17,7 +17,7 @@ export default class Manager {
   lastScanClients: ClientsMap = {};
 
   constructor(interfaceName: string, features: FeatureType[]) {
-    this.lastDeviceConfig.features = [ ...features ];
+    this.lastDeviceConfig.features = [...features];
     this.lastDeviceConfig.id = interfaceName;
     this.lastDeviceConfig.name = interfaceName;
     this.lastDeviceConfig.driver = interfaceName;
@@ -25,7 +25,10 @@ export default class Manager {
 
   handleConnect(client: Bun.ServerWebSocket) {
     this.clients.add(client);
-    this.send(client, { type: 'setDeviceConfig', config: this.lastDeviceConfig });
+    this.send(client, {
+      type: "setDeviceConfig",
+      config: this.lastDeviceConfig,
+    });
   }
 
   handleDisconnect(client: Bun.ServerWebSocket) {
@@ -34,21 +37,29 @@ export default class Manager {
   }
 
   handleRequest(client: Bun.ServerWebSocket, raw: WebSocketApi | string) {
-    const message = (typeof raw === "string" ? JSON.parse(raw) : raw) as WebSocketApi;
+    const message = (
+      typeof raw === "string" ? JSON.parse(raw) : raw
+    ) as WebSocketApi;
 
     switch (message.type) {
-      case 'enableFeature':
+      case "enableFeature":
         // For scan features, add to scan subscribers
-        if (message.feature.type === 'scan') {
+        if (message.feature.type === "scan") {
           this.scanSubscribers.add(client);
-          if (this.lastScanAccessPoints && Object.keys(this.lastScanAccessPoints).length) {
-            this.send(client, { type: 'addAccessPoints', accessPoints: this.lastScanAccessPoints } satisfies WebSocketApi);
+          if (
+            this.lastScanAccessPoints &&
+            Object.keys(this.lastScanAccessPoints).length
+          ) {
+            this.send(client, {
+              type: "addAccessPoints",
+              accessPoints: this.lastScanAccessPoints,
+            } satisfies WebSocketApi);
           }
         }
         break;
-      case 'disableFeature':
+      case "disableFeature":
         // For scan features, remove from scan subscribers
-        if (message.feature.type === 'scan') {
+        if (message.feature.type === "scan") {
           this.scanSubscribers.delete(client);
         }
         break;
@@ -58,17 +69,17 @@ export default class Manager {
   }
 
   handleScannerMessage(msg: WebSocketApi) {
-    if (msg.type === 'setDeviceConfig') {
+    if (msg.type === "setDeviceConfig") {
       this.lastDeviceConfig = { ...this.lastDeviceConfig, ...msg.config };
       this.broadcastAll(msg);
-    } else if (msg.type === 'addAccessPoints') {
+    } else if (msg.type === "addAccessPoints") {
       this.lastScanAccessPoints = msg.accessPoints;
       this.broadcastScan(msg);
-    } else if (msg.type === 'addClients') {
+    } else if (msg.type === "addClients") {
       this.lastScanClients = msg.clients;
       this.broadcastScan(msg);
     } else {
-      console.warn("Unrecognised message type: " + msg.type)
+      console.warn("Unrecognised message type: " + msg.type);
     }
   }
 
@@ -76,7 +87,7 @@ export default class Manager {
     try {
       client.send(JSON.stringify(payload));
     } catch (e) {
-      console.warn('Failed to send to client:', e);
+      console.warn("Failed to send to client:", e);
     }
   }
 

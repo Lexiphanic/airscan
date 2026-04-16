@@ -51,28 +51,26 @@ export const disableFeatureSchema = z.object({
 });
 export type disableFeature = z.infer<typeof disableFeatureSchema>;
 
-export const WebSocketApiSchema = z.discriminatedUnion(
-  'type',
-  [
-    pingSchema,
-    pongSchema,
-    setDeviceConfigSchema,
-    addAccessPointsSchema,
-    addClientsSchema,
-    addLogSchema,
-    enableFeatureSchema,
-    disableFeatureSchema,
-  ],
-);
+export const WebSocketApiSchema = z.discriminatedUnion("type", [
+  pingSchema,
+  pongSchema,
+  setDeviceConfigSchema,
+  addAccessPointsSchema,
+  addClientsSchema,
+  addLogSchema,
+  enableFeatureSchema,
+  disableFeatureSchema,
+]);
 export type WebSocketApi = z.infer<typeof WebSocketApiSchema>;
 
-export const WebSocketApiSchemaAsJson = z.string()
+export const WebSocketApiSchemaAsJson = z
+  .string()
   .transform((str, ctx) => {
     try {
       return JSON.parse(str);
     } catch (error) {
       ctx.addIssue({
-        code: 'custom',
+        code: "custom",
         message: `Invalid JSON: ${(error as Error).message}`,
         fatal: true,
       });

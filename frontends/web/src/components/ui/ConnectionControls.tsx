@@ -1,16 +1,18 @@
-import { WifiOff, Zap, Loader2, Settings } from 'lucide-react';
-import useAppStore from '../../store/useAppStore.ts';
-import useTransportState from '../../store/selectors/useTransportState.ts';
-import useTransportConfig from '../../store/selectors/useTransportConfig.ts';
+import { WifiOff, Zap, Loader2, Settings } from "lucide-react";
+import useAppStore from "../../store/useAppStore.ts";
+import useTransportState from "../../store/selectors/useTransportState.ts";
+import useTransportConfig from "../../store/selectors/useTransportConfig.ts";
 
 export default function ConnectionControls() {
   const transportState = useTransportState();
-  const connect = useAppStore(state => state.connect);
-  const disconnect = useAppStore(state => state.disconnect);
-  const setTransportDialogState = useAppStore(state => state.setTransportDialogState);
+  const connect = useAppStore((state) => state.connect);
+  const disconnect = useAppStore((state) => state.disconnect);
+  const setTransportDialogState = useAppStore(
+    (state) => state.setTransportDialogState,
+  );
   const transportConfig = useTransportConfig();
 
-  if (transportState === 'disconnected') {
+  if (transportState === "disconnected") {
     return (
       <div className="flex items-stretch">
         <button
@@ -18,10 +20,12 @@ export default function ConnectionControls() {
           className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-r-1 border-[var(--nb-border)] bg-red-500 text-white hover:bg-red-600 rounded-l-lg"
         >
           <WifiOff className="w-4 h-4" />
-          <span>{transportConfig.type === "none" ? "Missing Config" : "Connect"}</span>
+          <span>
+            {transportConfig.type === "none" ? "Missing Config" : "Connect"}
+          </span>
         </button>
         <button
-          onClick={() => setTransportDialogState('open')}
+          onClick={() => setTransportDialogState("open")}
           className="flex cursor-pointer items-center justify-center w-9 py-1.5 text-sm font-bold border-2 border-l-1 border-[var(--nb-border)] bg-red-500 text-white hover:bg-red-600 rounded-r-lg"
           aria-label="Transport settings"
         >
@@ -31,19 +35,21 @@ export default function ConnectionControls() {
     );
   }
 
-  if (transportState === 'connecting' || transportState === 'reconnecting') {
+  if (transportState === "connecting" || transportState === "reconnecting") {
     return (
       <button
         className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-[var(--nb-border)] bg-amber-400 text-black hover:bg-amber-500 rounded-lg"
         onClick={disconnect}
       >
         <Loader2 className="w-4 h-4 animate-spin" />
-        {transportState === 'reconnecting' ? 'Reconnecting...' : 'Connecting...'}
+        {transportState === "reconnecting"
+          ? "Reconnecting..."
+          : "Connecting..."}
       </button>
     );
   }
 
-  if (transportState === 'connected') {
+  if (transportState === "connected") {
     return (
       <button
         onClick={disconnect}

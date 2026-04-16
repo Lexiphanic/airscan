@@ -4,7 +4,9 @@ interface CardProps {
 }
 
 export default function Card(props: CardProps) {
-  return <div className={`neobrutalist-card ${props.className}`}>
-    {props.children}
-  </div>
+  return (
+    <div className={`neobrutalist-card ${props.className}`}>
+      {props.children}
+    </div>
+  );
 }

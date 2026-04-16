@@ -1,13 +1,13 @@
-import { Wifi, Search, Radio, Zap } from 'lucide-react';
-import { useEngineStore } from '@airscan/engine/engine.ts';
-import useTransportState from '../store/selectors/useTransportState.ts';
-import ConnectionControls from './ui/ConnectionControls.tsx';
-import useDeviceConfig from '@airscan/engine/selectors/useDeviceConfig.ts';
+import { Wifi, Search, Radio, Zap } from "lucide-react";
+import { useEngineStore } from "@airscan/engine/engine.ts";
+import useTransportState from "../store/selectors/useTransportState.ts";
+import ConnectionControls from "./ui/ConnectionControls.tsx";
+import useDeviceConfig from "@airscan/engine/selectors/useDeviceConfig.ts";
 
 export default function Header() {
-  const searchTerm = useEngineStore(state => state.searchTerm);
-  const setSearchTerm = useEngineStore(state => state.setSearchTerm);
-  const enabledFeatures = useEngineStore(state => state.enabledFeatures);
+  const searchTerm = useEngineStore((state) => state.searchTerm);
+  const setSearchTerm = useEngineStore((state) => state.setSearchTerm);
+  const enabledFeatures = useEngineStore((state) => state.enabledFeatures);
   const connectionState = useTransportState();
   const deviceConfig = useDeviceConfig();
 
@@ -28,28 +28,39 @@ export default function Header() {
           </div>
           <div>
             <h1 className="font-bold text-lg tracking-tight text-[var(--nb-text)] flex items-center gap-2">
-              AirScan <span className="text-xs font-mono text-[var(--nb-text-muted)] font-normal">v2.4.0</span>
+              AirScan{" "}
+              <span className="text-xs font-mono text-[var(--nb-text-muted)] font-normal">
+                v2.4.0
+              </span>
             </h1>
-            {connectionState === 'connected'
-              ? <div className="flex items-center gap-2 text-xs text-[var(--nb-text-muted)] font-mono">
+            {connectionState === "connected" ? (
+              <div className="flex items-center gap-2 text-xs text-[var(--nb-text-muted)] font-mono">
                 <span className="flex items-center gap-1">
                   <Radio className="w-3 h-3" />
                   <abbr title={deviceConfig.driver}>{deviceConfig.name}</abbr>
                 </span>
-                {deviceConfig.channels && <>
-                  <span className="w-1 h-1 rounded-lg bg-[var(--nb-border)]" />
-                  <span>CH: {deviceConfig.channels.join(",")}</span>
-                </>}
+                {deviceConfig.channels && (
+                  <>
+                    <span className="w-1 h-1 rounded-lg bg-[var(--nb-border)]" />
+                    <span>CH: {deviceConfig.channels.join(",")}</span>
+                  </>
+                )}
                 {enabledFeatures.length > 0 && (
                   <>
                     <span className="w-1 h-1 rounded-lg bg-[var(--nb-border)]" />
-                    <span className="flex items-center gap-1 text-red-600 font-bold">ACTIVE</span>
+                    <span className="flex items-center gap-1 text-red-600 font-bold">
+                      ACTIVE
+                    </span>
                   </>
                 )}
               </div>
-              : <div className="flex items-center gap-2 text-xs text-[var(--nb-text-muted)] font-mono">
-                <span className="flex items-center gap-1"><Radio className="w-3 h-3" /> Not Connected</span>
-              </div>}
+            ) : (
+              <div className="flex items-center gap-2 text-xs text-[var(--nb-text-muted)] font-mono">
+                <span className="flex items-center gap-1">
+                  <Radio className="w-3 h-3" /> Not Connected
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -70,4 +81,4 @@ export default function Header() {
       </div>
     </header>
   );
-};
+}

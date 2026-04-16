@@ -1,33 +1,57 @@
-import { useState } from 'react';
-import { X, Globe, Cable, Check, AlertCircle } from 'lucide-react';
-import type { TransportConfig } from '@airscan/types/Transport.ts';
+import { useState } from "react";
+import { X, Globe, Cable, Check, AlertCircle } from "lucide-react";
+import type { TransportConfig } from "@airscan/types/Transport.ts";
 
-const BAUD_RATE_OPTIONS = [9600, 19200, 38400, 57600, 115200, 230400, 460800, "custom"] as const;
+const BAUD_RATE_OPTIONS = [
+  9600,
+  19200,
+  38400,
+  57600,
+  115200,
+  230400,
+  460800,
+  "custom",
+] as const;
 
 export default function TransportSettingsModal(props: {
-  config: TransportConfig,
-  isOpen: boolean,
-  onClose: () => void,
-  onSave: (config: TransportConfig) => void
+  config: TransportConfig;
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (config: TransportConfig) => void;
 }) {
-  const [transportType, setTransportType] = useState<TransportConfig["type"]>(props.config.type);
-  const [wsUrl, setWsUrl] = useState(props.config.type === 'websocket' ? props.config.url : 'ws://localhost:8080');
-  const [selectedPort, setSelectedPort] = useState<SerialPort | undefined>(props.config.type === 'serial' ? props.config.serialPort : undefined);
+  const [transportType, setTransportType] = useState<TransportConfig["type"]>(
+    props.config.type,
+  );
+  const [wsUrl, setWsUrl] = useState(
+    props.config.type === "websocket"
+      ? props.config.url
+      : "ws://localhost:8080",
+  );
+  const [selectedPort, setSelectedPort] = useState<SerialPort | undefined>(
+    props.config.type === "serial" ? props.config.serialPort : undefined,
+  );
   const [isRequestingPort, setIsRequestingPort] = useState(false);
-  const [baudRate, setBaudRate] = useState<number | "custom">(props.config.type === 'serial' ? props.config.baudRate : BAUD_RATE_OPTIONS[4]);
+  const [baudRate, setBaudRate] = useState<number | "custom">(
+    props.config.type === "serial"
+      ? props.config.baudRate
+      : BAUD_RATE_OPTIONS[4],
+  );
   const [customBaudRate, setCustomBaudRate] = useState<string>(
-    props.config.type === 'serial' && !BAUD_RATE_OPTIONS.includes(props.config.baudRate as any)
+    props.config.type === "serial" &&
+      !BAUD_RATE_OPTIONS.includes(props.config.baudRate as any)
       ? props.config.baudRate.toString()
-      : ""
+      : "",
   );
 
-  const isSerialUnsupported = !('serial' in navigator);
+  const isSerialUnsupported = !("serial" in navigator);
 
   if (!props.isOpen) return null;
 
   const handleRequestSerialPort = async () => {
     if (isSerialUnsupported) {
-      alert('Web Serial API not supported in this browser. Use Chrome/Edge or ensure Experiment Flags are enabled.');
+      alert(
+        "Web Serial API not supported in this browser. Use Chrome/Edge or ensure Experiment Flags are enabled.",
+      );
       return;
     }
 
@@ -36,14 +60,14 @@ export default function TransportSettingsModal(props: {
       const port = await navigator.serial.requestPort();
       setSelectedPort(port);
     } catch (_e) {
-      console.log('Port selection cancelled');
+      console.log("Port selection cancelled");
     } finally {
       setIsRequestingPort(false);
     }
   };
 
   const getEffectiveBaudRate = () => {
-    if (baudRate === 'custom') {
+    if (baudRate === "custom") {
       const custom = parseInt(customBaudRate, 10);
       return isNaN(custom) ? 115200 : custom;
     }
@@ -52,17 +76,17 @@ export default function TransportSettingsModal(props: {
 
   const handleSave = () => {
     let config: TransportConfig = {
-      type: "none"
+      type: "none",
     };
-    if (transportType === 'serial') {
+    if (transportType === "serial") {
       if (!selectedPort) {
         return;
       }
       config = {
-        type: 'serial',
+        type: "serial",
         serialPort: selectedPort,
         baudRate: getEffectiveBaudRate(),
-      }
+      };
     }
     if (transportType === "websocket") {
       try {
@@ -72,7 +96,7 @@ export default function TransportSettingsModal(props: {
         return;
       }
       config = {
-        type: 'websocket',
+        type: "websocket",
         url: wsUrl,
       };
     }
@@ -80,14 +104,13 @@ export default function TransportSettingsModal(props: {
     props.onClose();
   };
 
-  const isFormValid = 
-    (transportType === 'websocket' && wsUrl)
-    || (transportType === 'serial' && selectedPort);
+  const isFormValid =
+    (transportType === "websocket" && wsUrl) ||
+    (transportType === "serial" && selectedPort);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
       <div className="w-full max-w-md neobrutalist-card p-6 border-3! shadow-[8px_8px_0px_0px_var(--nb-border)]!">
-
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-bold">Transport Settings</h2>
@@ -101,14 +124,17 @@ export default function TransportSettingsModal(props: {
 
         {/* Transport Type Selection */}
         <div className="space-y-3 mb-6">
-          <label className="text-sm font-bold text-[var(--nb-text-muted)]">Transport Type</label>
+          <label className="text-sm font-bold text-[var(--nb-text-muted)]">
+            Transport Type
+          </label>
           <div className="grid grid-cols-2 gap-3">
             <button
-              onClick={() => setTransportType('websocket')}
-              className={`cursor-pointer flex items-center gap-3 p-3 border-2 border-[var(--nb-border)] rounded-lg ${transportType === 'websocket'
-                ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]'
-                : 'bg-[var(--nb-bg)] text-[var(--nb-text)] hover:bg-[var(--nb-bg-secondary)]'
-                }`}
+              onClick={() => setTransportType("websocket")}
+              className={`cursor-pointer flex items-center gap-3 p-3 border-2 border-[var(--nb-border)] rounded-lg ${
+                transportType === "websocket"
+                  ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]"
+                  : "bg-[var(--nb-bg)] text-[var(--nb-text)] hover:bg-[var(--nb-bg-secondary)]"
+              }`}
             >
               <Globe className="w-5 h-5" />
               <div className="text-left">
@@ -118,34 +144,37 @@ export default function TransportSettingsModal(props: {
             </button>
 
             <button
-              onClick={() => setTransportType('serial')}
-              className={`cursor-pointer flex items-center gap-3 p-3 border-2 border-[var(--nb-border)] rounded-lg ${transportType === 'serial'
-                ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]'
-                : 'bg-[var(--nb-bg)] text-[var(--nb-text)] hover:bg-[var(--nb-bg-secondary)]'
-                }`}
+              onClick={() => setTransportType("serial")}
+              className={`cursor-pointer flex items-center gap-3 p-3 border-2 border-[var(--nb-border)] rounded-lg ${
+                transportType === "serial"
+                  ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]"
+                  : "bg-[var(--nb-bg)] text-[var(--nb-text)] hover:bg-[var(--nb-bg-secondary)]"
+              }`}
               disabled={isSerialUnsupported}
             >
               <Cable className="w-5 h-5" />
-              {
-                isSerialUnsupported
-                  ? <div className="text-left">
-                    <div className="text-sm font-bold">Serial</div>
-                    <div className="text-xs opacity-80">Unavailable</div>
-                  </div>
-                  : <div className="text-left">
-                    <div className="text-sm font-bold">Serial</div>
-                    <div className="text-xs opacity-80">USB/COM</div>
-                  </div>
-              }
+              {isSerialUnsupported ? (
+                <div className="text-left">
+                  <div className="text-sm font-bold">Serial</div>
+                  <div className="text-xs opacity-80">Unavailable</div>
+                </div>
+              ) : (
+                <div className="text-left">
+                  <div className="text-sm font-bold">Serial</div>
+                  <div className="text-xs opacity-80">USB/COM</div>
+                </div>
+              )}
             </button>
           </div>
         </div>
 
         {/* Dynamic Fields */}
         <div className="space-y-4">
-          {transportType === 'websocket' && (
+          {transportType === "websocket" && (
             <div className="space-y-2">
-              <label className="text-sm font-bold text-[var(--nb-text-muted)]">WebSocket URL</label>
+              <label className="text-sm font-bold text-[var(--nb-text-muted)]">
+                WebSocket URL
+              </label>
               <input
                 type="url"
                 value={wsUrl}
@@ -162,7 +191,9 @@ export default function TransportSettingsModal(props: {
             <div className="space-y-4">
               {/* Serial Port Selection */}
               <div className="space-y-3">
-                <label className="text-sm font-bold text-[var(--nb-text-muted)]">Serial Port</label>
+                <label className="text-sm font-bold text-[var(--nb-text-muted)]">
+                  Serial Port
+                </label>
 
                 {selectedPort ? (
                   <div className="flex items-center justify-between p-3 border-2 border-[var(--nb-border)] rounded-lg bg-emerald-500">
@@ -194,7 +225,7 @@ export default function TransportSettingsModal(props: {
                   >
                     <Cable className="w-5 h-5" />
                     <span className="text-sm font-bold">
-                      {isRequestingPort ? 'Waiting...' : 'Select Port'}
+                      {isRequestingPort ? "Waiting..." : "Select Port"}
                     </span>
                   </button>
                 )}
@@ -202,23 +233,26 @@ export default function TransportSettingsModal(props: {
 
               {/* Baud Rate Selection */}
               <div className="space-y-2">
-                <label className="text-sm font-bold text-[var(--nb-text-muted)]">Baud Rate</label>
+                <label className="text-sm font-bold text-[var(--nb-text-muted)]">
+                  Baud Rate
+                </label>
                 <div className="grid grid-cols-4 gap-2">
                   {BAUD_RATE_OPTIONS.map((rate) => (
                     <button
                       key={rate}
                       onClick={() => setBaudRate(rate)}
-                      className={`cursor-pointer px-2 py-2 text-xs font-bold border-2 border-[var(--nb-border)] rounded-lg ${baudRate === rate
-                        ? 'bg-[var(--nb-accent)] text-[var(--nb-bg)]'
-                        : 'bg-[var(--nb-bg)] text-[var(--nb-text)] hover:bg-[var(--nb-bg-secondary)]'
-                        }`}
+                      className={`cursor-pointer px-2 py-2 text-xs font-bold border-2 border-[var(--nb-border)] rounded-lg ${
+                        baudRate === rate
+                          ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]"
+                          : "bg-[var(--nb-bg)] text-[var(--nb-text)] hover:bg-[var(--nb-bg-secondary)]"
+                      }`}
                     >
                       {rate}
                     </button>
                   ))}
                 </div>
 
-                {baudRate === 'custom' && (
+                {baudRate === "custom" && (
                   <input
                     type="number"
                     value={customBaudRate}
@@ -231,9 +265,7 @@ export default function TransportSettingsModal(props: {
 
               <div className="flex items-start gap-2 text-xs text-[var(--nb-text-muted)]">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                <span>
-                  Select a serial port to connect.
-                </span>
+                <span>Select a serial port to connect.</span>
               </div>
             </div>
           )}
@@ -252,7 +284,7 @@ export default function TransportSettingsModal(props: {
             onClick={handleSave}
             type="button"
             disabled={!isFormValid}
-            className={`cursor-pointer flex-1 px-4 py-2 ${isFormValid ? 'neobrutalist-btn' : 'neobrutalist-btn-outline'}`}
+            className={`cursor-pointer flex-1 px-4 py-2 ${isFormValid ? "neobrutalist-btn" : "neobrutalist-btn-outline"}`}
           >
             Save Settings
           </button>

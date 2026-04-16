@@ -12,6 +12,5 @@ export const AccessPointSchema = z.object({
 });
 export type AccessPoint = z.infer<typeof AccessPointSchema>;
 
-
 export const AccessPointsMapSchema = z.record(z.string(), AccessPointSchema);
 export type AccessPointsMap = z.infer<typeof AccessPointsMapSchema>;

@@ -1,5 +1,5 @@
-import { useEngineStore } from '../engine.ts';
+import { useEngineStore } from "../engine.ts";
 
 export default function useSearchTerm(): string {
-  return useEngineStore(state => state.searchTerm);
+  return useEngineStore((state) => state.searchTerm);
 }

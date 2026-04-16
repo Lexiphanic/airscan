@@ -4,7 +4,12 @@
   "type": "module",
   "types": "src/index.ts",
   "scripts": {
-    "lint": "bunx tsc -b"
+    "lint": "bun run lint:tsc && bun run lint:biome",
+    "lint:tsc": "bunx tsc -b",
+    "lint:biome": "bun run biome lint",
+    "lint:fix": "bun run lint --fix",
+    "format": "bun run biome format",
+    "format:fix": "bun run format --fix"
   },
   "exports": {
     "./AccessPoint": "./src/AccessPoint.ts",

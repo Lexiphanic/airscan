@@ -7,8 +7,8 @@ import type { AccessPoint, AccessPointsMap } from "@airscan/types/AccessPoint";
 import type { Client, ClientsMap } from "@airscan/types/Client";
 import process from "node:process";
 
-
-const cli = meow(`
+const cli = meow(
+  `
   Usage
     $ bun ./src/index.ts [interface] [options]
 
@@ -22,33 +22,37 @@ const cli = meow(`
     $ bun ./src/index.ts mock0
     $ bun ./src/index.ts mock0 --channel 6 --mode auto
     $ bun ./src/index.ts mock0 --ap-count 5 --client-count 2
-`, {
-  importMeta: import.meta,
-  allowUnknownFlags: false,
-  flags: {
-    channel: {
-      type: "string",
-      short: "c",
-    },
-    mode: {
-      type: "string",
-      default: "manual",
-    },
-    apCount: {
-      type: "number",
-      default: 10,
-    },
-    clientCount: {
-      type: "number",
-      default: 3,
+`,
+  {
+    importMeta: import.meta,
+    allowUnknownFlags: false,
+    flags: {
+      channel: {
+        type: "string",
+        short: "c",
+      },
+      mode: {
+        type: "string",
+        default: "manual",
+      },
+      apCount: {
+        type: "number",
+        default: 10,
+      },
+      clientCount: {
+        type: "number",
+        default: 3,
+      },
     },
   },
-});
+);
 
 const [interfaceName] = cli.input;
 const { channel, mode, apCount, clientCount } = cli.flags;
 
-console.log(`Starting mock backend with ${apCount} APs, ${clientCount} clients per AP`);
+console.log(
+  `Starting mock backend with ${apCount} APs, ${clientCount} clients per AP`,
+);
 
 class MockManager extends Manager {
   private deauthActive: Set<string> = new Set(); // store deauth feature IDs
@@ -58,7 +62,13 @@ class MockManager extends Manager {
   private simulationChannel: number | null = null;
   private simulationMode: string;
 
-  constructor(interfaceName: string, channel: string | undefined, mode: string, apCount: number, clientCount: number) {
+  constructor(
+    interfaceName: string,
+    channel: string | undefined,
+    mode: string,
+    apCount: number,
+    clientCount: number,
+  ) {
     super(interfaceName, ["scan", "deauth"]);
     this.simulationChannel = channel ? parseInt(channel, 10) : null;
     this.simulationMode = mode;
@@ -73,16 +83,27 @@ class MockManager extends Manager {
     for (let i = 0; i < apCount; i++) {
       const bssid = faker.internet.mac();
       const ssid = faker.internet.displayName();
-      const channel = this.simulationChannel ?? faker.number.int({ min: 1, max: 11 });
+      const channel =
+        this.simulationChannel ?? faker.number.int({ min: 1, max: 11 });
       const rssi = faker.number.int({ min: 30, max: 90 });
       const ap: AccessPoint = {
         bssid,
         ssid,
         channel,
         rssi,
-        authentication: faker.helpers.arrayElement(["WPA2", "WPA3", "WEP", "OPEN"]),
+        authentication: faker.helpers.arrayElement([
+          "WPA2",
+          "WPA3",
+          "WEP",
+          "OPEN",
+        ]),
         encryption: faker.helpers.arrayElement(["CCMP", "TKIP", "NONE"]),
-        speed: faker.helpers.arrayElement(["54 Mbps", "150 Mbps", "300 Mbps", "600 Mbps"]),
+        speed: faker.helpers.arrayElement([
+          "54 Mbps",
+          "150 Mbps",
+          "300 Mbps",
+          "600 Mbps",
+        ]),
         packetCount: faker.number.int({ min: 0, max: 1000 }),
       };
       this.mockAccessPoints[bssid] = ap;
@@ -103,9 +124,15 @@ class MockManager extends Manager {
     // Update base class state
     this.lastScanAccessPoints = this.mockAccessPoints;
     this.lastScanClients = this.mockClients;
-    this.broadcastAll({ type: 'setDeviceConfig', config: this.lastDeviceConfig });
-    this.broadcastScan({ type: 'addAccessPoints', accessPoints: this.mockAccessPoints });
-    this.broadcastScan({ type: 'addClients', clients: this.mockClients });
+    this.broadcastAll({
+      type: "setDeviceConfig",
+      config: this.lastDeviceConfig,
+    });
+    this.broadcastScan({
+      type: "addAccessPoints",
+      accessPoints: this.mockAccessPoints,
+    });
+    this.broadcastScan({ type: "addClients", clients: this.mockClients });
   }
 
   private startSimulation() {
@@ -118,10 +145,16 @@ class MockManager extends Manager {
   private updateSimulation() {
     // Slightly fluctuate RSSI values
     for (const ap of Object.values(this.mockAccessPoints)) {
-      ap.rssi = Math.max(10, Math.min(100, ap.rssi + faker.number.int({ min: -5, max: 5 })));
+      ap.rssi = Math.max(
+        10,
+        Math.min(100, ap.rssi + faker.number.int({ min: -5, max: 5 })),
+      );
     }
     for (const client of Object.values(this.mockClients)) {
-      client.rssi = Math.max(10, Math.min(100, client.rssi + faker.number.int({ min: -5, max: 5 })));
+      client.rssi = Math.max(
+        10,
+        Math.min(100, client.rssi + faker.number.int({ min: -5, max: 5 })),
+      );
     }
 
     // Occasionally add/remove APs/clients (10% chance each)
@@ -143,8 +176,11 @@ class MockManager extends Manager {
     this.lastScanClients = this.mockClients;
 
     // Broadcast updates
-    this.broadcastScan({ type: 'addAccessPoints', accessPoints: this.mockAccessPoints });
-    this.broadcastScan({ type: 'addClients', clients: this.mockClients });
+    this.broadcastScan({
+      type: "addAccessPoints",
+      accessPoints: this.mockAccessPoints,
+    });
+    this.broadcastScan({ type: "addClients", clients: this.mockClients });
   }
 
   private addRandomAccessPoint() {
@@ -154,9 +190,19 @@ class MockManager extends Manager {
       ssid: faker.internet.displayName(),
       channel: this.simulationChannel ?? faker.number.int({ min: 1, max: 11 }),
       rssi: faker.number.int({ min: 30, max: 90 }),
-      authentication: faker.helpers.arrayElement(["WPA2", "WPA3", "WEP", "OPEN"]),
+      authentication: faker.helpers.arrayElement([
+        "WPA2",
+        "WPA3",
+        "WEP",
+        "OPEN",
+      ]),
       encryption: faker.helpers.arrayElement(["CCMP", "TKIP", "NONE"]),
-      speed: faker.helpers.arrayElement(["54 Mbps", "150 Mbps", "300 Mbps", "600 Mbps"]),
+      speed: faker.helpers.arrayElement([
+        "54 Mbps",
+        "150 Mbps",
+        "300 Mbps",
+        "600 Mbps",
+      ]),
       packetCount: faker.number.int({ min: 0, max: 1000 }),
     };
     this.mockAccessPoints[bssid] = ap;
@@ -165,7 +211,8 @@ class MockManager extends Manager {
 
   private removeRandomAccessPoint() {
     const keys = Object.keys(this.mockAccessPoints);
-    if (keys.length > 1) { // keep at least one
+    if (keys.length > 1) {
+      // keep at least one
       const randomKey = faker.helpers.arrayElement(keys);
       delete this.mockAccessPoints[randomKey];
       console.log(`Mock AP removed: ${randomKey}`);
@@ -197,45 +244,59 @@ class MockManager extends Manager {
   }
 
   // Override handleRequest to support deauth feature
-  override handleRequest(client: Bun.ServerWebSocket, raw: WebSocketApi | string) {
-    const message = (typeof raw === "string" ? JSON.parse(raw) : raw) as WebSocketApi;
+  override handleRequest(
+    client: Bun.ServerWebSocket,
+    raw: WebSocketApi | string,
+  ) {
+    const message = (
+      typeof raw === "string" ? JSON.parse(raw) : raw
+    ) as WebSocketApi;
 
     switch (message.type) {
-      case 'enableFeature':
-        if (message.feature.type === 'scan') {
+      case "enableFeature":
+        if (message.feature.type === "scan") {
           this.scanSubscribers.add(client);
           if (Object.keys(this.lastScanAccessPoints).length) {
-            this.send(client, { type: 'addAccessPoints', accessPoints: this.lastScanAccessPoints });
+            this.send(client, {
+              type: "addAccessPoints",
+              accessPoints: this.lastScanAccessPoints,
+            });
           }
           if (Object.keys(this.lastScanClients).length) {
-            this.send(client, { type: 'addClients', clients: this.lastScanClients });
+            this.send(client, {
+              type: "addClients",
+              clients: this.lastScanClients,
+            });
           }
-        } else if (message.feature.type === 'deauth') {
+        } else if (message.feature.type === "deauth") {
           this.deauthActive.add(message.feature.id);
-          console.log(`Deauth enabled: ${message.feature.id}`, message.feature.options);
+          console.log(
+            `Deauth enabled: ${message.feature.id}`,
+            message.feature.options,
+          );
           // Simulate deauth attack by sending logs
           this.send(client, {
-            type: 'addLog',
+            type: "addLog",
             log: {
               timestamp: new Date(),
-              message: `Deauthentication attack started (mock) - AP: ${message.feature.options.accessPoint || 'any'}, STA: ${message.feature.options.station || 'any'}, CH: ${message.feature.options.channel}`,
-              type: 'info',
+              message: `Deauthentication attack started (mock) - AP: ${message.feature.options.accessPoint || "any"}, STA: ${message.feature.options.station || "any"}, CH: ${message.feature.options.channel}`,
+              type: "info",
             },
           });
         }
         break;
-      case 'disableFeature':
-        if (message.feature.type === 'scan') {
+      case "disableFeature":
+        if (message.feature.type === "scan") {
           this.scanSubscribers.delete(client);
-        } else if (message.feature.type === 'deauth') {
+        } else if (message.feature.type === "deauth") {
           this.deauthActive.delete(message.feature.id);
           console.log(`Deauth disabled: ${message.feature.id}`);
           this.send(client, {
-            type: 'addLog',
+            type: "addLog",
             log: {
               timestamp: new Date(),
               message: `Deauthentication attack stopped (mock)`,
-              type: 'info',
+              type: "info",
             },
           });
         }
@@ -252,7 +313,13 @@ class MockManager extends Manager {
   }
 }
 
-const manager = new MockManager(interfaceName || "mock0", channel, mode, apCount, clientCount);
+const manager = new MockManager(
+  interfaceName || "mock0",
+  channel,
+  mode,
+  apCount,
+  clientCount,
+);
 const server = createServer(
   (client) => manager.handleConnect(client),
   (client, message) => manager.handleRequest(client, message),
@@ -262,8 +329,8 @@ const server = createServer(
 console.log(`Server running on ws://${server.hostname}:${server.port}...`);
 
 // Graceful shutdown
-process.on('SIGINT', async () => {
-  console.log('\nShutting down...');
+process.on("SIGINT", async () => {
+  console.log("\nShutting down...");
   manager.stop();
   await server.stop();
   process.exit(0);

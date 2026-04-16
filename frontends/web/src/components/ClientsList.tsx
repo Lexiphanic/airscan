@@ -1,8 +1,16 @@
-import { Smartphone, Monitor, Tablet, Laptop, Tv, Watch, Gamepad2 } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import ClientCard from './ClientCard.tsx';
-import useFilteredClients from '@airscan/engine/selectors/useFilteredClients.ts';
-import Card from './ui/Card.tsx';
+import {
+  Smartphone,
+  Monitor,
+  Tablet,
+  Laptop,
+  Tv,
+  Watch,
+  Gamepad2,
+} from "lucide-react";
+import { useState, useEffect } from "react";
+import ClientCard from "./ClientCard.tsx";
+import useFilteredClients from "@airscan/engine/selectors/useFilteredClients.ts";
+import Card from "./ui/Card.tsx";
 
 function RotatingDeviceIcon(props: { className: string }) {
   const devices = [
@@ -37,15 +45,17 @@ function RotatingDeviceIcon(props: { className: string }) {
       <div
         className={`
           transition-all duration-400 ease-in-out transform
-          ${isAnimating ? 'opacity-0 scale-75 rotate-12' : 'opacity-100 scale-100 rotate-0'}
+          ${isAnimating ? "opacity-0 scale-75 rotate-12" : "opacity-100 scale-100 rotate-0"}
         `}
       >
-        <CurrentIcon className={`${props.className} text-gray-400`} strokeWidth={1.5} />
+        <CurrentIcon
+          className={`${props.className} text-gray-400`}
+          strokeWidth={1.5}
+        />
       </div>
     </div>
   );
-};
-
+}
 
 export default function ClientsList() {
   const filteredClients = useFilteredClients();
@@ -72,4 +82,4 @@ export default function ClientsList() {
       </div>
     </div>
   );
-};
+}
