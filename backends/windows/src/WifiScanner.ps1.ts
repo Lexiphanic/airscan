@@ -31,7 +31,7 @@ Function Get-WiFiDeviceInfo
         $wifiAdapter = Get-NetAdapter | Where-Object { 
             $_.PhysicalMediaType -eq 'Native 802.11' -or 
             $_.PhysicalMediaType -eq 'Wireless LAN' -or
-            $_.InterfaceDescription -match 'wi-fi|wireless|wlan|802\.11'
+            $_.InterfaceDescription -match 'wi-fi|wireless|wlan|802.11'
         } | Select-Object -First 1
         
         if ($wifiAdapter) {

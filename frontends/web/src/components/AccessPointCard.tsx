@@ -123,6 +123,7 @@ export default function AccessPointCard(props: AccessPointCardProps) {
               <h3 className="font-bold text-lg text-[var(--nb-text)] group-hover:text-[var(--nb-accent)]">
                 {accessPoint.ssid ? (
                   <button
+                    type="button"
                     className="cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault();
@@ -178,6 +179,7 @@ export default function AccessPointCard(props: AccessPointCardProps) {
 
             {deviceConfig.features.includes("deauth") && (
               <button
+                type="button"
                 onClick={handleToggleFeature}
                 className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-[var(--nb-border)] cursor-pointer ${
                   isEnabled
@@ -244,6 +246,7 @@ export default function AccessPointCard(props: AccessPointCardProps) {
 
       <div className="bg-[var(--nb-bg-secondary)] border-t-2 border-[var(--nb-border)]">
         <button
+          type="button"
           onClick={() => setShowClients(!showClients)}
           disabled={connectedClients.length === 0}
           className={`w-full px-4 py-2 flex items-center justify-between text-xs font-bold uppercase cursor-pointer ${

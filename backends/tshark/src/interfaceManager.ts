@@ -58,7 +58,7 @@ export default class InterfaceManager {
   async setMonitorMode(interfaceName: string): Promise<void> {
     const { stdout: checkOut } = await execAsync("airmon-ng check");
     if (checkOut.trim()) {
-      console.log("airmon-ng check warnings:\n" + checkOut);
+      console.log(`airmon-ng check warnings:\n${checkOut}`);
       if (checkOut.includes("NetworkManager")) {
         await this.configureNetworkManager(interfaceName);
       }

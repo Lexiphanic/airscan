@@ -115,6 +115,7 @@ export default function TransportSettingsModal(props: {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-bold">Transport Settings</h2>
           <button
+            type="button"
             onClick={props.onClose}
             className="p-1 rounded-lg cursor-pointer hover:bg-[var(--nb-accent)] hover:text-[var(--nb-bg)]"
           >
@@ -129,6 +130,7 @@ export default function TransportSettingsModal(props: {
           </label>
           <div className="grid grid-cols-2 gap-3">
             <button
+              type="button"
               onClick={() => setTransportType("websocket")}
               className={`cursor-pointer flex items-center gap-3 p-3 border-2 border-[var(--nb-border)] rounded-lg ${
                 transportType === "websocket"
@@ -144,6 +146,7 @@ export default function TransportSettingsModal(props: {
             </button>
 
             <button
+              type="button"
               onClick={() => setTransportType("serial")}
               className={`cursor-pointer flex items-center gap-3 p-3 border-2 border-[var(--nb-border)] rounded-lg ${
                 transportType === "serial"
@@ -211,6 +214,7 @@ export default function TransportSettingsModal(props: {
                       </div>
                     </div>
                     <button
+                      type="button"
                       onClick={() => setSelectedPort(undefined)}
                       className="p-1.5 bg-black/20 hover:bg-black/40 text-white rounded cursor-pointer"
                     >
@@ -219,6 +223,7 @@ export default function TransportSettingsModal(props: {
                   </div>
                 ) : (
                   <button
+                    type="button"
                     onClick={handleRequestSerialPort}
                     disabled={isRequestingPort}
                     className="cursor-pointer w-full flex items-center justify-center gap-2 p-4 border-2 border-dashed border-[var(--nb-border)] rounded-lg bg-[var(--nb-bg-secondary)] text-[var(--nb-text)] hover:bg-[var(--nb-accent)] hover:text-[var(--nb-bg)]"
@@ -239,6 +244,7 @@ export default function TransportSettingsModal(props: {
                 <div className="grid grid-cols-4 gap-2">
                   {BAUD_RATE_OPTIONS.map((rate) => (
                     <button
+                      type="button"
                       key={rate}
                       onClick={() => setBaudRate(rate)}
                       className={`cursor-pointer px-2 py-2 text-xs font-bold border-2 border-[var(--nb-border)] rounded-lg ${

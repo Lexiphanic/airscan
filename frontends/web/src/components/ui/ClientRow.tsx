@@ -65,6 +65,7 @@ export default function ClientRow(props: {
 
         {deviceConfig.features.includes("deauth") && (
           <button
+            type="button"
             onClick={handleDeauth}
             className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-[var(--nb-border)] cursor-pointer ${
               isEnabled

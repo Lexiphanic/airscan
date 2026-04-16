@@ -1,10 +1,6 @@
-import { Trash2, Pause, Play, Zap } from "lucide-react";
-import Card from "./ui/Card.tsx";
+import { Zap } from "lucide-react";
 import Badge from "./ui/Badge.tsx";
-import useAppStore from "../store/useAppStore.ts";
 import { useEngineStore } from "@airscan/engine/engine.ts";
-import FeatureIcon from "./ui/FeatureIcon.tsx";
-import getFeatureDescription from "../utils/getFeatureDescription.ts";
 import useDeviceConfig from "@airscan/engine/selectors/useDeviceConfig.ts";
 import ScanFeature from "./features/scan/index.tsx";
 import DeauthFeature from "./features/deauth/index.tsx";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Terminal, Zap, ChevronUp } from "lucide-react";
+import { Terminal, ChevronUp } from "lucide-react";
 import { useEngineStore } from "@airscan/engine/engine.ts";
 
 export default function Console() {
@@ -10,6 +10,7 @@ export default function Console() {
   if (!isOpen) {
     return (
       <button
+        type="button"
         onClick={() => setIsOpen(true)}
         className="fixed bottom-4 right-4 z-30 cursor-pointer"
       >
@@ -43,6 +44,7 @@ export default function Console() {
             Click to minimize
           </span>
           <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation();
               clearLogs();

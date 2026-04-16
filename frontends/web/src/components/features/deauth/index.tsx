@@ -265,6 +265,7 @@ export default function DeauthFeature() {
               </label>
               <div className="flex -space-x-px">
                 <button
+                  type="button"
                   onClick={() => setApMode("manual")}
                   className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] rounded-l-md cursor-pointer ${apMode === "manual" ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]" : "bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]"}`}
                   title="Enter MAC manually"
@@ -273,6 +274,7 @@ export default function DeauthFeature() {
                   Manual
                 </button>
                 <button
+                  type="button"
                   onClick={() => setApMode("manufacturer")}
                   className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-l-0 border-[var(--nb-border)] rounded-r-md cursor-pointer ${apMode === "manufacturer" ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]" : "bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]"}`}
                   title="Select by manufacturer"
@@ -339,6 +341,7 @@ export default function DeauthFeature() {
               </label>
               <div className="flex -space-x-px">
                 <button
+                  type="button"
                   onClick={() => setClientMode("manual")}
                   className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] rounded-l-md cursor-pointer ${clientMode === "manual" ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]" : "bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]"}`}
                   title="Enter MAC manually"
@@ -347,6 +350,7 @@ export default function DeauthFeature() {
                   Manual
                 </button>
                 <button
+                  type="button"
                   onClick={() => setClientMode("manufacturer")}
                   className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-l-0 border-[var(--nb-border)] rounded-r-md cursor-pointer ${clientMode === "manufacturer" ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]" : "bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]"}`}
                   title="Select by manufacturer"
@@ -411,6 +415,7 @@ export default function DeauthFeature() {
           </div>
 
           <button
+            type="button"
             onClick={handleSubmit}
             disabled={!canSubmit}
             className={`w-full flex items-center justify-center gap-2 px-4 py-2 font-bold uppercase text-sm tracking-wider rounded-md neobrutalist-btn-danger ${!canSubmit ? "opacity-50 cursor-not-allowed" : ""}`}
@@ -460,6 +465,7 @@ export default function DeauthFeature() {
                   <h3 className="text-lg font-bold">Dangerous Operation</h3>
                 </div>
                 <button
+                  type="button"
                   onClick={handleCancel}
                   className="p-1 rounded-lg hover:bg-red-500 hover:text-white cursor-pointer"
                 >
@@ -508,12 +514,14 @@ export default function DeauthFeature() {
 
                 <div className="flex gap-3 pt-2">
                   <button
+                    type="button"
                     onClick={handleCancel}
                     className="flex-1 px-4 py-2 neobrutalist-btn-outline font-bold"
                   >
                     Cancel
                   </button>
                   <button
+                    type="button"
                     onClick={handleConfirm}
                     className="flex-1 px-4 py-2 neobrutalist-btn-danger flex items-center justify-center gap-2"
                   >

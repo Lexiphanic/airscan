@@ -30,6 +30,7 @@ export default function ScanFeature() {
             </div>
           </div>
           <button
+            type="button"
             onClick={toggleScanning}
             disabled={!isConnected}
             className={`px-4 py-2 neobrutalist-btn-outline cursor-pointer ${

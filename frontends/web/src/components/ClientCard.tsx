@@ -101,6 +101,7 @@ export default function ClientCard(props: ClientCardProps) {
             <div className="flex flex-wrap gap-1">
               {props.client.probes.map((probe, idx) => (
                 <button
+                  type="button"
                   key={idx}
                   className="neobrutalist-btn-outline px-2 py-1 text-xs"
                   onClick={(e) => {
@@ -141,6 +142,7 @@ export default function ClientCard(props: ClientCardProps) {
 
           {deviceConfig.features.includes("deauth") && (
             <button
+              type="button"
               onClick={handleDeauth}
               disabled={isUnassociated && !isEnabled}
               className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-[var(--nb-border)] cursor-pointer ${

@@ -79,7 +79,7 @@ export default class Manager {
       this.lastScanClients = msg.clients;
       this.broadcastScan(msg);
     } else {
-      console.warn("Unrecognised message type: " + msg.type);
+      console.warn(`Unrecognised message type: ${msg.type}`);
     }
   }
 

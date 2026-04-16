@@ -63,6 +63,7 @@ export default function Welcome() {
           </div>
 
           <button
+            type="button"
             onClick={handleClick}
             className="cursor-pointer w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-4 px-6 rounded-xl"
           >
