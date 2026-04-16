@@ -67,7 +67,7 @@ export class SerialTransport implements ITransport {
           if (msg.success) {
             this.handleMessage(msg.data);
           } else {
-            this.callbacks.addLog(line + ": " + msg.error.toString(), "error");
+            this.callbacks.addLog(`${line}: ${msg.error.toString()}`, "error");
           }
         }
       }

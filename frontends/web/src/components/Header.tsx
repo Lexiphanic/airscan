@@ -6,10 +6,16 @@ import useDeviceConfig from "@airscan/engine/selectors/useDeviceConfig.ts";
 
 export default function Header() {
   const searchTerm = useEngineStore((state) => state.searchTerm);
-  const setSearchTerm = useEngineStore((state) => state.setSearchTerm);
   const enabledFeatures = useEngineStore((state) => state.enabledFeatures);
   const connectionState = useTransportState();
   const deviceConfig = useDeviceConfig();
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    const hash = query ? `#q=${encodeURIComponent(query)}` : "#q=";
+    window.history.replaceState(null, "", hash);
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
+  };
 
   return (
     <header className="border-b-4 border-[var(--nb-border)] bg-[var(--nb-bg-secondary)] sticky top-0 z-20">
@@ -72,7 +78,7 @@ export default function Header() {
               placeholder="Filter SSID, BSSID, MAC..."
               className="neobrutalist-input pl-10 pr-4 py-1.5 text-sm w-72"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={handleSearchChange}
             />
           </div>
 

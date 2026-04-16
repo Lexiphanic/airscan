@@ -82,7 +82,6 @@ export default function AccessPointCard(props: AccessPointCardProps) {
   );
   const connectedClients = useConnectedClients(accessPoint.bssid);
   const deviceConfig = useDeviceConfig();
-  const setSearchTerm = useEngineStore((state) => state.setSearchTerm);
 
   const accessPointFeature = enabledFeatures.find(
     (feature) =>
@@ -122,16 +121,12 @@ export default function AccessPointCard(props: AccessPointCardProps) {
             <div className="flex items-center gap-2 mb-1">
               <h3 className="font-bold text-lg text-[var(--nb-text)] group-hover:text-[var(--nb-accent)]">
                 {accessPoint.ssid ? (
-                  <button
-                    type="button"
+                  <a
                     className="cursor-pointer"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSearchTerm(accessPoint.ssid);
-                    }}
+                    href={`#q=${encodeURIComponent(accessPoint.ssid)}`}
                   >
                     {accessPoint.ssid}
-                  </button>
+                  </a>
                 ) : (
                   <em className="text-[var(--nb-text-muted)]">
                     {macInfo.label || "[hidden]"}

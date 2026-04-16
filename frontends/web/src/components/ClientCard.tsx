@@ -18,7 +18,6 @@ export default function ClientCard(props: ClientCardProps) {
   const removeEnabledFeature = useAppStore(
     (state) => state.removeEnabledFeature,
   );
-  const setSearchTerm = useEngineStore((state) => state.setSearchTerm);
   const deviceConfig = useDeviceConfig();
   const isUnassociated = props.client.bssid.length === 0;
 
@@ -100,17 +99,13 @@ export default function ClientCard(props: ClientCardProps) {
             </div>
             <div className="flex flex-wrap gap-1">
               {props.client.probes.map((probe) => (
-                <button
-                  type="button"
+                <a
                   key={probe}
                   className="neobrutalist-btn-outline px-2 py-1 text-xs"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setSearchTerm(probe);
-                  }}
+                  href={`#q=${encodeURIComponent(probe)}`}
                 >
                   {probe}
-                </button>
+                </a>
               ))}
             </div>
           </div>
@@ -131,7 +126,7 @@ export default function ClientCard(props: ClientCardProps) {
                   <a
                     key={bssid}
                     className="hover:underline cursor-pointer"
-                    onClick={() => setSearchTerm(bssid)}
+                    href={`#q=${encodeURIComponent(bssid)}`}
                   >
                     {bssid}
                   </a>

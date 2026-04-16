@@ -6,8 +6,10 @@ import useAppStore from "./store/useAppStore.ts";
 import useTransportConfig from "./store/selectors/useTransportConfig.ts";
 import Dashboard from "./components/Dashboard.tsx";
 import Welcome from "./components/Welcome.tsx";
+import useSearchTermFromUrl from "./hooks/useSearchTermFromUrl.ts";
 
 export default function App() {
+  useSearchTermFromUrl();
   const transportDialogState = useTransportDialogState();
   const transportConfig = useTransportConfig();
   const setTransportDialogState = useAppStore(
