@@ -61,13 +61,12 @@ Usage
 
 Options
   --channel, -c   WiFi channel to simulate (default: random)
-  --mode          auto or manual (default: manual)
   --ap-count      Number of access points to generate (default: 10)
   --client-count  Number of clients to generate per AP (default: 3)
 
 Examples
   $ bun ./src/index.ts mock0
-  $ bun ./src/index.ts mock0 --channel 6 --mode auto
+  $ bun ./src/index.ts mock0 --channel 6
   $ bun ./src/index.ts mock0 --ap-count 5 --client-count 2
 ```
 
