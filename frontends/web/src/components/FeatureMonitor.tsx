@@ -15,7 +15,7 @@ export default function FeatureMonitor() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2 text-[var(--nb-text-muted)]">
+        <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2 text-(--nb-text-muted)">
           <Zap className="w-4 h-4" /> Features
           {enabledFeatures.length > 0 && (
             <Badge color="red" className="animate-pulse uppercase">

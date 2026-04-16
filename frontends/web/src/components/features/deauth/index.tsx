@@ -230,7 +230,7 @@ export default function DeauthFeature() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2 text-[var(--nb-text-muted)]">
+        <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2 text-(--nb-text-muted)">
           <Crosshair className="w-4 h-4" /> Deauth
         </h2>
         <Badge color="purple">
@@ -243,7 +243,7 @@ export default function DeauthFeature() {
           <div>
             <label
               htmlFor="channel"
-              className="text-sm text-[var(--nb-text-muted)] font-bold mb-2 block"
+              className="text-sm text-(--nb-text-muted) font-bold mb-2 block"
             >
               Channel (optional)
             </label>
@@ -257,7 +257,7 @@ export default function DeauthFeature() {
               placeholder="All channels"
               className="w-full neobrutalist-input"
             />
-            <div className="text-xs text-[var(--nb-text-muted)] mt-1">
+            <div className="text-xs text-(--nb-text-muted) mt-1">
               Leave empty for all channels
             </div>
           </div>
@@ -266,7 +266,7 @@ export default function DeauthFeature() {
             <div className="flex items-center justify-between">
               <label
                 htmlFor="access-point"
-                className="text-sm text-[var(--nb-text-muted)] font-bold"
+                className="text-sm text-(--nb-text-muted) font-bold"
               >
                 Access Point
               </label>
@@ -274,7 +274,7 @@ export default function DeauthFeature() {
                 <button
                   type="button"
                   onClick={() => setApMode("manual")}
-                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] rounded-l-md cursor-pointer ${apMode === "manual" ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]" : "bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]"}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-(--nb-border) rounded-l-md cursor-pointer ${apMode === "manual" ? "bg-(--nb-accent) text-(--nb-bg)" : "bg-(--nb-bg) hover:bg-(--nb-bg-secondary)"}`}
                   title="Enter MAC manually"
                 >
                   <Edit className="w-3 h-3" />
@@ -283,7 +283,7 @@ export default function DeauthFeature() {
                 <button
                   type="button"
                   onClick={() => setApMode("manufacturer")}
-                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-l-0 border-[var(--nb-border)] rounded-r-md cursor-pointer ${apMode === "manufacturer" ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]" : "bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]"}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-l-0 border-(--nb-border) rounded-r-md cursor-pointer ${apMode === "manufacturer" ? "bg-(--nb-accent) text-(--nb-bg)" : "bg-(--nb-bg) hover:bg-(--nb-bg-secondary)"}`}
                   title="Select by manufacturer"
                 >
                   <Building className="w-3 h-3" />
@@ -317,8 +317,8 @@ export default function DeauthFeature() {
                   ))}
                 </select>
                 {selectedApManufacturer && (
-                  <div className="border-2 border-[var(--nb-border)] p-2 rounded-lg">
-                    <div className="text-xs text-[var(--nb-text-muted)] font-bold mb-1">
+                  <div className="border-2 border-(--nb-border) p-2 rounded-lg">
+                    <div className="text-xs text-(--nb-text-muted) font-bold mb-1">
                       OUI Prefixes:
                     </div>
                     <div className="flex flex-wrap gap-1">
@@ -336,7 +336,7 @@ export default function DeauthFeature() {
                 )}
               </div>
             )}
-            <div className="text-xs text-[var(--nb-text-muted)]">
+            <div className="text-xs text-(--nb-text-muted)">
               {apMode === "manual"
                 ? "Specific AP MAC address"
                 : "Target all APs from selected manufacturer"}
@@ -347,7 +347,7 @@ export default function DeauthFeature() {
             <div className="flex items-center justify-between">
               <label
                 htmlFor="client"
-                className="text-sm text-[var(--nb-text-muted)] font-bold"
+                className="text-sm text-(--nb-text-muted) font-bold"
               >
                 Client
               </label>
@@ -355,7 +355,7 @@ export default function DeauthFeature() {
                 <button
                   type="button"
                   onClick={() => setClientMode("manual")}
-                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] rounded-l-md cursor-pointer ${clientMode === "manual" ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]" : "bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]"}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-(--nb-border) rounded-l-md cursor-pointer ${clientMode === "manual" ? "bg-(--nb-accent) text-(--nb-bg)" : "bg-(--nb-bg) hover:bg-(--nb-bg-secondary)"}`}
                   title="Enter MAC manually"
                 >
                   <Edit className="w-3 h-3" />
@@ -364,7 +364,7 @@ export default function DeauthFeature() {
                 <button
                   type="button"
                   onClick={() => setClientMode("manufacturer")}
-                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-l-0 border-[var(--nb-border)] rounded-r-md cursor-pointer ${clientMode === "manufacturer" ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]" : "bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]"}`}
+                  className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-l-0 border-(--nb-border) rounded-r-md cursor-pointer ${clientMode === "manufacturer" ? "bg-(--nb-accent) text-(--nb-bg)" : "bg-(--nb-bg) hover:bg-(--nb-bg-secondary)"}`}
                   title="Select by manufacturer"
                 >
                   <Building className="w-3 h-3" />
@@ -400,8 +400,8 @@ export default function DeauthFeature() {
                   ))}
                 </select>
                 {selectedClientManufacturer && (
-                  <div className="border-2 border-[var(--nb-border)] p-2 rounded-lg">
-                    <div className="text-xs text-[var(--nb-text-muted)] font-bold mb-1">
+                  <div className="border-2 border-(--nb-border) p-2 rounded-lg">
+                    <div className="text-xs text-(--nb-text-muted) font-bold mb-1">
                       OUI Prefixes:
                     </div>
                     <div className="flex flex-wrap gap-1">
@@ -421,7 +421,7 @@ export default function DeauthFeature() {
                 )}
               </div>
             )}
-            <div className="text-xs text-[var(--nb-text-muted)]">
+            <div className="text-xs text-(--nb-text-muted)">
               {clientMode === "manual"
                 ? "Specific client MAC address"
                 : "Target all clients from selected manufacturer"}
@@ -473,7 +473,7 @@ export default function DeauthFeature() {
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 border-2 border-[var(--nb-border)] bg-red-500 rounded-lg">
+                  <div className="p-2 border-2 border-(--nb-border) bg-red-500 rounded-lg">
                     <AlertTriangle className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="text-lg font-bold">Dangerous Operation</h3>
@@ -511,8 +511,8 @@ export default function DeauthFeature() {
                   </ul>
                 </div>
 
-                <div className="border-2 border-[var(--nb-border)] p-3 rounded-lg">
-                  <div className="text-xs uppercase text-[var(--nb-text-muted)] font-bold mb-1">
+                <div className="border-2 border-(--nb-border) p-3 rounded-lg">
+                  <div className="text-xs uppercase text-(--nb-text-muted) font-bold mb-1">
                     Configuration
                   </div>
                   <div className="text-sm font-mono space-y-1">

@@ -18,7 +18,7 @@ export default function ConnectionControls() {
         <button
           type="button"
           onClick={connect}
-          className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-r-1 border-[var(--nb-border)] bg-red-500 text-white hover:bg-red-600 rounded-l-lg"
+          className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-r border-(--nb-border) bg-red-500 text-white hover:bg-red-600 rounded-l-lg"
         >
           <WifiOff className="w-4 h-4" />
           <span>
@@ -28,7 +28,7 @@ export default function ConnectionControls() {
         <button
           type="button"
           onClick={() => setTransportDialogState("open")}
-          className="flex cursor-pointer items-center justify-center w-9 py-1.5 text-sm font-bold border-2 border-l-1 border-[var(--nb-border)] bg-red-500 text-white hover:bg-red-600 rounded-r-lg"
+          className="flex cursor-pointer items-center justify-center w-9 py-1.5 text-sm font-bold border-2 border-l border-(--nb-border) bg-red-500 text-white hover:bg-red-600 rounded-r-lg"
           aria-label="Transport settings"
         >
           <Settings className="w-4 h-4" />
@@ -41,7 +41,7 @@ export default function ConnectionControls() {
     return (
       <button
         type="button"
-        className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-[var(--nb-border)] bg-amber-400 text-black hover:bg-amber-500 rounded-lg"
+        className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-(--nb-border) bg-amber-400 text-black hover:bg-amber-500 rounded-lg"
         onClick={disconnect}
       >
         <Loader2 className="w-4 h-4 animate-spin" />
@@ -57,7 +57,7 @@ export default function ConnectionControls() {
       <button
         type="button"
         onClick={disconnect}
-        className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-[var(--nb-border)] bg-[var(--nb-accent)] text-[var(--nb-bg)] rounded-lg"
+        className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-(--nb-border) bg-(--nb-accent) text-(--nb-bg) rounded-lg"
       >
         <Zap className="w-4 h-4" />
         Connected
