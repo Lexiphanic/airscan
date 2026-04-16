@@ -36,9 +36,9 @@ function RotatingDeviceIcon(props: { className: string }) {
     }, 2000); // Change every 2 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [devices.length]);
 
-  const CurrentIcon = devices[currentIndex]!;
+  const CurrentIcon = devices[currentIndex] ?? Smartphone;
 
   return (
     <div className="relative flex flex-col items-center">

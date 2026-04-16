@@ -34,7 +34,7 @@ function processResponse(jsonString: string): WebSocketApi | undefined {
       // Convert array to map keyed by BSSID
       const map: Record<string, AccessPoint> = {};
       for (const ap of response.accessPoints) {
-        if (ap && ap.bssid) map[ap.bssid] = ap;
+        if (ap?.bssid) map[ap.bssid] = ap;
       }
 
       return {
@@ -43,7 +43,7 @@ function processResponse(jsonString: string): WebSocketApi | undefined {
       } satisfies WebSocketApi;
     }
 
-    console.warn("Unknown response: " + jsonString.substring(0, 200));
+    console.warn(`Unknown response: ${jsonString.substring(0, 200)}`);
   } catch (e) {
     console.error("Failed to parse scan result:", (e as Error).message);
     console.error("JSON string was:", jsonString.substring(0, 200));

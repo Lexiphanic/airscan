@@ -112,33 +112,6 @@ export default function DeauthFeature() {
     manufacturers,
   ]);
 
-  const handleSubmit = useCallback(() => {
-    const featureConfig = prepareFeature();
-
-    if (featureConfig.type === "single" && featureConfig.isBroadcast) {
-      setPendingFeature({
-        id: id(),
-        type: "deauth",
-        isActive: true,
-        options: {
-          accessPoint: "",
-          station: "",
-          channel: featureConfig.channelNum,
-        },
-      });
-      setShowConfirmation(true);
-      return;
-    }
-
-    executeFeatureCreation(featureConfig);
-
-    setChannel("");
-    setAccessPoint("");
-    setClient("");
-    setSelectedApManufacturer("");
-    setSelectedClientManufacturer("");
-  }, [prepareFeature]);
-
   const executeFeatureCreation = useCallback(
     (featureConfig: FeatureConfig) => {
       switch (featureConfig.type) {
@@ -206,6 +179,33 @@ export default function DeauthFeature() {
     [addEnabledFeature],
   );
 
+  const handleSubmit = useCallback(() => {
+    const featureConfig = prepareFeature();
+
+    if (featureConfig.type === "single" && featureConfig.isBroadcast) {
+      setPendingFeature({
+        id: id(),
+        type: "deauth",
+        isActive: true,
+        options: {
+          accessPoint: "",
+          station: "",
+          channel: featureConfig.channelNum,
+        },
+      });
+      setShowConfirmation(true);
+      return;
+    }
+
+    executeFeatureCreation(featureConfig);
+
+    setChannel("");
+    setAccessPoint("");
+    setClient("");
+    setSelectedApManufacturer("");
+    setSelectedClientManufacturer("");
+  }, [prepareFeature, executeFeatureCreation]);
+
   const handleConfirm = useCallback(() => {
     if (pendingFeature) {
       addEnabledFeature(pendingFeature);
@@ -241,10 +241,14 @@ export default function DeauthFeature() {
       <Card className="p-4">
         <div className="space-y-4">
           <div>
-            <label className="text-sm text-[var(--nb-text-muted)] font-bold mb-2 block">
+            <label
+              htmlFor="channel"
+              className="text-sm text-[var(--nb-text-muted)] font-bold mb-2 block"
+            >
               Channel (optional)
             </label>
             <input
+              id="channel"
               type="number"
               min="1"
               max="14"
@@ -260,11 +264,15 @@ export default function DeauthFeature() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-[var(--nb-text-muted)] font-bold">
+              <label
+                htmlFor="access-point"
+                className="text-sm text-[var(--nb-text-muted)] font-bold"
+              >
                 Access Point
               </label>
               <div className="flex -space-x-px">
                 <button
+                  type="button"
                   onClick={() => setApMode("manual")}
                   className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] rounded-l-md cursor-pointer ${apMode === "manual" ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]" : "bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]"}`}
                   title="Enter MAC manually"
@@ -273,6 +281,7 @@ export default function DeauthFeature() {
                   Manual
                 </button>
                 <button
+                  type="button"
                   onClick={() => setApMode("manufacturer")}
                   className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-l-0 border-[var(--nb-border)] rounded-r-md cursor-pointer ${apMode === "manufacturer" ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]" : "bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]"}`}
                   title="Select by manufacturer"
@@ -285,6 +294,7 @@ export default function DeauthFeature() {
 
             {apMode === "manual" ? (
               <input
+                id="access-point"
                 type="text"
                 value={accessPoint}
                 onChange={(e) => setAccessPoint(e.target.value)}
@@ -294,6 +304,7 @@ export default function DeauthFeature() {
             ) : (
               <div className="space-y-2">
                 <select
+                  id="access-point"
                   value={selectedApManufacturer}
                   onChange={(e) => setSelectedApManufacturer(e.target.value)}
                   className="w-full neobrutalist-input"
@@ -334,11 +345,15 @@ export default function DeauthFeature() {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm text-[var(--nb-text-muted)] font-bold">
+              <label
+                htmlFor="client"
+                className="text-sm text-[var(--nb-text-muted)] font-bold"
+              >
                 Client
               </label>
               <div className="flex -space-x-px">
                 <button
+                  type="button"
                   onClick={() => setClientMode("manual")}
                   className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-[var(--nb-border)] rounded-l-md cursor-pointer ${clientMode === "manual" ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]" : "bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]"}`}
                   title="Enter MAC manually"
@@ -347,6 +362,7 @@ export default function DeauthFeature() {
                   Manual
                 </button>
                 <button
+                  type="button"
                   onClick={() => setClientMode("manufacturer")}
                   className={`flex items-center gap-1 px-2 py-1 text-xs font-bold border-2 border-l-0 border-[var(--nb-border)] rounded-r-md cursor-pointer ${clientMode === "manufacturer" ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]" : "bg-[var(--nb-bg)] hover:bg-[var(--nb-bg-secondary)]"}`}
                   title="Select by manufacturer"
@@ -359,6 +375,7 @@ export default function DeauthFeature() {
 
             {clientMode === "manual" ? (
               <input
+                id="client"
                 type="text"
                 value={client}
                 onChange={(e) => setClient(e.target.value)}
@@ -368,6 +385,7 @@ export default function DeauthFeature() {
             ) : (
               <div className="space-y-2">
                 <select
+                  id="client"
                   value={selectedClientManufacturer}
                   onChange={(e) =>
                     setSelectedClientManufacturer(e.target.value)
@@ -411,6 +429,7 @@ export default function DeauthFeature() {
           </div>
 
           <button
+            type="button"
             onClick={handleSubmit}
             disabled={!canSubmit}
             className={`w-full flex items-center justify-center gap-2 px-4 py-2 font-bold uppercase text-sm tracking-wider rounded-md neobrutalist-btn-danger ${!canSubmit ? "opacity-50 cursor-not-allowed" : ""}`}
@@ -460,6 +479,7 @@ export default function DeauthFeature() {
                   <h3 className="text-lg font-bold">Dangerous Operation</h3>
                 </div>
                 <button
+                  type="button"
                   onClick={handleCancel}
                   className="p-1 rounded-lg hover:bg-red-500 hover:text-white cursor-pointer"
                 >
@@ -508,12 +528,14 @@ export default function DeauthFeature() {
 
                 <div className="flex gap-3 pt-2">
                   <button
+                    type="button"
                     onClick={handleCancel}
                     className="flex-1 px-4 py-2 neobrutalist-btn-outline font-bold"
                   >
                     Cancel
                   </button>
                   <button
+                    type="button"
                     onClick={handleConfirm}
                     className="flex-1 px-4 py-2 neobrutalist-btn-danger flex items-center justify-center gap-2"
                   >

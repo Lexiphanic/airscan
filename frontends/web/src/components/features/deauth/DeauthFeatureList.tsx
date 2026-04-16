@@ -139,6 +139,7 @@ export default function DeauthFeatureList() {
 
                 <div className="flex items-center gap-1">
                   <button
+                    type="button"
                     onClick={() =>
                       feature.isActive
                         ? pauseEnabledFeature(feature)
@@ -160,6 +161,7 @@ export default function DeauthFeatureList() {
                     )}
                   </button>
                   <button
+                    type="button"
                     onClick={() => removeEnabledFeature(feature)}
                     className="p-1.5 border-2 border-[var(--nb-border)] rounded-lg cursor-pointer bg-[var(--nb-bg)] hover:bg-red-600 hover:text-white"
                     title="Remove feature"
@@ -198,6 +200,7 @@ export default function DeauthFeatureList() {
                     </div>
                     <div className="flex items-center gap-2">
                       <button
+                        type="button"
                         onClick={() =>
                           handleStopManufacturer(normalizedName, type)
                         }

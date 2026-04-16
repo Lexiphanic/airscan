@@ -1,4 +1,4 @@
-import { Wifi, Search, Radio, Zap } from "lucide-react";
+import { Wifi, Search, Radio } from "lucide-react";
 import { useEngineStore } from "@airscan/engine/engine.ts";
 import useTransportState from "../store/selectors/useTransportState.ts";
 import ConnectionControls from "./ui/ConnectionControls.tsx";

@@ -1,7 +1,6 @@
 import type { AccessPoint } from "@airscan/types/AccessPoint";
 import type { Client } from "@airscan/types/Client";
 import type { WebSocketApi } from "@airscan/types/Api/WebSocket";
-import type { DeviceConfig } from "@airscan/types/Device";
 
 interface TsharkCsvRow {
   "frame.time_epoch": string;
@@ -43,7 +42,7 @@ function parseCsvLine(line: string): string[] {
 }
 
 const cleanValue = (val: string | undefined): string => {
-  let cleaned = val?.replace(/^"|"$/g, "") ?? "";
+  const cleaned = val?.replace(/^"|"$/g, "") ?? "";
   if (cleaned === "<MISSING>") return "";
   return cleaned;
 };

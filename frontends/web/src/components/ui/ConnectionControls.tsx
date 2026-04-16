@@ -16,6 +16,7 @@ export default function ConnectionControls() {
     return (
       <div className="flex items-stretch">
         <button
+          type="button"
           onClick={connect}
           className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-r-1 border-[var(--nb-border)] bg-red-500 text-white hover:bg-red-600 rounded-l-lg"
         >
@@ -25,6 +26,7 @@ export default function ConnectionControls() {
           </span>
         </button>
         <button
+          type="button"
           onClick={() => setTransportDialogState("open")}
           className="flex cursor-pointer items-center justify-center w-9 py-1.5 text-sm font-bold border-2 border-l-1 border-[var(--nb-border)] bg-red-500 text-white hover:bg-red-600 rounded-r-lg"
           aria-label="Transport settings"
@@ -38,6 +40,7 @@ export default function ConnectionControls() {
   if (transportState === "connecting" || transportState === "reconnecting") {
     return (
       <button
+        type="button"
         className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-[var(--nb-border)] bg-amber-400 text-black hover:bg-amber-500 rounded-lg"
         onClick={disconnect}
       >
@@ -52,6 +55,7 @@ export default function ConnectionControls() {
   if (transportState === "connected") {
     return (
       <button
+        type="button"
         onClick={disconnect}
         className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-[var(--nb-border)] bg-[var(--nb-accent)] text-[var(--nb-bg)] rounded-lg"
       >
