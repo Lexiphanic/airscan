@@ -150,9 +150,7 @@ export default function AccessPointCard(props: AccessPointCardProps) {
 
             <div className="font-mono text-xs text-(--nb-text-muted) flex flex-col gap-1">
               <div className="flex items-center gap-2">
-                <span className="text-(--nb-text)">
-                  {accessPoint.bssid}
-                </span>
+                <span className="text-(--nb-text)">{accessPoint.bssid}</span>
 
                 {macInfo.type === "laa" && !manufacturer && (
                   <span className="text-xs italic text-(--nb-accent)">

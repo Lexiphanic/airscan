@@ -23,9 +23,7 @@ export default function AccessPointList() {
         {filteredAccessPoints.length === 0 && (
           <Card className="text-center py-12 border-2 border-dashed border-(--nb-border)">
             <RadioTower className="w-8 h-8 mx-auto mb-2 text-(--nb-text-muted)" />
-            <p className="text-(--nb-text-muted)">
-              No access points found.
-            </p>
+            <p className="text-(--nb-text-muted)">No access points found.</p>
           </Card>
         )}
       </div>
