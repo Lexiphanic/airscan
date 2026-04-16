@@ -1,8 +1,8 @@
-import { create } from 'zustand';
-import { createEngine, type Engine } from '@airscan/engine/engine.ts';
-import { createTransport } from '../transport/factory.ts';
-import type { ITransport, TransportConfig } from '@airscan/types/Transport';
-import type { EnabledFeature } from '@airscan/types/EnabledFeature';
+import { create } from "zustand";
+import { createEngine, type Engine } from "@airscan/engine/engine.ts";
+import { createTransport } from "../transport/factory.ts";
+import type { ITransport, TransportConfig } from "@airscan/types/Transport";
+import type { EnabledFeature } from "@airscan/types/EnabledFeature";
 
 let currentEngine: Engine | null = null;
 let currentTransport: ITransport | null = null;
@@ -23,13 +23,13 @@ const getOrCreateEngine = (): Engine => {
 
 export interface AppState {
   transport: ITransport | null;
-  transportDialogState: 'open' | 'closed';
+  transportDialogState: "open" | "closed";
   transportConfig: TransportConfig;
-  transportState: 'connected' | "connecting" | "reconnecting" | "disconnected";
+  transportState: "connected" | "connecting" | "reconnecting" | "disconnected";
 
   engine: Engine;
 
-  setTransportDialogState: (state: 'open' | 'closed') => void;
+  setTransportDialogState: (state: "open" | "closed") => void;
   setTransportConfig: (config: TransportConfig) => void;
   toggleScanning: () => void;
 
@@ -47,9 +47,9 @@ export const useAppStore = create<AppState>((set, get) => {
 
   return {
     transport: null,
-    transportDialogState: 'closed',
-    transportConfig: { type: 'none' },
-    transportState: 'disconnected',
+    transportDialogState: "closed",
+    transportConfig: { type: "none" },
+    transportState: "disconnected",
 
     engine,
 
@@ -78,8 +78,8 @@ export const useAppStore = create<AppState>((set, get) => {
 
       // Check if scan feature is already enabled
       const enabledFeatures = engine.store.getState().enabledFeatures;
-      const scanFeature = enabledFeatures.find(f => f.type === 'scan');
-      
+      const scanFeature = enabledFeatures.find((f) => f.type === "scan");
+
       if (scanFeature) {
         // Stop scanning - engine will call transport.disableFeature via onFeatureDisable callback
         engine.removeEnabledFeature(scanFeature);
@@ -89,7 +89,7 @@ export const useAppStore = create<AppState>((set, get) => {
           type: "scan",
           options: {
             channels: [44],
-          }
+          },
         });
       }
     },
@@ -100,7 +100,8 @@ export const useAppStore = create<AppState>((set, get) => {
       const transport = createTransport(transportConfig, {
         ...engine.callbacks,
         onConnect: () => set({ transportState: "connected" }),
-        onDisconnect: () => set({ transportState: "disconnected", transport: null }),
+        onDisconnect: () =>
+          set({ transportState: "disconnected", transport: null }),
       });
 
       if (transport) {

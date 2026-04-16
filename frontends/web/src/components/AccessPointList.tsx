@@ -1,7 +1,7 @@
-import { Server, RadioTower } from 'lucide-react';
-import AccessPointCard from './AccessPointCard.tsx';
-import useFilteredAccessPoints from '@airscan/engine/selectors/useFilteredAccessPoints.ts';
-import Card from './ui/Card.tsx';
+import { Server, RadioTower } from "lucide-react";
+import AccessPointCard from "./AccessPointCard.tsx";
+import useFilteredAccessPoints from "@airscan/engine/selectors/useFilteredAccessPoints.ts";
+import Card from "./ui/Card.tsx";
 
 export default function AccessPointList() {
   const filteredAccessPoints = useFilteredAccessPoints();
@@ -10,7 +10,8 @@ export default function AccessPointList() {
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2 text-[var(--nb-text-muted)]">
-          <Server className="w-4 h-4" /> Access Points ({filteredAccessPoints.length})
+          <Server className="w-4 h-4" /> Access Points (
+          {filteredAccessPoints.length})
         </h2>
       </div>
 
@@ -22,10 +23,12 @@ export default function AccessPointList() {
         {filteredAccessPoints.length === 0 && (
           <Card className="text-center py-12 border-2 border-dashed border-[var(--nb-border)]">
             <RadioTower className="w-8 h-8 mx-auto mb-2 text-[var(--nb-text-muted)]" />
-            <p className="text-[var(--nb-text-muted)]">No access points found.</p>
+            <p className="text-[var(--nb-text-muted)]">
+              No access points found.
+            </p>
           </Card>
         )}
       </div>
     </div>
   );
-};
+}

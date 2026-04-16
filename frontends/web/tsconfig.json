@@ -1,12 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "lib": [
-      "DOM",
-      "DOM.Iterable"
-    ],
-    "types": [
-      "dom-serial"
-    ]
+    "lib": ["DOM", "DOM.Iterable"],
+    "types": ["dom-serial"]
   }
 }

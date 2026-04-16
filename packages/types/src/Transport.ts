@@ -26,18 +26,20 @@ export interface ITransport {
 }
 
 export const TransportConfigNoneSchema = z.object({
-  type: z.literal('none'),
+  type: z.literal("none"),
 });
 export type TransportConfigNone = z.infer<typeof TransportConfigNoneSchema>;
 
 export const TransportConfigWebSocketSchema = z.object({
-  type: z.literal('websocket'),
+  type: z.literal("websocket"),
   url: z.url(),
 });
-export type TransportConfigWebSocket = z.infer<typeof TransportConfigWebSocketSchema>;
+export type TransportConfigWebSocket = z.infer<
+  typeof TransportConfigWebSocketSchema
+>;
 
 export const TransportConfigSerialSchema = z.object({
-  type: z.literal('serial'),
+  type: z.literal("serial"),
   serialPort: z.any(),
   baudRate: z.number(),
 });

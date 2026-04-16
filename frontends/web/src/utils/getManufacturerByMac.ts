@@ -1,1 +1,1 @@
-export { default } from '@airscan/engine/utils/getManufacturerByMac';
+export { default } from "@airscan/engine/utils/getManufacturerByMac";

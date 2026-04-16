@@ -50,7 +50,8 @@ jobs:
           cacheFrom: ${{ steps.config.outputs.containerCache }}
           imageTag: ${{ steps.config.outputs.containerTag }}${{ github.ref == 'refs/heads/main' && ',latest' || '' }}
           push: always
-          runCmd: echo "Image built"
+          runCmd: |
+            bun run format
 
   build-backends-mock:
     name: Build @airscan/backend-mock

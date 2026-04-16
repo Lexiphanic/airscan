@@ -15,14 +15,18 @@ export const EnabledFeatureDeauthSchema = EnabledFeatureSchemaBase.extend({
     channel: z.number().nonnegative(),
   }),
 });
-export type EnabledFeatureDeauthType = z.infer<typeof EnabledFeatureDeauthSchema>;
+export type EnabledFeatureDeauthType = z.infer<
+  typeof EnabledFeatureDeauthSchema
+>;
 
 export const EnabledFeatureScanSchema = EnabledFeatureSchemaBase.extend({
   type: z.literal("scan"),
-  options: z.object({
-    channels: z.array(z.number().nonnegative()).optional(),
-    intervalMs: z.number().nonnegative().optional(),
-  }).optional(),
+  options: z
+    .object({
+      channels: z.array(z.number().nonnegative()).optional(),
+      intervalMs: z.number().nonnegative().optional(),
+    })
+    .optional(),
 });
 export type EnabledFeatureScanType = z.infer<typeof EnabledFeatureScanSchema>;
 

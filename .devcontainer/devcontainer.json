@@ -1,27 +1,25 @@
 {
-	"name": "Airscan Dev Container",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"context": ".",
-		"args": {
-			"USER_NAME": "vscode",
-			"VARIANT": "debian-11",
-			"ARDUINO_CLI_VERSION": "1.4.0",
-            "DIALOUT_GID": "20"
-		 }
-	},
+  "name": "Airscan Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".",
+    "args": {
+      "USER_NAME": "vscode",
+      "VARIANT": "debian-11",
+      "ARDUINO_CLI_VERSION": "1.4.0",
+      "DIALOUT_GID": "20"
+    }
+  },
 
-	"mounts": [
-		"source=/dev,target=/dev,type=bind"
-	],
-	
-	"runArgs": [
-		"--privileged",
-		"--cap-add=SYS_PTRACE",
-		"--security-opt",
-		"seccomp=unconfined"
-	],
+  "mounts": ["source=/dev,target=/dev,type=bind"],
 
-	"postCreateCommand": "bun install",
-	"remoteUser": "vscode"
+  "runArgs": [
+    "--privileged",
+    "--cap-add=SYS_PTRACE",
+    "--security-opt",
+    "seccomp=unconfined"
+  ],
+
+  "postCreateCommand": "bun install",
+  "remoteUser": "vscode"
 }

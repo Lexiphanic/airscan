@@ -1,19 +1,11 @@
 {
   "compilerOptions": {
     "paths": {
-      "@airscan/types/*": [
-        "./packages/types/src/*"
-      ],
-      "@airscan/websockets/*": [
-        "./packages/websockets/src/*"
-      ],
-      "@airscan/engine/*": [
-        "./packages/engine/src/*"
-      ]
+      "@airscan/types/*": ["./packages/types/src/*"],
+      "@airscan/websockets/*": ["./packages/websockets/src/*"],
+      "@airscan/engine/*": ["./packages/engine/src/*"]
     },
-    "lib": [
-      "ESNext"
-    ],
+    "lib": ["ESNext"],
     "target": "ESNext",
     "module": "Preserve",
     "moduleDetection": "force",

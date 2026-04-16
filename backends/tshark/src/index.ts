@@ -5,7 +5,8 @@ import ServiceManager from "@airscan/websockets/Manager";
 import InterfaceManager from "./interfaceManager.ts";
 import process from "node:process";
 
-const cli = meow(`
+const cli = meow(
+  `
   Usage
     $ bun ./src/index.ts <interface> [options]
 
@@ -17,20 +18,22 @@ const cli = meow(`
     $ bun ./src/index.ts wlan0
     $ bun ./src/index.ts wlan0 --mode auto
     $ bun ./src/index.ts wlan0 --channel 6 --mode auto
-`, {
-  importMeta: import.meta,
-  allowUnknownFlags: false,
-  flags: {
-    channel: {
-      type: "string",
-      short: "c",
-    },
-    mode: {
-      type: "string",
-      default: "manual",
+`,
+  {
+    importMeta: import.meta,
+    allowUnknownFlags: false,
+    flags: {
+      channel: {
+        type: "string",
+        short: "c",
+      },
+      mode: {
+        type: "string",
+        default: "manual",
+      },
     },
   },
-});
+);
 
 const [interfaceName] = cli.input;
 const { channel, mode } = cli.flags;
@@ -44,12 +47,11 @@ if (!interfaceName) {
 const manager = new ServiceManager(interfaceName, ["scan"]);
 const interfaceManager = new InterfaceManager();
 
-const autoModeUsed = mode === "auto" && await interfaceManager.autoSetup(interfaceName);
+const autoModeUsed =
+  mode === "auto" && (await interfaceManager.autoSetup(interfaceName));
 
-const wifiProcess = startScanner(
-  interfaceName,
-  channel,
-  (message) => manager.handleScannerMessage(message)
+const wifiProcess = startScanner(interfaceName, channel, (message) =>
+  manager.handleScannerMessage(message),
 );
 const server = createServer(
   (client) => manager.handleConnect(client),
@@ -57,11 +59,11 @@ const server = createServer(
   (client) => manager.handleDisconnect(client),
 );
 
-console.log(`Server running on ws://${server.hostname}:${server.port}...`)
+console.log(`Server running on ws://${server.hostname}:${server.port}...`);
 
 // Graceful shutdown
-process.on('SIGINT', async () => {
-  console.log('\nShutting down...');
+process.on("SIGINT", async () => {
+  console.log("\nShutting down...");
   wifiProcess.kill();
   await server.stop();
   if (autoModeUsed) {

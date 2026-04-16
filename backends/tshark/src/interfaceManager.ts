@@ -8,7 +8,9 @@ const NM_CONFIG_PATH = "/etc/NetworkManager/NetworkManager.conf";
 
 export default class InterfaceManager {
   private getMonitorInterface(interfaceName: string): string {
-    return interfaceName.endsWith("mon") ? interfaceName : `${interfaceName}mon`;
+    return interfaceName.endsWith("mon")
+      ? interfaceName
+      : `${interfaceName}mon`;
   }
 
   async isMonitorMode(interfaceName: string): Promise<boolean> {
@@ -37,12 +39,12 @@ export default class InterfaceManager {
       if (keyfileSection.includes("unmanaged-devices")) {
         updatedContent = updatedContent.replace(
           /(unmanaged-devices=)(.*?)(\n|$)/,
-          (_, key, value) => `${key}${value}${unmanagedEntry};`
+          (_, key, value) => `${key}${value}${unmanagedEntry};`,
         );
       } else {
         updatedContent = updatedContent.replace(
           /\[keyfile\]/,
-          `[keyfile]\nunmanaged-devices=${unmanagedEntry}`
+          `[keyfile]\nunmanaged-devices=${unmanagedEntry}`,
         );
       }
     }

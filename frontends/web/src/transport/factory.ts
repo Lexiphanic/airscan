@@ -1,17 +1,21 @@
-import type { ITransport, TransportCallbacks, TransportConfig } from '@airscan/types/Transport';
-import { WebSocketClient } from './websocket.ts';
-import { SerialTransport } from './serial.ts';
+import type {
+  ITransport,
+  TransportCallbacks,
+  TransportConfig,
+} from "@airscan/types/Transport";
+import { WebSocketClient } from "./websocket.ts";
+import { SerialTransport } from "./serial.ts";
 
 export function createTransport(
   config: TransportConfig,
-  callbacks: TransportCallbacks
+  callbacks: TransportCallbacks,
 ): ITransport | null {
   switch (config.type) {
-    case 'websocket':
+    case "websocket":
       return new WebSocketClient(config.url, callbacks);
-    case 'serial':
+    case "serial":
       return new SerialTransport(config.serialPort, config.baudRate, callbacks);
-    case 'none':
+    case "none":
     default:
       return null;
   }

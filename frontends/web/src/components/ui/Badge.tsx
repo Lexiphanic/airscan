@@ -1,6 +1,13 @@
 import type { ReactNode } from "react";
 
-type BadgeColor = "blue" | "red" | "green" | "yellow" | "gray" | "purple" | "cyan";
+type BadgeColor =
+  | "blue"
+  | "red"
+  | "green"
+  | "yellow"
+  | "gray"
+  | "purple"
+  | "cyan";
 
 interface BadgeProps {
   children: ReactNode;
@@ -19,7 +26,11 @@ const colors: Record<BadgeColor, string> = {
 } as const;
 
 export default function Badge(props: BadgeProps) {
-  return <span className={`px-2 py-0.5 text-xs font-medium rounded-lg ${colors[props.color ?? 'blue']} ${props.className}`}>
-    {props.children}
-  </span>
+  return (
+    <span
+      className={`px-2 py-0.5 text-xs font-medium rounded-lg ${colors[props.color ?? "blue"]} ${props.className}`}
+    >
+      {props.children}
+    </span>
+  );
 }

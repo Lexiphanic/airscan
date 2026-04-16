@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Terminal, Zap, ChevronUp } from 'lucide-react';
-import { useEngineStore } from '@airscan/engine/engine.ts';
+import { useState } from "react";
+import { Terminal, Zap, ChevronUp } from "lucide-react";
+import { useEngineStore } from "@airscan/engine/engine.ts";
 
 export default function Console() {
-  const logs = useEngineStore(state => state.logs);
-  const clearLogs = useEngineStore(state => state.clearLogs);
+  const logs = useEngineStore((state) => state.logs);
+  const clearLogs = useEngineStore((state) => state.clearLogs);
   const [isOpen, setIsOpen] = useState(false);
 
   if (!isOpen) {
@@ -17,7 +17,7 @@ export default function Console() {
           <Terminal className="w-5 h-5 text-[var(--nb-accent)]" />
           {logs.length > 0 && (
             <div className="absolute -top-1 -left-1 min-w-4.5 h-4.5 bg-[var(--nb-accent)] border-2 border-[var(--nb-border)] rounded-full flex items-center justify-center text-[10px] font-bold text-white px-1">
-              {logs.length > 99 ? '99+' : logs.length}
+              {logs.length > 99 ? "99+" : logs.length}
             </div>
           )}
         </div>
@@ -39,7 +39,9 @@ export default function Console() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-[10px] font-bold uppercase">Click to minimize</span>
+          <span className="text-[10px] font-bold uppercase">
+            Click to minimize
+          </span>
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -54,20 +56,32 @@ export default function Console() {
 
       <div className="flex-1 overflow-y-auto p-4 font-mono text-xs space-y-1.5">
         {logs.length === 0 ? (
-          <span className="text-[var(--nb-text-muted)] italic">Waiting for commands... System idle.</span>
+          <span className="text-[var(--nb-text-muted)] italic">
+            Waiting for commands... System idle.
+          </span>
         ) : (
           logs.map((log) => (
-            <div key={log.timestamp.toISOString() + log.type} className="flex gap-3">
-              <span className="text-[var(--nb-text-muted)] shrink-0">[{log.timestamp.toISOString()}]</span>
-              <span className={
-                log.type === 'warning' ? 'text-amber-600' :
-                  log.type === 'success' ? 'text-emerald-600' :
-                    log.type === 'error' ? 'text-red-600' :
-                      'text-[var(--nb-text-muted)]'
-              }>
-                {log.type === 'warning' && '⚡ '}
-                {log.type === 'success' && '✓ '}
-                {log.type === 'error' && '✗ '}
+            <div
+              key={log.timestamp.toISOString() + log.type}
+              className="flex gap-3"
+            >
+              <span className="text-[var(--nb-text-muted)] shrink-0">
+                [{log.timestamp.toISOString()}]
+              </span>
+              <span
+                className={
+                  log.type === "warning"
+                    ? "text-amber-600"
+                    : log.type === "success"
+                      ? "text-emerald-600"
+                      : log.type === "error"
+                        ? "text-red-600"
+                        : "text-[var(--nb-text-muted)]"
+                }
+              >
+                {log.type === "warning" && "⚡ "}
+                {log.type === "success" && "✓ "}
+                {log.type === "error" && "✗ "}
                 {log.message}
               </span>
             </div>
@@ -76,4 +90,4 @@ export default function Console() {
       </div>
     </div>
   );
-};
+}

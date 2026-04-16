@@ -56,7 +56,10 @@ body {
   background: var(--nb-bg-secondary);
 }
 
-input, button, select, textarea {
+input,
+button,
+select,
+textarea {
   font-family: inherit;
 }
 

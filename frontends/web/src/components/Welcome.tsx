@@ -1,11 +1,24 @@
-import { Settings, Wifi, Shield, Zap, RadioTower, Smartphone, Crosshair } from 'lucide-react';
-import useAppStore from '../store/useAppStore.ts';
-import { useCallback } from 'react';
+import {
+  Settings,
+  Wifi,
+  Shield,
+  Zap,
+  RadioTower,
+  Smartphone,
+  Crosshair,
+} from "lucide-react";
+import useAppStore from "../store/useAppStore.ts";
+import { useCallback } from "react";
 
 export default function Welcome() {
-  const setTransportDialogState = useAppStore(state => state.setTransportDialogState);
+  const setTransportDialogState = useAppStore(
+    (state) => state.setTransportDialogState,
+  );
 
-  const handleClick = useCallback(() => setTransportDialogState("open"), [setTransportDialogState])
+  const handleClick = useCallback(
+    () => setTransportDialogState("open"),
+    [setTransportDialogState],
+  );
 
   return (
     <div className="flex items-center justify-center p-6 mt-12">
@@ -30,7 +43,8 @@ export default function Welcome() {
           </h1>
 
           <p className="text-gray-600 text-center mb-8 leading-relaxed">
-            Before you can start monitoring networks and clients, you need to configure your transport settings first.
+            Before you can start monitoring networks and clients, you need to
+            configure your transport settings first.
           </p>
 
           <div className="grid grid-cols-3 gap-3 mb-8">

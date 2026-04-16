@@ -1,10 +1,10 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 const toArray = (value: unknown, ctx: z.RefinementCtx): string[] => {
   if (value === null || value === undefined) return [];
   if (Array.isArray(value)) return value;
   ctx.addIssue({
-    code: 'custom',
+    code: "custom",
     message: `Expected array, null, or undefined, got ${typeof value}`,
     fatal: true,
   });
@@ -14,14 +14,8 @@ const toArray = (value: unknown, ctx: z.RefinementCtx): string[] => {
 export const ClientSchema = z.object({
   mac: z.string(),
   rssi: z.number().nonnegative(),
-  probes: z
-    .any()
-    .transform(toArray)
-    .pipe(z.string().array()),
-  bssid: z
-    .any()
-    .transform(toArray)
-    .pipe(z.string().array()),
+  probes: z.any().transform(toArray).pipe(z.string().array()),
+  bssid: z.any().transform(toArray).pipe(z.string().array()),
   packetCount: z.number().optional(),
 });
 export type Client = z.infer<typeof ClientSchema>;

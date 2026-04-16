@@ -4,7 +4,12 @@
   "type": "module",
   "main": "./src/main.tsx",
   "scripts": {
-    "lint": "bunx tsc -b",
+    "lint": "bun run lint:tsc && bun run lint:biome",
+    "lint:tsc": "bunx tsc -b",
+    "lint:biome": "bun run biome lint",
+    "lint:fix": "bun run lint --fix",
+    "format": "bun run biome format",
+    "format:fix": "bun run format --fix",
     "dev": "vite --host 0.0.0.0",
     "build": "bunx tsc -b && vite build",
     "preview": "vite preview --host 0.0.0.0",
