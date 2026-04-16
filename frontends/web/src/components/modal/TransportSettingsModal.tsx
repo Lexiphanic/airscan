@@ -117,7 +117,7 @@ export default function TransportSettingsModal(props: {
           <button
             type="button"
             onClick={props.onClose}
-            className="p-1 rounded-lg cursor-pointer hover:bg-[var(--nb-accent)] hover:text-[var(--nb-bg)]"
+            className="p-1 rounded-lg cursor-pointer hover:bg-(--nb-accent) hover:text-(--nb-bg)"
           >
             <X className="w-5 h-5" />
           </button>
@@ -125,17 +125,17 @@ export default function TransportSettingsModal(props: {
 
         {/* Transport Type Selection */}
         <div className="space-y-3 mb-6">
-          <span className="text-sm font-bold text-[var(--nb-text-muted)]">
+          <span className="text-sm font-bold text-(--nb-text-muted)">
             Transport Type
           </span>
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
               onClick={() => setTransportType("websocket")}
-              className={`cursor-pointer flex items-center gap-3 p-3 border-2 border-[var(--nb-border)] rounded-lg ${
+              className={`cursor-pointer flex items-center gap-3 p-3 border-2 border-(--nb-border) rounded-lg ${
                 transportType === "websocket"
-                  ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]"
-                  : "bg-[var(--nb-bg)] text-[var(--nb-text)] hover:bg-[var(--nb-bg-secondary)]"
+                  ? "bg-(--nb-accent) text-(--nb-bg)"
+                  : "bg-(--nb-bg) text-(--nb-text) hover:bg-(--nb-bg-secondary)"
               }`}
             >
               <Globe className="w-5 h-5" />
@@ -148,10 +148,10 @@ export default function TransportSettingsModal(props: {
             <button
               type="button"
               onClick={() => setTransportType("serial")}
-              className={`cursor-pointer flex items-center gap-3 p-3 border-2 border-[var(--nb-border)] rounded-lg ${
+              className={`cursor-pointer flex items-center gap-3 p-3 border-2 border-(--nb-border) rounded-lg ${
                 transportType === "serial"
-                  ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]"
-                  : "bg-[var(--nb-bg)] text-[var(--nb-text)] hover:bg-[var(--nb-bg-secondary)]"
+                  ? "bg-(--nb-accent) text-(--nb-bg)"
+                  : "bg-(--nb-bg) text-(--nb-text) hover:bg-(--nb-bg-secondary)"
               }`}
               disabled={isSerialUnsupported}
             >
@@ -177,7 +177,7 @@ export default function TransportSettingsModal(props: {
             <div className="space-y-2">
               <label
                 htmlFor="websocket-url"
-                className="text-sm font-bold text-[var(--nb-text-muted)]"
+                className="text-sm font-bold text-(--nb-text-muted)"
               >
                 WebSocket URL
               </label>
@@ -187,9 +187,9 @@ export default function TransportSettingsModal(props: {
                 value={wsUrl}
                 onChange={(e) => setWsUrl(e.target.value)}
                 placeholder="ws://localhost:8080"
-                className="w-full neobrutalist-input !pl-3"
+                className="w-full neobrutalist-input pl-3!"
               />
-              <p className="text-xs text-[var(--nb-text-muted)]">
+              <p className="text-xs text-(--nb-text-muted)">
                 Enter the WebSocket endpoint
               </p>
             </div>
@@ -198,12 +198,12 @@ export default function TransportSettingsModal(props: {
             <div className="space-y-4">
               {/* Serial Port Selection */}
               <div className="space-y-3">
-                <span className="text-sm font-bold text-[var(--nb-text-muted)]">
+                <span className="text-sm font-bold text-(--nb-text-muted)">
                   Serial Port
                 </span>
 
                 {selectedPort ? (
-                  <div className="flex items-center justify-between p-3 border-2 border-[var(--nb-border)] rounded-lg bg-emerald-500">
+                  <div className="flex items-center justify-between p-3 border-2 border-(--nb-border) rounded-lg bg-emerald-500">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center justify-center w-8 h-8 bg-black/20 rounded">
                         <Check className="w-4 h-4 text-white" />
@@ -230,7 +230,7 @@ export default function TransportSettingsModal(props: {
                     type="button"
                     onClick={handleRequestSerialPort}
                     disabled={isRequestingPort}
-                    className="cursor-pointer w-full flex items-center justify-center gap-2 p-4 border-2 border-dashed border-[var(--nb-border)] rounded-lg bg-[var(--nb-bg-secondary)] text-[var(--nb-text)] hover:bg-[var(--nb-accent)] hover:text-[var(--nb-bg)]"
+                    className="cursor-pointer w-full flex items-center justify-center gap-2 p-4 border-2 border-dashed border-(--nb-border) rounded-lg bg-(--nb-bg-secondary) text-(--nb-text) hover:bg-(--nb-accent) hover:text-(--nb-bg)"
                   >
                     <Cable className="w-5 h-5" />
                     <span className="text-sm font-bold">
@@ -242,7 +242,7 @@ export default function TransportSettingsModal(props: {
 
               {/* Baud Rate Selection */}
               <div className="space-y-2">
-                <span className="text-sm font-bold text-[var(--nb-text-muted)]">
+                <span className="text-sm font-bold text-(--nb-text-muted)">
                   Baud Rate
                 </span>
                 <div className="grid grid-cols-4 gap-2">
@@ -251,10 +251,10 @@ export default function TransportSettingsModal(props: {
                       type="button"
                       key={rate}
                       onClick={() => setBaudRate(rate)}
-                      className={`cursor-pointer px-2 py-2 text-xs font-bold border-2 border-[var(--nb-border)] rounded-lg ${
+                      className={`cursor-pointer px-2 py-2 text-xs font-bold border-2 border-(--nb-border) rounded-lg ${
                         baudRate === rate
-                          ? "bg-[var(--nb-accent)] text-[var(--nb-bg)]"
-                          : "bg-[var(--nb-bg)] text-[var(--nb-text)] hover:bg-[var(--nb-bg-secondary)]"
+                          ? "bg-(--nb-accent) text-(--nb-bg)"
+                          : "bg-(--nb-bg) text-(--nb-text) hover:bg-(--nb-bg-secondary)"
                       }`}
                     >
                       {rate}
@@ -268,12 +268,12 @@ export default function TransportSettingsModal(props: {
                     value={customBaudRate}
                     onChange={(e) => setCustomBaudRate(e.target.value)}
                     placeholder="Enter baud rate..."
-                    className="w-full mt-2 neobrutalist-input !pl-3"
+                    className="w-full mt-2 neobrutalist-input pl-3!"
                   />
                 )}
               </div>
 
-              <div className="flex items-start gap-2 text-xs text-[var(--nb-text-muted)]">
+              <div className="flex items-start gap-2 text-xs text-(--nb-text-muted)">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                 <span>Select a serial port to connect.</span>
               </div>

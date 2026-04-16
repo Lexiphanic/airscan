@@ -63,7 +63,7 @@ export default function ClientsList() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2 text-[var(--nb-text-muted)]">
+        <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2 text-(--nb-text-muted)">
           <Smartphone className="w-4 h-4" /> Clients ({filteredClients.length})
         </h2>
       </div>
@@ -74,9 +74,9 @@ export default function ClientsList() {
         ))}
 
         {filteredClients.length === 0 && (
-          <Card className="text-center py-12 border-2 border-dashed border-[var(--nb-border)]">
-            <RotatingDeviceIcon className="w-8 h-8 mx-auto mb-2 text-[var(--nb-text-muted)]" />
-            <p className="text-[var(--nb-text-muted)]">No clients detected.</p>
+          <Card className="text-center py-12 border-2 border-dashed border-(--nb-border)">
+            <RotatingDeviceIcon className="w-8 h-8 mx-auto mb-2 text-(--nb-text-muted)" />
+            <p className="text-(--nb-text-muted)">No clients detected.</p>
           </Card>
         )}
       </div>

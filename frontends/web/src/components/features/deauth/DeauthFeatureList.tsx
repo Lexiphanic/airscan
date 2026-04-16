@@ -113,7 +113,7 @@ export default function DeauthFeatureList() {
       {/* Individual Deauths */}
       {individualDeauthFeatures.length > 0 && (
         <div className="space-y-2">
-          <h3 className="text-xs uppercase text-[var(--nb-text-muted)] font-bold">
+          <h3 className="text-xs uppercase text-(--nb-text-muted) font-bold">
             Individual Deauths
           </h3>
           {individualDeauthFeatures.map((feature) => (
@@ -123,7 +123,7 @@ export default function DeauthFeatureList() {
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-1.5 border-2 border-[var(--nb-border)] bg-red-500 rounded-lg">
+                  <div className="p-1.5 border-2 border-(--nb-border) bg-red-500 rounded-lg">
                     <Crosshair className="w-4 h-4 text-white" />
                   </div>
                   <div>
@@ -131,7 +131,7 @@ export default function DeauthFeatureList() {
                       {feature.options.accessPoint || "Any"} →{" "}
                       {feature.options.station || "Any"}
                     </div>
-                    <div className="text-xs text-[var(--nb-text-muted)] font-mono flex items-center gap-2">
+                    <div className="text-xs text-(--nb-text-muted) font-mono flex items-center gap-2">
                       <span>CH: {feature.options.channel || "Any"}</span>
                     </div>
                   </div>
@@ -145,7 +145,7 @@ export default function DeauthFeatureList() {
                         ? pauseEnabledFeature(feature)
                         : resumeEnabledFeature(feature)
                     }
-                    className={`p-1.5 border-2 border-[var(--nb-border)] rounded-lg cursor-pointer ${
+                    className={`p-1.5 border-2 border-(--nb-border) rounded-lg cursor-pointer ${
                       feature.isActive
                         ? "bg-amber-400 text-black hover:bg-amber-500"
                         : "bg-emerald-500 text-white hover:bg-emerald-600"
@@ -163,7 +163,7 @@ export default function DeauthFeatureList() {
                   <button
                     type="button"
                     onClick={() => removeEnabledFeature(feature)}
-                    className="p-1.5 border-2 border-[var(--nb-border)] rounded-lg cursor-pointer bg-[var(--nb-bg)] hover:bg-red-600 hover:text-white"
+                    className="p-1.5 border-2 border-(--nb-border) rounded-lg cursor-pointer bg-(--nb-bg) hover:bg-red-600 hover:text-white"
                     title="Remove feature"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -178,7 +178,7 @@ export default function DeauthFeatureList() {
       {/* Active Manufacturer Features */}
       {Object.keys(groupedByManufacturer).length > 0 && (
         <div className="space-y-2">
-          <h3 className="text-xs uppercase text-[var(--nb-text-muted)] font-bold">
+          <h3 className="text-xs uppercase text-(--nb-text-muted) font-bold">
             Manufacturer Deauths
           </h3>
           {Object.entries(groupedByManufacturer).map(
@@ -189,10 +189,10 @@ export default function DeauthFeatureList() {
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="font-bold flex items-center gap-2">
-                        <Factory className="w-4 h-4 text-[var(--nb-accent)]" />
+                        <Factory className="w-4 h-4 text-(--nb-accent)" />
                         {rawName} ({type === "accessPoint" ? "APs" : "Clients"})
                       </div>
-                      <div className="text-xs text-[var(--nb-text-muted)] mt-1">
+                      <div className="text-xs text-(--nb-text-muted) mt-1">
                         {features.length} rules •{" "}
                         {features.filter((feature) => feature.isActive).length}{" "}
                         enabled
@@ -204,7 +204,7 @@ export default function DeauthFeatureList() {
                         onClick={() =>
                           handleStopManufacturer(normalizedName, type)
                         }
-                        className="p-2 border-2 border-[var(--nb-border)] rounded-lg cursor-pointer bg-red-500 text-white hover:bg-red-600"
+                        className="p-2 border-2 border-(--nb-border) rounded-lg cursor-pointer bg-red-500 text-white hover:bg-red-600"
                         title="Disable all"
                       >
                         <Crosshair className="w-4 h-4" />

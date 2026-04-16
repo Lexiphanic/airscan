@@ -47,19 +47,19 @@ export default function ClientRow(props: {
   };
 
   return (
-    <div className="flex items-center justify-between bg-[var(--nb-card-bg)] border-2 border-[var(--nb-border)] rounded-lg p-3 hover:bg-[var(--nb-accent)] hover:text-[var(--nb-bg)] group/client">
+    <div className="flex items-center justify-between bg-(--nb-card-bg) border-2 border-(--nb-border) rounded-lg p-3 hover:bg-(--nb-accent) hover:text-(--nb-bg) group/client">
       <div className="flex items-center gap-3">
         <Smartphone className="w-4 h-4" />
         <div>
           <div className="font-mono text-sm">{props.client.mac}</div>
-          <div className="text-[10px] text-[var(--nb-text-muted)] group-hover/client:text-[var(--nb-bg)]">
+          <div className="text-[10px] text-(--nb-text-muted) group-hover/client:text-(--nb-bg)">
             {getManufacturerByMac(props.client.mac) || "Unknown"}
           </div>
         </div>
       </div>
 
       <div className="flex items-center gap-4">
-        <span className="text-xs font-mono text-[var(--nb-text-muted)] group-hover/client:text-[var(--nb-bg)]">
+        <span className="text-xs font-mono text-(--nb-text-muted) group-hover/client:text-(--nb-bg)">
           -{props.client.rssi}&nbsp;dBm
         </span>
 
@@ -67,10 +67,10 @@ export default function ClientRow(props: {
           <button
             type="button"
             onClick={handleDeauth}
-            className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-[var(--nb-border)] cursor-pointer ${
+            className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-(--nb-border) cursor-pointer ${
               isEnabled
                 ? "bg-red-600 text-white"
-                : "bg-[var(--nb-bg)] text-red-600 hover:bg-red-600 hover:text-white"
+                : "bg-(--nb-bg) text-red-600 hover:bg-red-600 hover:text-white"
             }`}
             title={
               isEnabled

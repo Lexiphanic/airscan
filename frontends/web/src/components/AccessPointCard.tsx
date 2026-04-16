@@ -67,7 +67,7 @@ function analyzeMacAddress(bssid: string) {
   return {
     type: "uaa",
     label: null,
-    color: "text-[var(--nb-text-muted)]",
+    color: "text-(--nb-text-muted)",
     bgColor: null,
   };
 }
@@ -119,7 +119,7 @@ export default function AccessPointCard(props: AccessPointCardProps) {
         <div className="flex justify-between items-start mb-2">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-bold text-lg text-[var(--nb-text)] group-hover:text-[var(--nb-accent)]">
+              <h3 className="font-bold text-lg text-(--nb-text) group-hover:text-(--nb-accent)">
                 {accessPoint.ssid ? (
                   <a
                     className="cursor-pointer"
@@ -128,7 +128,7 @@ export default function AccessPointCard(props: AccessPointCardProps) {
                     {accessPoint.ssid}
                   </a>
                 ) : (
-                  <em className="text-[var(--nb-text-muted)]">
+                  <em className="text-(--nb-text-muted)">
                     {macInfo.label || "[hidden]"}
                   </em>
                 )}
@@ -143,31 +143,29 @@ export default function AccessPointCard(props: AccessPointCardProps) {
               )}
             </div>
 
-            <div className="font-mono text-xs text-[var(--nb-text-muted)] flex flex-col gap-1">
+            <div className="font-mono text-xs text-(--nb-text-muted) flex flex-col gap-1">
               <div className="flex items-center gap-2">
-                <span className="text-[var(--nb-text)]">
-                  {accessPoint.bssid}
-                </span>
+                <span className="text-(--nb-text)">{accessPoint.bssid}</span>
 
                 {macInfo.type === "laa" && !manufacturer && (
-                  <span className="text-xs italic text-[var(--nb-accent)]">
+                  <span className="text-xs italic text-(--nb-accent)">
                     (virtual)
                   </span>
                 )}
               </div>
 
               {(manufacturer || macInfo.type === "laa") && (
-                <div className="flex items-center gap-2 text-[var(--nb-text-muted)]">
-                  <span className="w-1 h-1 rounded-full bg-[var(--nb-border)]" />
+                <div className="flex items-center gap-2 text-(--nb-text-muted)">
+                  <span className="w-1 h-1 rounded-full bg-(--nb-border)" />
                   <span>{manufacturer || "No OUI vendor"}</span>
                 </div>
               )}
             </div>
           </div>
           <div className="text-right flex flex-col items-end gap-2">
-            <div className="text-2xl font-mono font-bold text-[var(--nb-text)]">
+            <div className="text-2xl font-mono font-bold text-(--nb-text)">
               -{accessPoint.rssi}&nbsp;
-              <span className="text-sm text-[var(--nb-text-muted)] font-normal">
+              <span className="text-sm text-(--nb-text-muted) font-normal">
                 dBm
               </span>
             </div>
@@ -176,10 +174,10 @@ export default function AccessPointCard(props: AccessPointCardProps) {
               <button
                 type="button"
                 onClick={handleToggleFeature}
-                className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-[var(--nb-border)] cursor-pointer ${
+                className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-(--nb-border) cursor-pointer ${
                   isEnabled
                     ? "bg-red-600 text-white"
-                    : "bg-[var(--nb-bg)] text-red-600 hover:bg-red-600 hover:text-white"
+                    : "bg-(--nb-bg) text-red-600 hover:bg-red-600 hover:text-white"
                 }`}
                 title={
                   isEnabled
@@ -200,9 +198,9 @@ export default function AccessPointCard(props: AccessPointCardProps) {
             )}
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t-2 border-[var(--nb-border)]">
+        <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t-2 border-(--nb-border)">
           <div className="flex flex-col col-span-2">
-            <span className="text-[10px] uppercase text-[var(--nb-text-muted)] font-bold">
+            <span className="text-[10px] uppercase text-(--nb-text-muted) font-bold">
               Security
             </span>
             <AuthenticationAndEncryptionText
@@ -212,7 +210,7 @@ export default function AccessPointCard(props: AccessPointCardProps) {
             />
           </div>
           <div className="flex flex-col">
-            <span className="text-[10px] uppercase text-[var(--nb-text-muted)] font-bold">
+            <span className="text-[10px] uppercase text-(--nb-text-muted) font-bold">
               Packets
             </span>
             <span className="uppercase font-mono font-medium">
@@ -239,14 +237,14 @@ export default function AccessPointCard(props: AccessPointCardProps) {
         </div>
       </div>
 
-      <div className="bg-[var(--nb-bg-secondary)] border-t-2 border-[var(--nb-border)]">
+      <div className="bg-(--nb-bg-secondary) border-t-2 border-(--nb-border)">
         <button
           type="button"
           onClick={() => setShowClients(!showClients)}
           disabled={connectedClients.length === 0}
           className={`w-full px-4 py-2 flex items-center justify-between text-xs font-bold uppercase cursor-pointer ${
             connectedClients.length > 0
-              ? "hover:bg-[var(--nb-accent)] hover:text-[var(--nb-bg)]"
+              ? "hover:bg-(--nb-accent) hover:text-(--nb-bg)"
               : "cursor-not-allowed"
           }`}
         >
@@ -275,7 +273,7 @@ export default function AccessPointCard(props: AccessPointCardProps) {
                 />
               ))
             ) : (
-              <div className="text-xs text-[var(--nb-text-muted)] italic py-2">
+              <div className="text-xs text-(--nb-text-muted) italic py-2">
                 No clients currently associated.
               </div>
             )}
