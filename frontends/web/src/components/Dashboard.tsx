@@ -12,6 +12,47 @@ const tabs = [
   { id: "features", label: "Features", icon: Zap },
 ] as const;
 
+const overlayContent = {
+  connecting: {
+    title: "Wait...",
+    message: "Connecting to device...",
+    titleClassName: "text-(--nb-accent)",
+  },
+  reconnecting: {
+    title: "Wait...",
+    message: "Reconnecting to device...",
+    titleClassName: "text-(--nb-accent)",
+  },
+  disconnected: {
+    title: "Not Connected",
+    message: "Please connect to a device first to view the dashboard.",
+    titleClassName: "text-(--nb-text-muted)",
+  },
+  noFeatures: {
+    title: "No Features",
+    message:
+      "Your device doesn't appear to support any features. Please check your device and try again.",
+    titleClassName: "text-amber-600",
+  },
+} as const;
+
+function Overlay(props: {
+  title: string;
+  message: string;
+  titleClassName: string;
+}) {
+  return (
+    <div className="absolute inset-0 z-30 items-center justify-center bg-(--nb-bg)/50 backdrop-blur-sm p-8 md:p-20">
+      <div className="neobrutalist-card p-6 text-center">
+        <div className={`${props.titleClassName} text-2xl mb-2`}>
+          {props.title}
+        </div>
+        <p className="text-(--nb-text-muted)">{props.message}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<
     "accessPoints" | "clients" | "features"
@@ -23,50 +64,6 @@ export default function Dashboard() {
     (feature) => feature === "deauth" /* || feature === 'fake-ap'*/,
   ).length;
   const hasActiveFeatures = hasScanSupport || enabledFeatureCount > 0;
-
-  if (connectionState === "connecting" || connectionState === "reconnecting") {
-    return (
-      <div className="max-w-7xl mx-auto p-8">
-        <div className="neobrutalist-card p-6 text-center">
-          <div className="text-(--nb-accent) text-2xl mb-2">Wait...</div>
-          <p className="text-(--nb-text-muted)">
-            {connectionState === "reconnecting"
-              ? "Reconnecting to device..."
-              : "Connecting to device..."}
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  if (connectionState === "disconnected") {
-    return (
-      <div className="max-w-7xl mx-auto p-8">
-        <div className="neobrutalist-card p-6 text-center">
-          <div className="text-(--nb-text-muted) text-2xl mb-2">
-            Not Connected
-          </div>
-          <p className="text-(--nb-text-muted)">
-            Please connect to a device first to view the dashboard.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!hasActiveFeatures) {
-    return (
-      <div className="max-w-7xl mx-auto p-8">
-        <div className="neobrutalist-card p-6 text-center">
-          <div className="text-amber-600 text-2xl mb-2">No Features</div>
-          <p className="text-(--nb-text-muted)">
-            Your device doesn't appear to support any features. Please check
-            your device and try again.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>
@@ -98,7 +95,32 @@ export default function Dashboard() {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <main className="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 relative min-h-[calc(100vh-120px)]">
+        {(connectionState === "connecting" ||
+          connectionState === "reconnecting") && (
+          <Overlay
+            title={overlayContent[connectionState].title}
+            message={overlayContent[connectionState].message}
+            titleClassName={overlayContent[connectionState].titleClassName}
+          />
+        )}
+
+        {connectionState === "disconnected" && (
+          <Overlay
+            title={overlayContent.disconnected.title}
+            message={overlayContent.disconnected.message}
+            titleClassName={overlayContent.disconnected.titleClassName}
+          />
+        )}
+
+        {!hasActiveFeatures && connectionState === "connected" && (
+          <Overlay
+            title={overlayContent.noFeatures.title}
+            message={overlayContent.noFeatures.message}
+            titleClassName={overlayContent.noFeatures.titleClassName}
+          />
+        )}
+
         <div
           className={`
           lg:col-span-6 xl:col-span-4 space-y-6
