@@ -18,7 +18,7 @@ export default function Header() {
   };
 
   return (
-    <header className="border-b-4 border-(--nb-border) bg-(--nb-bg-secondary) sticky top-0 z-20">
+    <header className="border-b-4 border-(--nb-border) bg-(--nb-bg-secondary) z-20">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="relative">

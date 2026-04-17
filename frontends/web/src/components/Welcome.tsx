@@ -65,7 +65,7 @@ export default function Welcome() {
           <button
             type="button"
             onClick={handleClick}
-            className="cursor-pointer w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-4 px-6 rounded-xl"
+            className="cursor-pointer w-full neobrutalist-btn py-4 px-6"
           >
             <div className="flex items-center justify-center gap-3">
               <Settings className="w-5 h-5" />

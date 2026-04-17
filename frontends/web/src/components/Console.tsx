@@ -6,19 +6,32 @@ export default function Console() {
   const logs = useEngineStore((state) => state.logs);
   const clearLogs = useEngineStore((state) => state.clearLogs);
   const [isOpen, setIsOpen] = useState(false);
+  const [seenLogCount, setSeenLogCount] = useState(0);
+
+  const unseenCount = Math.max(0, logs.length - seenLogCount);
+
+  const handleOpen = () => {
+    setSeenLogCount(logs.length);
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setSeenLogCount(logs.length);
+    setIsOpen(false);
+  };
 
   if (!isOpen) {
     return (
       <button
         type="button"
-        onClick={() => setIsOpen(true)}
+        onClick={handleOpen}
         className="fixed bottom-4 right-4 z-30 cursor-pointer"
       >
         <div className="neobrutalist-card p-3">
           <Terminal className="w-5 h-5 text-(--nb-accent)" />
-          {logs.length > 0 && (
+          {unseenCount > 0 && (
             <div className="absolute -top-1 -left-1 min-w-4.5 h-4.5 bg-(--nb-accent) border-2 border-(--nb-border) rounded-full flex items-center justify-center text-[10px] font-bold text-white px-1">
-              {logs.length > 99 ? "99+" : logs.length}
+              {unseenCount > 99 ? "99+" : unseenCount}
             </div>
           )}
         </div>
@@ -39,7 +52,7 @@ export default function Console() {
         <div className="flex items-center gap-4">
           <button
             type="button"
-            onClick={() => setIsOpen(false)}
+            onClick={handleClose}
             className="neobrutalist-btn text-[10px] uppercase px-3 py-1"
           >
             Minimize
