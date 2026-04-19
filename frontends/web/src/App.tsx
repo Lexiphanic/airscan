@@ -18,7 +18,7 @@ export default function App() {
   const setTransportConfig = useAppStore((state) => state.setTransportConfig);
 
   return (
-    <div className="min-h-screen bg-(--nb-bg) text-(--nb-text) selection:bg-(--nb-accent) selection:text-(--nb-bg)">
+    <div className="min-h-screen text-(--nb-text) selection:bg-(--nb-accent) selection:text-(--nb-bg)">
       <TransportSettingsModal
         config={transportConfig}
         isOpen={transportDialogState === "open"}

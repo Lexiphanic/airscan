@@ -114,8 +114,8 @@ export default function AccessPointCard(props: AccessPointCardProps) {
   const macInfo = analyzeMacAddress(accessPoint.bssid);
 
   return (
-    <Card className={`group overflow-hidden hover:bg-red-400`}>
-      <div className="p-4">
+    <Card className={`group overflow-hidden bg-(--nb-bg-secondary) break-inside-avoid`}>
+      <div className="p-4 bg-white">
         <div className="flex justify-between items-start mb-2">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -137,8 +137,8 @@ export default function AccessPointCard(props: AccessPointCardProps) {
                 <ShieldAlert className="w-4 h-4 text-red-600" />
               )}
               {isEnabled && (
-                <Badge color="red" className="animate-pulse font-bold">
-                  ACTIVE
+                <Badge color="red" className="animate-pulse font-bold uppercase print:animate-none">
+                  Active
                 </Badge>
               )}
             </div>
@@ -174,7 +174,7 @@ export default function AccessPointCard(props: AccessPointCardProps) {
               <button
                 type="button"
                 onClick={handleToggleFeature}
-                className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-(--nb-border) cursor-pointer ${
+                className={`print:hidden flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-(--nb-border) cursor-pointer ${
                   isEnabled
                     ? "bg-red-600 text-white"
                     : "bg-(--nb-bg) text-red-600 hover:bg-red-600 hover:text-white"
@@ -237,7 +237,7 @@ export default function AccessPointCard(props: AccessPointCardProps) {
         </div>
       </div>
 
-      <div className="bg-(--nb-bg-secondary) border-t-2 border-(--nb-border)">
+      <div className="border-t-2 border-(--nb-border)">
         <button
           type="button"
           onClick={() => setShowClients(!showClients)}
@@ -252,33 +252,36 @@ export default function AccessPointCard(props: AccessPointCardProps) {
             <Activity className="w-3 h-3" />
             {connectedClients.length === 0
               ? "No Associated Clients"
-              : `View Associated Clients (${connectedClients.length})`}
+              : <>
+                <span className="print:hidden">View Associated Clients&nbsp;({connectedClients.length})</span>
+                <span className="hidden print:inline">View Associated Clients&nbsp;({connectedClients.length})</span>
+                </>
+                
+            }
           </span>
           {connectedClients.length > 0 &&
             (showClients ? (
-              <span className="text-[10px]">HIDE</span>
+              <span className="text-[10px] print:hidden">HIDE</span>
             ) : (
-              <span className="text-[10px]">SHOW</span>
+              <span className="text-[10px] print:hidden">SHOW</span>
             ))}
         </button>
 
-        {showClients && (
-          <div className="p-4 space-y-2">
-            {connectedClients.length > 0 ? (
-              connectedClients.map((client) => (
-                <ClientRow
-                  key={client.mac}
-                  client={client}
-                  accessPointBssid={accessPoint.bssid}
-                />
-              ))
-            ) : (
-              <div className="text-xs text-(--nb-text-muted) italic py-2">
-                No clients currently associated.
-              </div>
-            )}
-          </div>
-        )}
+        <div className={`${showClients ? '' : 'hidden'} print:block p-4 space-y-2`}>
+          {connectedClients.length > 0 ? (
+            connectedClients.map((client) => (
+              <ClientRow
+                key={client.mac}
+                client={client}
+                accessPointBssid={accessPoint.bssid}
+              />
+            ))
+          ) : (
+            <div className="text-xs text-(--nb-text-muted) italic py-2">
+              No clients currently associated.
+            </div>
+          )}
+        </div>
       </div>
     </Card>
   );

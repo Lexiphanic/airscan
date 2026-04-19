@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import ClientCard from "./ClientCard.tsx";
 import useFilteredClients from "@airscan/engine/selectors/useFilteredClients.ts";
 import Card from "./ui/Card.tsx";
+import getManufacturerByMac from "../utils/getManufacturerByMac.ts";
 
 function RotatingDeviceIcon(props: { className: string }) {
   const devices = [
@@ -32,8 +33,8 @@ function RotatingDeviceIcon(props: { className: string }) {
       setTimeout(() => {
         setCurrentIndex((prev) => (prev + 1) % devices.length);
         setIsAnimating(false);
-      }, 200); // Half of transition time for smooth swap
-    }, 2000); // Change every 2 seconds
+      }, 200);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [devices.length]);
@@ -68,7 +69,7 @@ export default function ClientsList() {
         </h2>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-3 grid grid-cols-1 print:grid-cols-2 print:gap-2">
         {filteredClients.map((client) => (
           <ClientCard key={client.mac} client={client} />
         ))}

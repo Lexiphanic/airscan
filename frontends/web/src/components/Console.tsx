@@ -25,7 +25,7 @@ export default function Console() {
       <button
         type="button"
         onClick={handleOpen}
-        className="fixed bottom-4 right-4 z-30 cursor-pointer"
+        className="fixed bottom-4 right-4 z-30 cursor-pointer print:hidden"
       >
         <div className="neobrutalist-card p-3">
           <Terminal className="w-5 h-5 text-(--nb-accent)" />
@@ -40,7 +40,7 @@ export default function Console() {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-(--nb-bg) border-t-4 border-(--nb-border) z-30 h-1/2 min-h-96 max-h-3/4 flex flex-col">
+    <div className="fixed bottom-0 left-0 right-0 bg-(--nb-bg) border-t-4 border-(--nb-border) z-30 h-1/2 min-h-96 max-h-3/4 flex flex-col print:hidden">
       <div className="bg-(--nb-bg-secondary) px-4 py-2 border-b-4 border-(--nb-border) flex items-center justify-between w-full text-left">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">

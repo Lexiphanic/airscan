@@ -18,7 +18,7 @@ export default function Header() {
   };
 
   return (
-    <header className="border-b-4 border-(--nb-border) bg-(--nb-bg-secondary) z-20">
+    <header className="border-b-4 border-(--nb-border) bg-(--nb-bg-secondary) z-20 print:mb-4">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="relative">
@@ -54,8 +54,8 @@ export default function Header() {
                 {enabledFeatures.length > 0 && (
                   <>
                     <span className="w-1 h-1 rounded-lg bg-(--nb-border)" />
-                    <span className="flex items-center gap-1 text-red-600 font-bold">
-                      ACTIVE
+                    <span className="flex items-center gap-1 text-red-600 font-bold uppercase">
+                      Active
                     </span>
                   </>
                 )}

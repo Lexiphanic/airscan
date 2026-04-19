@@ -52,7 +52,7 @@ export default function ClientCard(props: ClientCardProps) {
 
   return (
     <Card
-      className={`p-0 border-l-4 overflow-visible border-l-(--nb-border) hover:border-l-(--nb-accent) ${isEnabled ? "border-l-red-600" : ""}`}
+      className={`p-0 border-l-4 overflow-visible border-l-(--nb-border) hover:border-l-(--nb-accent) break-inside-avoid`}
     >
       <div className="p-4">
         <div className="flex justify-between items-start mb-3">
@@ -63,7 +63,7 @@ export default function ClientCard(props: ClientCardProps) {
               {isUnassociated ? (
                 <Search className="w-4 h-4 text-black" />
               ) : (
-                <Wifi className="w-4 h-4 text-white" />
+                <Wifi className="w-4 h-4 text-white print:text-black" />
               )}
             </div>
             <div>
@@ -140,7 +140,7 @@ export default function ClientCard(props: ClientCardProps) {
               type="button"
               onClick={handleDeauth}
               disabled={isUnassociated && !isEnabled}
-              className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-(--nb-border) cursor-pointer ${
+              className={`print:hidden flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-(--nb-border) cursor-pointer ${
                 isUnassociated && !isEnabled
                   ? "opacity-30 cursor-not-allowed bg-gray-300 text-gray-500"
                   : isEnabled

@@ -57,7 +57,7 @@ export default function ConnectionControls() {
       <button
         type="button"
         onClick={disconnect}
-        className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-(--nb-border) bg-(--nb-accent) text-(--nb-bg) rounded-lg"
+        className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-(--nb-border) bg-(--nb-accent) text-(--nb-bg) rounded-lg print:text-black"
       >
         <Zap className="w-4 h-4" />
         Connected

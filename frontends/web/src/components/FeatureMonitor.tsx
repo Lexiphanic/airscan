@@ -13,7 +13,7 @@ export default function FeatureMonitor() {
   const hasDeauthSupport = deviceConfig.features.includes("deauth");
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 print:hidden">
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2 text-(--nb-text-muted)">
           <Zap className="w-4 h-4" /> Features
