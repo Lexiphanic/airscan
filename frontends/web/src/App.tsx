@@ -1,5 +1,6 @@
 import Header from "./components/Header.tsx";
 import Console from "./components/Console.tsx";
+import Footer from "./components/Footer.tsx";
 import TransportSettingsModal from "./components/modal/TransportSettingsModal.tsx";
 import useTransportDialogState from "./store/selectors/useTransportDialogState.ts";
 import useAppStore from "./store/useAppStore.ts";
@@ -30,6 +31,7 @@ export default function App() {
       {transportConfig.type === "none" ? <Welcome /> : <Dashboard />}
 
       <Console />
+      <Footer />
     </div>
   );
 }

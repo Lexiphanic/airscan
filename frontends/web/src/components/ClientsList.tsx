@@ -11,7 +11,6 @@ import { useState, useEffect } from "react";
 import ClientCard from "./ClientCard.tsx";
 import useFilteredClients from "@airscan/engine/selectors/useFilteredClients.ts";
 import Card from "./ui/Card.tsx";
-import getManufacturerByMac from "../utils/getManufacturerByMac.ts";
 
 function RotatingDeviceIcon(props: { className: string }) {
   const devices = [
@@ -50,7 +49,7 @@ function RotatingDeviceIcon(props: { className: string }) {
         `}
       >
         <CurrentIcon
-          className={`${props.className} text-gray-400`}
+          className={props.className}
           strokeWidth={1.5}
         />
       </div>
@@ -75,7 +74,7 @@ export default function ClientsList() {
         ))}
 
         {filteredClients.length === 0 && (
-          <Card className="text-center py-12 border-2 border-dashed border-(--nb-border)">
+          <Card className="text-center py-12 border-2 border-dashed border-(--nb-border) print:col-span-2">
             <RotatingDeviceIcon className="w-8 h-8 mx-auto mb-2 text-(--nb-text-muted)" />
             <p className="text-(--nb-text-muted)">No clients detected.</p>
           </Card>
