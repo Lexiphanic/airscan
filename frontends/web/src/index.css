@@ -173,38 +173,4 @@ textarea {
   main > div {
     display: block !important;
   }
-
-  .print\:table {
-    display: table !important;
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .print\:table-row {
-    display: table-row !important;
-    border-bottom: 1pt solid #ccc;
-    page-break-inside: avoid;
-  }
-
-  .print\:table-cell {
-    display: table-cell !important;
-    padding: 4pt 8pt;
-    font-size: 9pt;
-  }
-
-  .print\:table-header-group {
-    display: table-header-group;
-  }
-
-  .print\:table-row-group {
-    display: table-row-group;
-  }
-
-  .print\:heading {
-    font-weight: bold;
-    font-size: 10pt;
-    text-transform: uppercase;
-    letter-spacing: 0.5pt;
-    border-bottom: 1pt solid #333;
-  }
 }
