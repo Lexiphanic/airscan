@@ -12,6 +12,13 @@ interface TsharkCsvRow {
   "wlan.ssid": string;
   "radiotap.dbm_antsignal": string;
   "wlan_radio.channel": string;
+  "wlan.fixed.capabilities": string;
+  "wlan.rsn.pcs.type": string;
+  "wlan.rsn.gcs.type": string;
+  "wlan.rsn.akms.type": string;
+  "wlan.wfa.ie.wpa.ucs.type": string;
+  "wlan.wfa.ie.wpa.mcs.type": string;
+  "wlan.wfa.ie.wpa.akms.type": string;
 }
 
 function parseCsvLine(line: string): string[] {
@@ -55,6 +62,85 @@ const isFromAccessPoint = (row: TsharkCsvRow): boolean => {
   );
 };
 
+const CIPHER_SUITE: Record<number, string> = {
+  1: "WEP-40",
+  2: "TKIP",
+  3: "WRAP",
+  4: "CCMP",
+  5: "WEP-104",
+  7: "GCMP",
+  11: "GCMP-256",
+  12: "CCMP-256",
+};
+
+const AKM_SUITE: Record<number, string> = {
+  1: "PMK",
+  2: "PSK",
+  3: "FT/PMK",
+  4: "FT/PSK",
+  5: "PMK+SHA256",
+  6: "PSK+SHA256",
+  8: "SAE",
+  9: "FT/SAE",
+  10: "PMK-P256",
+  11: "PMK-P384",
+  12: "PMK-P521",
+  18: "OWE",
+};
+
+function mapValue(val: string, map: Record<number, string>): string {
+  if (!val) return "";
+  const num = parseInt(val, 10);
+  if (!isNaN(num) && map[num]) return map[num];
+  return val;
+}
+
+function parseAuthEncryption(
+  capabilities: string,
+  rsnPairwise: string,
+  rsnGroup: string,
+  rsnAkm: string,
+  wpaPairwise: string,
+  wpaGroup: string,
+  wpaAkm: string,
+): { authentication: string; encryption: string } | null {
+  const hasRsn = rsnPairwise !== "" || rsnGroup !== "" || rsnAkm !== "";
+  const hasWpa = wpaPairwise !== "" || wpaGroup !== "" || wpaAkm !== "";
+  const capsNum = parseInt(capabilities, 16);
+  const privBit =
+    capabilities !== "" && !isNaN(capsNum) && (capsNum & 0x10) !== 0;
+
+  if (!hasRsn && !hasWpa && !privBit) return null;
+
+  let authentication = "UNK";
+  let encryption = "UNK";
+
+  if (hasRsn) {
+    const akm = mapValue(rsnAkm, AKM_SUITE);
+    const cipher = mapValue(rsnPairwise, CIPHER_SUITE);
+
+    if (akm === "SAE" || akm === "FT/SAE") {
+      authentication = "WPA3";
+    } else if (akm === "OWE") {
+      authentication = "OWE";
+    } else if (hasWpa) {
+      authentication = "WPA2/WPA3";
+    } else {
+      authentication = "WPA2";
+    }
+
+    encryption = cipher || "CCMP";
+  } else if (hasWpa) {
+    authentication = "WPA";
+    encryption = mapValue(wpaPairwise, CIPHER_SUITE) || "TKIP";
+  } else if (privBit) {
+    authentication = "WEP";
+    encryption = "WEP";
+  }
+
+  return { authentication, encryption };
+}
+
 const decodeSsid = (ssid: string): string => {
   if (/^[0-9a-fA-F]+$/.test(ssid)) {
     try {
@@ -73,6 +159,7 @@ interface ParsedRow {
   mac: string;
   rssi: number;
   channel: number;
+  authEnc: { authentication: string; encryption: string } | null;
   raw: {
     transmitter: string;
     receiver: string;
@@ -99,6 +186,16 @@ function parseRow(headers: string[], values: string[]): ParsedRow | null {
 
   if (!mac) return null;
 
+  const authEnc = parseAuthEncryption(
+    row["wlan.fixed.capabilities"],
+    row["wlan.rsn.pcs.type"],
+    row["wlan.rsn.gcs.type"],
+    row["wlan.rsn.akms.type"],
+    row["wlan.wfa.ie.wpa.ucs.type"],
+    row["wlan.wfa.ie.wpa.mcs.type"],
+    row["wlan.wfa.ie.wpa.akms.type"],
+  );
+
   return {
     type: isAp ? "accessPoint" : "client",
     bssid,
@@ -106,6 +203,7 @@ function parseRow(headers: string[], values: string[]): ParsedRow | null {
     mac,
     rssi: Math.abs(parseInt(row["radiotap.dbm_antsignal"], 10)),
     channel,
+    authEnc,
     raw: {
       transmitter: row["wlan.ta"],
       receiver: row["wlan.ra"],
@@ -121,8 +219,8 @@ function buildAccessPointResponse(parsed: ParsedRow): WebSocketApi {
     ssid: parsed.ssid,
     rssi: parsed.rssi,
     channel: parsed.channel,
-    encryption: "UNK",
-    authentication: "UNK",
+    encryption: parsed.authEnc?.encryption ?? "UNK",
+    authentication: parsed.authEnc?.authentication ?? "UNK",
   };
 
   return {
@@ -181,6 +279,20 @@ export default function startScanner(
       "radiotap.dbm_antsignal",
       "-e",
       "wlan_radio.channel",
+      "-e",
+      "wlan.fixed.capabilities",
+      "-e",
+      "wlan.rsn.pcs.type",
+      "-e",
+      "wlan.rsn.gcs.type",
+      "-e",
+      "wlan.rsn.akms.type",
+      "-e",
+      "wlan.wfa.ie.wpa.ucs.type",
+      "-e",
+      "wlan.wfa.ie.wpa.mcs.type",
+      "-e",
+      "wlan.wfa.ie.wpa.akms.type",
       "-E",
       "header=y",
       "-E",

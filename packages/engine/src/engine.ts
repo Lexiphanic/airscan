@@ -113,6 +113,14 @@ export const createEngineStore = () => {
           if (existing) {
             merged[mac] = {
               ...newAp,
+              authentication:
+                newAp.authentication !== "UNK"
+                  ? newAp.authentication
+                  : existing.authentication,
+              encryption:
+                newAp.encryption !== "UNK"
+                  ? newAp.encryption
+                  : existing.encryption,
               packetCount: (existing.packetCount ?? 0) + 1,
             };
           } else {
