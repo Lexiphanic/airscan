@@ -1,5 +1,6 @@
 import Header from "./components/Header.tsx";
 import Console from "./components/Console.tsx";
+import Footer from "./components/Footer.tsx";
 import TransportSettingsModal from "./components/modal/TransportSettingsModal.tsx";
 import useTransportDialogState from "./store/selectors/useTransportDialogState.ts";
 import useAppStore from "./store/useAppStore.ts";
@@ -18,7 +19,7 @@ export default function App() {
   const setTransportConfig = useAppStore((state) => state.setTransportConfig);
 
   return (
-    <div className="min-h-screen bg-(--nb-bg) text-(--nb-text) selection:bg-(--nb-accent) selection:text-(--nb-bg)">
+    <div className="min-h-screen text-(--nb-text) selection:bg-(--nb-accent) selection:text-(--nb-bg)">
       <TransportSettingsModal
         config={transportConfig}
         isOpen={transportDialogState === "open"}
@@ -30,6 +31,7 @@ export default function App() {
       {transportConfig.type === "none" ? <Welcome /> : <Dashboard />}
 
       <Console />
+      <Footer />
     </div>
   );
 }

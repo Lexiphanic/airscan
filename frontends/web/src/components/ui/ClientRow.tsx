@@ -67,7 +67,7 @@ export default function ClientRow(props: {
           <button
             type="button"
             onClick={handleDeauth}
-            className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-(--nb-border) cursor-pointer ${
+            className={`print:hidden flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border-2 border-(--nb-border) cursor-pointer ${
               isEnabled
                 ? "bg-red-600 text-white"
                 : "bg-(--nb-bg) text-red-600 hover:bg-red-600 hover:text-white"

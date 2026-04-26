@@ -18,7 +18,7 @@ export default function ConnectionControls() {
         <button
           type="button"
           onClick={connect}
-          className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-r border-(--nb-border) bg-red-500 text-white hover:bg-red-600 rounded-l-lg"
+          className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-r print:rounded-r-lg print:border-2 border-(--nb-border) bg-red-500 text-white print:text-black hover:bg-red-600 rounded-l-lg"
         >
           <WifiOff className="w-4 h-4" />
           <span>
@@ -28,7 +28,7 @@ export default function ConnectionControls() {
         <button
           type="button"
           onClick={() => setTransportDialogState("open")}
-          className="flex cursor-pointer items-center justify-center w-9 py-1.5 text-sm font-bold border-2 border-l border-(--nb-border) bg-red-500 text-white hover:bg-red-600 rounded-r-lg"
+          className="flex cursor-pointer items-center justify-center w-9 py-1.5 text-sm font-bold border-2 border-l border-(--nb-border) bg-red-500 text-white hover:bg-red-600 rounded-r-lg print:hidden"
           aria-label="Transport settings"
         >
           <Settings className="w-4 h-4" />
@@ -57,7 +57,7 @@ export default function ConnectionControls() {
       <button
         type="button"
         onClick={disconnect}
-        className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-(--nb-border) bg-(--nb-accent) text-(--nb-bg) rounded-lg"
+        className="flex cursor-pointer items-center gap-2 px-4 py-1.5 text-sm font-bold border-2 border-(--nb-border) bg-(--nb-accent) text-(--nb-bg) rounded-lg print:text-black"
       >
         <Zap className="w-4 h-4" />
         Connected

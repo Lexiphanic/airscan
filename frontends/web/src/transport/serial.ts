@@ -97,7 +97,7 @@ export class SerialTransport implements ITransport {
         // Nothing to do.
         break;
       default:
-        this.callbacks.addLog("Unexpected message type: " + msg.type, "error");
+        this.callbacks.addLog(`Unexpected message type: ${msg.type}`, "error");
     }
   }
 

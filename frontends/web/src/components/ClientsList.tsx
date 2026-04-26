@@ -32,8 +32,8 @@ function RotatingDeviceIcon(props: { className: string }) {
       setTimeout(() => {
         setCurrentIndex((prev) => (prev + 1) % devices.length);
         setIsAnimating(false);
-      }, 200); // Half of transition time for smooth swap
-    }, 2000); // Change every 2 seconds
+      }, 200);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [devices.length]);
@@ -48,10 +48,7 @@ function RotatingDeviceIcon(props: { className: string }) {
           ${isAnimating ? "opacity-0 scale-75 rotate-12" : "opacity-100 scale-100 rotate-0"}
         `}
       >
-        <CurrentIcon
-          className={`${props.className} text-gray-400`}
-          strokeWidth={1.5}
-        />
+        <CurrentIcon className={props.className} strokeWidth={1.5} />
       </div>
     </div>
   );
@@ -68,13 +65,13 @@ export default function ClientsList() {
         </h2>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-3 grid grid-cols-1 print:grid-cols-2 print:gap-2">
         {filteredClients.map((client) => (
           <ClientCard key={client.mac} client={client} />
         ))}
 
         {filteredClients.length === 0 && (
-          <Card className="text-center py-12 border-2 border-dashed border-(--nb-border)">
+          <Card className="text-center py-12 border-2 border-dashed border-(--nb-border) print:col-span-2">
             <RotatingDeviceIcon className="w-8 h-8 mx-auto mb-2 text-(--nb-text-muted)" />
             <p className="text-(--nb-text-muted)">No clients detected.</p>
           </Card>

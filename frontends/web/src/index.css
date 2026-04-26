@@ -163,3 +163,14 @@ textarea {
   background-color: #ffffff;
   box-shadow: 6px 6px 0px 0px var(--nb-border);
 }
+
+@media print {
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  main > div {
+    display: block !important;
+  }
+}

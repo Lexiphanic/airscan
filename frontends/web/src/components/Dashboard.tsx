@@ -42,7 +42,7 @@ function Overlay(props: {
   titleClassName: string;
 }) {
   return (
-    <div className="absolute inset-0 z-30 items-center justify-center bg-(--nb-bg)/50 backdrop-blur-sm p-8 md:p-20">
+    <div className="absolute inset-0 z-30 items-center justify-center bg-(--nb-bg)/50 backdrop-blur-sm p-8 md:p-20 print:hidden">
       <div className="neobrutalist-card p-6 text-center">
         <div className={`${props.titleClassName} text-2xl mb-2`}>
           {props.title}
@@ -67,7 +67,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <nav className="lg:hidden sticky top-0 z-40 bg-(--nb-bg) border-b-4 border-(--nb-border)">
+      <nav className="lg:hidden sticky top-0 z-40 bg-(--nb-bg) border-b-4 border-(--nb-border) print:hidden">
         <div className="flex divide-x-2 divide-(--nb-border)">
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -95,7 +95,7 @@ export default function Dashboard() {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 relative min-h-[calc(100vh-120px)]">
+      <main className="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 relative min-h-[calc(100vh-120px)] print:p-0 print:grid-cols-1">
         {(connectionState === "connecting" ||
           connectionState === "reconnecting") && (
           <Overlay
@@ -125,6 +125,7 @@ export default function Dashboard() {
           className={`
           lg:col-span-6 xl:col-span-4 space-y-6
           ${activeTab === "accessPoints" ? "block" : "hidden lg:block"}
+          print:w-full print:col-span-12 print:mb-8
         `}
         >
           <AccessPointList />
@@ -134,6 +135,7 @@ export default function Dashboard() {
           className={`
           lg:col-span-6 xl:col-span-4 space-y-6
           ${activeTab === "clients" ? "block" : "hidden lg:block"}
+          print:w-full print:col-span-12
         `}
         >
           <ClientsList />
@@ -143,6 +145,7 @@ export default function Dashboard() {
           className={`
           lg:col-span-12 xl:col-span-4 space-y-6
           ${activeTab === "features" ? "block" : "hidden lg:block"}
+          print:hidden
         `}
         >
           <FeatureMonitor />
