@@ -114,7 +114,9 @@ export default function AccessPointCard(props: AccessPointCardProps) {
   const macInfo = analyzeMacAddress(accessPoint.bssid);
 
   return (
-    <Card className={`group overflow-hidden bg-(--nb-bg-secondary) break-inside-avoid`}>
+    <Card
+      className={`group overflow-hidden bg-(--nb-bg-secondary) break-inside-avoid`}
+    >
       <div className="p-4 bg-white">
         <div className="flex justify-between items-start mb-2">
           <div>
@@ -137,7 +139,10 @@ export default function AccessPointCard(props: AccessPointCardProps) {
                 <ShieldAlert className="w-4 h-4 text-red-600" />
               )}
               {isEnabled && (
-                <Badge color="red" className="animate-pulse font-bold uppercase print:animate-none">
+                <Badge
+                  color="red"
+                  className="animate-pulse font-bold uppercase print:animate-none"
+                >
                   Active
                 </Badge>
               )}
@@ -250,14 +255,18 @@ export default function AccessPointCard(props: AccessPointCardProps) {
         >
           <span className="flex items-center gap-2">
             <Activity className="w-3 h-3" />
-            {connectedClients.length === 0
-              ? "No Associated Clients"
-              : <>
-                <span className="print:hidden">View Associated Clients&nbsp;({connectedClients.length})</span>
-                <span className="hidden print:inline">View Associated Clients&nbsp;({connectedClients.length})</span>
-                </>
-                
-            }
+            {connectedClients.length === 0 ? (
+              "No Associated Clients"
+            ) : (
+              <>
+                <span className="print:hidden">
+                  View Associated Clients&nbsp;({connectedClients.length})
+                </span>
+                <span className="hidden print:inline">
+                  View Associated Clients&nbsp;({connectedClients.length})
+                </span>
+              </>
+            )}
           </span>
           {connectedClients.length > 0 &&
             (showClients ? (
@@ -267,7 +276,9 @@ export default function AccessPointCard(props: AccessPointCardProps) {
             ))}
         </button>
 
-        <div className={`${showClients ? '' : 'hidden'} print:block p-4 space-y-2`}>
+        <div
+          className={`${showClients ? "" : "hidden"} print:block p-4 space-y-2`}
+        >
           {connectedClients.length > 0 ? (
             connectedClients.map((client) => (
               <ClientRow

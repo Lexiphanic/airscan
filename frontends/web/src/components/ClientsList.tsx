@@ -48,10 +48,7 @@ function RotatingDeviceIcon(props: { className: string }) {
           ${isAnimating ? "opacity-0 scale-75 rotate-12" : "opacity-100 scale-100 rotate-0"}
         `}
       >
-        <CurrentIcon
-          className={props.className}
-          strokeWidth={1.5}
-        />
+        <CurrentIcon className={props.className} strokeWidth={1.5} />
       </div>
     </div>
   );
